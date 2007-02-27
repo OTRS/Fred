@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2001-2006 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: OutputFilterFred.pm,v 1.1.1.1 2007-02-16 17:59:15 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.2 2007-02-27 20:48:38 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFred;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1.1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -61,6 +61,31 @@ sub Run {
         }
     }
 
+    # Search for stderr messages
+    if ($Self->{ConfigObject}->Get('Fred::STDERRLog')) {
+        if (open (OUTPUT, "< ".$Self->{ConfigObject}->Get('Home')."/var/fred.log")) {
+            my $ErrorLogText = '';
+            my @Row = <OUTPUT>;
+            my @ReverseRow = reverse(@Row);
+            foreach (@ReverseRow) {
+                if ($_ =~ /FRED/) {
+                    last;
+                }
+                $ErrorLogText .= $_;
+            }
+
+            print STDERR "FRED\n";
+
+            close (OUTPUT);
+
+            if ($ErrorLogText) {
+                $Text .= $Self->_HTMLQuote(
+                    Text => $ErrorLogText,
+                    Title => "STDERR",
+                );
+            }
+        }
+    }
     # Search for apache errorlog warning
     if ($Self->{ConfigObject}->Get('Fred::ApacheErrorlogWarnings')) {
         if (open (OUTPUT, "< /var/log/apache2/error_log")) {
@@ -149,13 +174,38 @@ sub Run {
 sub _HTMLQuote {
     my $Self = shift;
     my %Param = @_;
-        $Param{Text} =~ s/&/&amp;/g;
-        $Param{Text} =~ s/</&lt;/g;
-        $Param{Text} =~ s/>/&gt;/g;
-        $Param{Text} =~ s/\n/\n\<br\>/g;
-        $Param{Text} = "<b>$Param{Title}</b><br>\n" . $Param{Text};
-
-    return $Param{Text};
+    my $Output = '';
+    $Param{Text} =~ s/&/&amp;/g;
+    $Param{Text} =~ s/</&lt;/g;
+    $Param{Text} =~ s/>/&gt;/g;
+    $Param{Text} =~ s/\n/\n\<br\>/g;
+    # shown message
+    $Output .= "<table bgcolor=\"#000000\" cellspacing=\"3\" cellpadding=\"0\" width=\"100%\">\n";
+    $Output .= "<tr>\n";
+    $Output .= "<td bgcolor=\"ba0f0f\">\n";
+    $Output .= "<table bgcolor=\"#ffffff\" cellspacing=\"0\" cellpadding=\"2\" width=\"100%\">\n";
+    $Output .= "<tr>\n";
+    $Output .= "<td bgcolor=\"ba0f0f\">\n";
+    $Output .= "<b><font color=\"#ffffff\">Fred: $Param{Title}</font></b>\n";
+    $Output .= "</td>\n";
+    $Output .= "</tr>\n";
+    $Output .= "<tr>\n";
+    $Output .= "<td>\n";
+    $Output .= "<font size=\"-2\">" . $Param{Text} ."</font>";
+    $Output .= "</td>\n";
+    $Output .= "</tr>\n";
+    $Output .= "</table>\n";
+    $Output .= "</td>\n";
+    $Output .= "</tr>\n";
+    $Output .= "</table>\n";
+    # just a small space
+    $Output .= "<table cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n";
+    $Output .= "<tr>\n";
+    $Output .= "<td>\n";
+    $Output .= "</td>\n";
+    $Output .= "</tr>\n";
+    $Output .= "</table>\n";
+    return $Output;
 }
 
 1;
