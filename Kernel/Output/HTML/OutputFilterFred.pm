@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: OutputFilterFred.pm,v 1.2 2007-02-27 20:48:38 martin Exp $
+# $Id: OutputFilterFred.pm,v 1.3 2007-02-28 14:22:43 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFred;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -38,6 +38,12 @@ sub Run {
     my %Param = @_;
     my $Text = '';
     my $Home = $Self->{ConfigObject}->Get('Home');
+
+    # do noting on redirects
+    if (${$Param{Data}} =~ /^Status: 302 Moved/mi && ${$Param{Data}} =~ /^location:/mi && length(${$Param{Data}}) < 800 ) {
+        # do nothing
+        return 1;
+    }
 
     # Check the HTML-Output with HTML::Lint
     if ($Self->{ConfigObject}->Get('Fred::HTMLCheck')) {
@@ -164,7 +170,7 @@ sub Run {
     #-----------------------------------------
 
     if ($Text) {
-        if (${$Param{Data}} =~ s/(\<body\>)/$1\n$Text\n\n\n\n/mx) {
+        if (${$Param{Data}} =~ s/(\<body(|.+?)\>)/$1\n$Text\n\n\n\n/mx) {
         }
     }
 
