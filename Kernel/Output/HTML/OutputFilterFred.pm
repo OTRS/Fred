@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
 # --
-# $Id: OutputFilterFred.pm,v 1.3 2007-02-28 14:22:43 martin Exp $
+# $Id: OutputFilterFred.pm,v 1.4 2007-04-16 15:51:52 ot Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFred;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -26,7 +26,7 @@ sub new {
     bless ($Self, $Type);
 
     # get needed objects
-    foreach (qw(ConfigObject LogObject)) {
+    foreach (qw(MainObject ConfigObject LogObject)) {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
@@ -47,18 +47,24 @@ sub Run {
 
     # Check the HTML-Output with HTML::Lint
     if ($Self->{ConfigObject}->Get('Fred::HTMLCheck')) {
-        use HTML::Lint;
         my $HTMLText = '';
-        my $HTMLLintObject = HTML::Lint->new( only_types => HTML::Lint::Error::STRUCTURE );
-        $HTMLLintObject->parse (${$Param{Data}});
+        if ($Self->{MainObject}->Require('HTML::Lint')) {
+            HTML::Lint->import();
+            my $HTMLLintObject = HTML::Lint->new( only_types => HTML::Lint::Error->STRUCTURE );
+            $HTMLLintObject->parse (${$Param{Data}});
 
-        my $ErrorCounter = $HTMLLintObject->errors;
-        foreach my $Error ($HTMLLintObject->errors) {
-            my $String .= $Error->as_string;
-            if ($String !~ /Invalid character .+ should be written as /) {
-                $HTMLText .=  $String . "\n";
+            my $ErrorCounter = $HTMLLintObject->errors;
+            foreach my $Error ($HTMLLintObject->errors) {
+                my $String .= $Error->as_string;
+                if ($String !~ /Invalid character .+ should be written as /) {
+                    $HTMLText .=  $String . "\n";
+                }
             }
+        } else {
+            $HTMLText = 'The HTML-checker of Fred requires HTML::Lint to be installed!'
+                . 'Please install HTML::Lint or deactivate the HTML-checker via SysConfig.';
         }
+
         if ($HTMLText) {
             $Text .= $Self->_HTMLQuote(
                 Text => $HTMLText,
@@ -92,81 +98,56 @@ sub Run {
             }
         }
     }
-    # Search for apache errorlog warning
-    if ($Self->{ConfigObject}->Get('Fred::ApacheErrorlogWarnings')) {
-        if (open (OUTPUT, "< /var/log/apache2/error_log")) {
-            my $ErrorLogText = '';
-            my @Row = <OUTPUT>;
-            my @ReverseRow = reverse(@Row);
-            foreach (@ReverseRow) {
-                if ($_ =~ /FRED/) {
-                    last;
-                }
-                $ErrorLogText .= $_;
-            }
-
-            print STDERR "FRED\n";
-
-            close (OUTPUT);
-
-            if ($ErrorLogText) {
-                $Text .= $Self->_HTMLQuote(
-                    Text => $ErrorLogText,
-                    Title => "Apache2 error_log",
-                );
-            }
-        }
-    }
     # use the cvs checks
-    if ($Self->{ConfigObject}->Get('Fred::CVSFilter')) {
-        my $PathToCVSFilter = $Self->{ConfigObject}->Get('Fred::PathToCVSFilter');
-        if (${$Param{Data}} =~ /Notify.+?Action.+?value="(.+?)">.*?$/mxs) {
-            my $Action = $1;
-            my $FilterText = '';
-            if (-e "$Home/Kernel/Modules/$Action.pm") {
-                if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/Modules $Home/Kernel/Modules/$Action.pm |")) {
-                    my $Merge = 0;
-                    while (<OUTPUT>) {
-                        if ($_!~ /^NOTICE/) {
-                            $FilterText .= $_;
-                            $Merge = 1;
-                        }
-                    }
-                    close (OUTPUT);
-                    if ($Merge) {
-                        $FilterText = $Action . ".pm\n" . $FilterText;
-                    }
-                }
-            }
-
-            my $SystemModule = '';
-            if ($Action =~ /(Agent|Admin|Customer|Public)(.+)$/) {
-                $SystemModule = $2;
-            }
-
-            if (-e "$Home/Kernel/System/$SystemModule.pm") {
-                if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/System $Home/Kernel/System/$SystemModule.pm |")) {
-                    my $Merge = 0;
-                    while (<OUTPUT>) {
-                        if ($_!~ /^NOTICE/) {
-                            $FilterText .= $_;
-                            $Merge = 1;
-                        }
-                    }
-                    close (OUTPUT);
-                    if ($Merge) {
-                        $FilterText = $SystemModule . ".pm\n" . $FilterText;
-                    }
-                }
-            }
-            if ($FilterText) {
-                $Text .= $Self->_HTMLQuote(
-                    Text => $FilterText,
-                    Title => "filter-extended.pl",
-                );
-            }
-        }
-    }
+#     if ($Self->{ConfigObject}->Get('Fred::CVSFilter')) {
+#         my $PathToCVSFilter = $Self->{ConfigObject}->Get('Fred::PathToCVSFilter');
+#         if (${$Param{Data}} =~ /Notify.+?Action.+?value="(.+?)">.*?$/mxs) {
+#             my $Action = $1;
+#             my $FilterText = '';
+#             if (-e "$Home/Kernel/Modules/$Action.pm") {
+#                 if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/Modules $Home/Kernel/Modules/$Action.pm |")) {
+#                     my $Merge = 0;
+#                     while (<OUTPUT>) {
+#                         if ($_!~ /^NOTICE/) {
+#                             $FilterText .= $_;
+#                             $Merge = 1;
+#                         }
+#                     }
+#                     close (OUTPUT);
+#                     if ($Merge) {
+#                         $FilterText = $Action . ".pm\n" . $FilterText;
+#                     }
+#                 }
+#             }
+#
+#             my $SystemModule = '';
+#             if ($Action =~ /(Agent|Admin|Customer|Public)(.+)$/) {
+#                 $SystemModule = $2;
+#             }
+#
+#             if (-e "$Home/Kernel/System/$SystemModule.pm") {
+#                 if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/System $Home/Kernel/System/$SystemModule.pm |")) {
+#                     my $Merge = 0;
+#                     while (<OUTPUT>) {
+#                         if ($_!~ /^NOTICE/) {
+#                             $FilterText .= $_;
+#                             $Merge = 1;
+#                         }
+#                     }
+#                     close (OUTPUT);
+#                     if ($Merge) {
+#                         $FilterText = $SystemModule . ".pm\n" . $FilterText;
+#                     }
+#                 }
+#             }
+#             if ($FilterText) {
+#                 $Text .= $Self->_HTMLQuote(
+#                     Text => $FilterText,
+#                     Title => "filter-extended.pl",
+#                 );
+#             }
+#         }
+#     }
     #-----------------------------------------
 
     if ($Text) {
