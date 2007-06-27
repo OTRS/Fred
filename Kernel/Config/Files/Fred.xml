@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.4 2007-04-26 08:44:07 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.5 2007-06-27 09:10:05 martin Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -21,7 +21,7 @@
     -->
     <ConfigItem Name="Fred::HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefhrt werden soll. WICHTIG: Das Cpan-Modul HTML::lint ist hierfr notwendig!</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefhrt werden soll. WICHTIG: Das Cpan-Modul HTML::lint ist hierfuer notwendig.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -33,7 +33,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::STDERRLog" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to see the STDERRLog.</Description>
-        <Description Lang="de">Hier aktivieren wenn man zur Laufzeit das STDERRLog sehen will!</Description>
+        <Description Lang="de">Hier aktivieren wenn man zur Laufzeit das STDERRLog sehen will.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -64,4 +64,16 @@
             <String Regex="">/home/tr/src/CVSROOT-int</String>
         </Setting>
     </ConfigItem>-->
+    <ConfigItem Name="Database::SlowLog" Required="0" Valid="1">
+        <Description Lang="en">To enable slow sql log (to log all sql queries which take longer the 4 sec.).</Description>
+        <Description Lang="de">Um Slow SQL zu aktivieren (mitschneider aller SQL-Abfragen welche laenger 4 Sek. brauchen).</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
