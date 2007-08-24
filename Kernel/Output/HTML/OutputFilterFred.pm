@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2003-2007 OTRS GmbH, http://otrs.com/
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.4 2007-04-16 15:51:52 ot Exp $
+# $Id: OutputFilterFred.pm,v 1.5 2007-08-24 10:03:40 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFred;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -83,7 +83,9 @@ sub Run {
                 if ($_ =~ /FRED/) {
                     last;
                 }
-                $ErrorLogText .= $_;
+                if ($_ !~ /Subroutine .+? redefined at/) {
+                    $ErrorLogText .= $_;
+                }
             }
 
             print STDERR "FRED\n";
