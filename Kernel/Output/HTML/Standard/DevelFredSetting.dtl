@@ -2,7 +2,7 @@
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSetting.dtl,v 1.1 2007-09-21 07:49:26 tr Exp $
+# $Id: DevelFredSetting.dtl,v 1.2 2007-09-21 09:04:48 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -34,7 +34,7 @@
             </td>
           </tr>
         </table>
-      </td>
-    </form>
+      </form>
+    </td>
   </tr>
 </table>
