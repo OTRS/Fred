@@ -1,0 +1,40 @@
+# --
+# DevelFredSetting.dtl - a frontend for a fast fred setting handling
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# --
+# $Id: DevelFredSetting.dtl,v 1.1 2007-09-21 07:49:26 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
+  <tr>
+    <td bgcolor="ba0f0f">
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="DevelFredSetting">
+        <input type="hidden" name="Action" value="DevelFred">
+        <input type="hidden" name="Subaction" value="SettingAction">
+        <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+          <tr>
+            <td bgcolor="ba0f0f">
+              <b><font color="#ffffff">Fred-Setting</font></b>
+            </td>
+          </tr>
+<!-- dtl:block:FredModule -->
+          <tr>
+            <td>
+              <input type="checkbox" name="FredModule" value="$QData{"FredModule"}" $Data{"Checked"}>
+              $QData{"FredModule"}
+            </td>
+          </tr>
+<!-- dtl:block:FredModule -->
+          <tr>
+            <td align="right">
+              <input type="submit" value="$Text{"Save"}" class="button" onClick="window.close()">
+            </td>
+          </tr>
+        </table>
+      </td>
+    </form>
+  </tr>
+</table>

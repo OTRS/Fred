@@ -1,0 +1,38 @@
+# --
+# DevelFredConsole.dtl - a html console for a better fred handling
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# --
+# $Id: DevelFredConsole.dtl,v 1.1 2007-09-21 07:49:26 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
+  <tr>
+    <td bgcolor="ba0f0f">
+      <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+          <td colspan="2" bgcolor="ba0f0f">
+            <b><font color="#ffffff">Fred-Console</font></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            $Data{"Text"}
+          </td>
+          <td align="right">
+<!-- dtl:block:Setting -->
+            <a href="$Env{"Baselink"}Action=DevelFred&Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=500,top=450');" target="setting">setting</a>
+<!-- dtl:block:Setting -->
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+# just a small space
+<table cellspacing="1" cellpadding="0" width="100%">
+  <tr><td></td></tr>
+</table>

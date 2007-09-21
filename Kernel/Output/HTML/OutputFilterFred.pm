@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.5 2007-08-24 10:03:40 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.6 2007-09-21 07:48:48 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,189 +12,148 @@
 package Kernel::Output::HTML::OutputFilterFred;
 
 use strict;
+use warnings;
+
+use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
+=head1 NAME
+
+Kernel::Output::HTML::OutputFilterFred
+
+=head1 SYNOPSIS
+
+a output filter module specially for developer
+
+=head1 PUBLIC INTERFACE
+
+=over 4
+
+=cut
+
 sub new {
-    my $Type = shift;
+    my $Type  = shift;
     my %Param = @_;
 
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
     # get needed objects
-    foreach (qw(MainObject ConfigObject LogObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(MainObject ConfigObject LogObject )) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
+
+    if ( $Param{LayoutObject} ) {
+        $Self->{LayoutObject} = $Param{LayoutObject};
+    }
+    else {
+
+        # insert LayoutObject entry in FilterContent function of the Layout.pm
+        # this happens only in OTRS 2.2
+        $Self->{FredObject}->InsertLayoutObject();
     }
 
     return $Self;
 }
 
 sub Run {
-    my $Self = shift;
+    my $Self  = shift;
     my %Param = @_;
-    my $Text = '';
-    my $Home = $Self->{ConfigObject}->Get('Home');
+    my $OutputConsole;
 
-    # do noting on redirects
-    if (${$Param{Data}} =~ /^Status: 302 Moved/mi && ${$Param{Data}} =~ /^location:/mi && length(${$Param{Data}}) < 800 ) {
-        # do nothing
+    # is a check because OTRS2.2 don't deliver here a LayoutObject
+    if ( !$Self->{LayoutObject} ) {
         return 1;
     }
 
-    # Check the HTML-Output with HTML::Lint
-    if ($Self->{ConfigObject}->Get('Fred::HTMLCheck')) {
-        my $HTMLText = '';
-        if ($Self->{MainObject}->Require('HTML::Lint')) {
-            HTML::Lint->import();
-            my $HTMLLintObject = HTML::Lint->new( only_types => HTML::Lint::Error->STRUCTURE );
-            $HTMLLintObject->parse (${$Param{Data}});
+    # do nothing if it is a redirect
+    if (   ${ $Param{Data} } =~ /^Status: 302 Moved/mi
+        && ${ $Param{Data} } =~ /^location:/mi
+        && length( ${ $Param{Data} } ) < 800 )
+    {
+        return 1;
+    }
 
-            my $ErrorCounter = $HTMLLintObject->errors;
-            foreach my $Error ($HTMLLintObject->errors) {
-                my $String .= $Error->as_string;
-                if ($String !~ /Invalid character .+ should be written as /) {
-                    $HTMLText .=  $String . "\n";
-                }
-            }
-        } else {
-            $HTMLText = 'The HTML-checker of Fred requires HTML::Lint to be installed!'
-                . 'Please install HTML::Lint or deactivate the HTML-checker via SysConfig.';
+    # get all activated modules
+    my $ModuleForRef   = $Self->{ConfigObject}->Get('Fred::Module');
+    my $ModulesDataRef = {};
+    for my $Module ( keys %{$ModuleForRef} ) {
+        if ( $ModuleForRef->{$Module}->{Active} ) {
+            $ModulesDataRef->{$Module} = {};
         }
+    }
 
-        if ($HTMLText) {
-            $Text .= $Self->_HTMLQuote(
-                Text => $HTMLText,
-                Title => "HTML-Checker",
+    # create the console table
+    my $Console = 'Activated modules: ';
+    for my $Module ( keys %{$ModulesDataRef} ) {
+        $Console .= $Module . " - ";
+    }
+    $Console =~ s/ - $//;
+    if ( ${ $Param{Data} } !~ /Fred-Setting/ ) {
+        if ( ${ $Param{Data} } !~ /name="Action" value="Login"/ ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Setting',
+                Data => {                }
             );
         }
+        $OutputConsole = $Self->{LayoutObject}->Output(
+            TemplateFile => 'DevelFredConsole',
+            Data         => {
+                Text    => $Console,
+            },
+        );
     }
 
-    # Search for stderr messages
-    if ($Self->{ConfigObject}->Get('Fred::STDERRLog')) {
-        if (open (OUTPUT, "< ".$Self->{ConfigObject}->Get('Home')."/var/fred.log")) {
-            my $ErrorLogText = '';
-            my @Row = <OUTPUT>;
-            my @ReverseRow = reverse(@Row);
-            foreach (@ReverseRow) {
-                if ($_ =~ /FRED/) {
-                    last;
-                }
-                if ($_ !~ /Subroutine .+? redefined at/) {
-                    $ErrorLogText .= $_;
-                }
-            }
+    # load the activated modules
+    $Self->{FredObject}->DataGet(
+        FredModulesRef => $ModulesDataRef,
+        HTMLDataRef    => $Param{Data},
+    );
+    $Self->{LayoutObject}->CreateFredOutput( FredModulesRef => $ModulesDataRef );
 
-            print STDERR "FRED\n";
-
-            close (OUTPUT);
-
-            if ($ErrorLogText) {
-                $Text .= $Self->_HTMLQuote(
-                    Text => $ErrorLogText,
-                    Title => "STDERR",
-                );
-            }
+    # build the content string
+    my $Output = '';
+    for my $Module ( %{$ModulesDataRef} ) {
+        if ( $ModulesDataRef->{$Module}->{Output} ) {
+            $Output .= $ModulesDataRef->{$Module}->{Output};
         }
     }
-    # use the cvs checks
-#     if ($Self->{ConfigObject}->Get('Fred::CVSFilter')) {
-#         my $PathToCVSFilter = $Self->{ConfigObject}->Get('Fred::PathToCVSFilter');
-#         if (${$Param{Data}} =~ /Notify.+?Action.+?value="(.+?)">.*?$/mxs) {
-#             my $Action = $1;
-#             my $FilterText = '';
-#             if (-e "$Home/Kernel/Modules/$Action.pm") {
-#                 if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/Modules $Home/Kernel/Modules/$Action.pm |")) {
-#                     my $Merge = 0;
-#                     while (<OUTPUT>) {
-#                         if ($_!~ /^NOTICE/) {
-#                             $FilterText .= $_;
-#                             $Merge = 1;
-#                         }
-#                     }
-#                     close (OUTPUT);
-#                     if ($Merge) {
-#                         $FilterText = $Action . ".pm\n" . $FilterText;
-#                     }
-#                 }
-#             }
-#
-#             my $SystemModule = '';
-#             if ($Action =~ /(Agent|Admin|Customer|Public)(.+)$/) {
-#                 $SystemModule = $2;
-#             }
-#
-#             if (-e "$Home/Kernel/System/$SystemModule.pm") {
-#                 if (open (OUTPUT, "perl $PathToCVSFilter/filter-extended.pl $Home/Kernel/System $Home/Kernel/System/$SystemModule.pm |")) {
-#                     my $Merge = 0;
-#                     while (<OUTPUT>) {
-#                         if ($_!~ /^NOTICE/) {
-#                             $FilterText .= $_;
-#                             $Merge = 1;
-#                         }
-#                     }
-#                     close (OUTPUT);
-#                     if ($Merge) {
-#                         $FilterText = $SystemModule . ".pm\n" . $FilterText;
-#                     }
-#                 }
-#             }
-#             if ($FilterText) {
-#                 $Text .= $Self->_HTMLQuote(
-#                     Text => $FilterText,
-#                     Title => "filter-extended.pl",
-#                 );
-#             }
-#         }
-#     }
-    #-----------------------------------------
 
-    if ($Text) {
-        if (${$Param{Data}} =~ s/(\<body(|.+?)\>)/$1\n$Text\n\n\n\n/mx) {
-        }
+    # include the fred output in the original output
+    if ( ${ $Param{Data} } =~ s/(\<body(|.+?)\>)/$1\n$OutputConsole$Output\n\n\n\n/mx ) {
+
+        # ?
+    }
+    elsif ( ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx ) {
+
+        # ?
     }
 
     return 1;
 }
 
-sub _HTMLQuote {
-    my $Self = shift;
-    my %Param = @_;
-    my $Output = '';
-    $Param{Text} =~ s/&/&amp;/g;
-    $Param{Text} =~ s/</&lt;/g;
-    $Param{Text} =~ s/>/&gt;/g;
-    $Param{Text} =~ s/\n/\n\<br\>/g;
-    # shown message
-    $Output .= "<table bgcolor=\"#000000\" cellspacing=\"3\" cellpadding=\"0\" width=\"100%\">\n";
-    $Output .= "<tr>\n";
-    $Output .= "<td bgcolor=\"ba0f0f\">\n";
-    $Output .= "<table bgcolor=\"#ffffff\" cellspacing=\"0\" cellpadding=\"2\" width=\"100%\">\n";
-    $Output .= "<tr>\n";
-    $Output .= "<td bgcolor=\"ba0f0f\">\n";
-    $Output .= "<b><font color=\"#ffffff\">Fred: $Param{Title}</font></b>\n";
-    $Output .= "</td>\n";
-    $Output .= "</tr>\n";
-    $Output .= "<tr>\n";
-    $Output .= "<td>\n";
-    $Output .= "<font size=\"-2\">" . $Param{Text} ."</font>";
-    $Output .= "</td>\n";
-    $Output .= "</tr>\n";
-    $Output .= "</table>\n";
-    $Output .= "</td>\n";
-    $Output .= "</tr>\n";
-    $Output .= "</table>\n";
-    # just a small space
-    $Output .= "<table cellspacing=\"1\" cellpadding=\"0\" width=\"100%\">\n";
-    $Output .= "<tr>\n";
-    $Output .= "<td>\n";
-    $Output .= "</td>\n";
-    $Output .= "</tr>\n";
-    $Output .= "</table>\n";
-    return $Output;
-}
-
 1;
+
+=back
+
+=head1 TERMS AND CONDITIONS
+
+This Software is part of the OTRS project (http://otrs.org/).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (GPL). If you
+did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+
+=cut
+
+=head1 VERSION
+
+$Revision: 1.6 $ $Date: 2007-09-21 07:48:48 $
+
+=cut

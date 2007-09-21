@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.5 2007-06-27 09:10:05 martin Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.6 2007-09-21 07:44:15 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -13,36 +13,51 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <!--
-        $Self->{'Frontend::Output::FilterContent'}->{'Fred'} = {
-            Module => 'Kernel::Output::HTML::OutputFilterFred',
-            Debug => 0,
-        };
-    -->
-    <ConfigItem Name="Fred::HTMLCheck" Required="0" Valid="1">
+    <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefhrt werden soll. WICHTIG: Das Cpan-Modul HTML::lint ist hierfuer notwendig.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das Cpan-Modul HTML::lint ist hierfür notwendig.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>
+                <Item Key="Active">1</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::STDERRLog" Required="0" Valid="1">
+    <ConfigItem Name="Fred::Module###STDERRLog" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to see the STDERRLog.</Description>
         <Description Lang="de">Hier aktivieren wenn man zur Laufzeit das STDERRLog sehen will.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###DevelFred" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the devel fred object in the admin area.</Description>
+        <Description Lang="de">Frontendmodul-Registration des Entwickler-Objekts Fred im Admin-Bereich.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <!-- <Group>admin</Group> -->
+                <Description>Admin</Description>
+                <Title>Fred-Developertools</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>Fred</Name>
+                    <Block>Block4</Block>
+                    <Prio>999</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
 <!--    <ConfigItem Name="Fred::CVSFilter" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to allow the CVSFilter realtime.</Description>
         <Description Lang="de">Hier aktivieren um zur Laufzeit bereits die CVS-Filter zu testen.</Description>
@@ -63,7 +78,7 @@
         <Setting>
             <String Regex="">/home/tr/src/CVSROOT-int</String>
         </Setting>
-    </ConfigItem>-->
+    </ConfigItem>
     <ConfigItem Name="Database::SlowLog" Required="0" Valid="1">
         <Description Lang="en">To enable slow sql log (to log all sql queries which take longer the 4 sec.).</Description>
         <Description Lang="de">Um Slow SQL zu aktivieren (mitschneider aller SQL-Abfragen welche laenger 4 Sek. brauchen).</Description>
@@ -75,5 +90,5 @@
                 <Item Key="1">Yes</Item>
             </Option>
         </Setting>
-    </ConfigItem>
+    </ConfigItem> -->
 </otrs_config>
