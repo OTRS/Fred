@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.1 2007-09-21 07:44:58 tr Exp $
+# $Id: DevelFred.pm,v 1.2 2007-09-24 14:32:18 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,11 +15,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
 use Kernel::System::Config;
+use Kernel::System::Fred;
 
 sub new {
     my $Type = shift;
@@ -43,6 +44,7 @@ sub new {
     }
 #    $Self->{XMLObject} = Kernel::System::XML->new(%{$Self});
     $Self->{ConfigToolObject} = Kernel::System::Config->new(%{$Self});
+    $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
     $Self->{Subaction} = $Self->{ParamObject}->GetParam(Param => 'Subaction');
     return $Self;
 }
@@ -144,11 +146,13 @@ sub Run {
     # ---------------------------------------------------------- #
     elsif ($Self->{Subaction} eq 'Setting') {
         my $ModuleForRef = $Self->{ConfigObject}->Get('Fred::Module');
+        delete $ModuleForRef->{Console};
         for my $Module (keys %{$ModuleForRef}) {
             my $Checked = '';
             if ($ModuleForRef->{$Module}->{Active}) {
                 $Checked = 'checked="checked"';
             }
+
             $Self->{LayoutObject}->Block(
                 Name => 'FredModule',
                 Data => {
@@ -156,6 +160,16 @@ sub Run {
                     Checked    => $Checked,
                 }
             );
+
+            if ($Self->{ConfigObject}->Get("Fred::$Module")) {
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'Config',
+                    Data => {
+                        FredModule => $Module,
+                    }
+                );
+            }
         }
 
         # build output
@@ -174,7 +188,10 @@ sub Run {
         my @SelectedFredModules = $Self->{ParamObject}->GetArray(Param => 'FredModule');
         my %SelectedModules = map { $_ => 1; } @SelectedFredModules;
         my $UpdateFlag;
+        delete $ModuleForRef->{Console};
+
         for my $Module (keys %{$ModuleForRef}) {
+            # update the sysconfig settings
             if ($ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module} ||
                 !$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}
             ) {
@@ -183,12 +200,29 @@ sub Run {
                     Key => "Fred::Module###$Module",
                     Value => {
                         'Active' => $SelectedModules{$Module} || 0,
-                        'Module' => $ModuleForRef->{$Module}->{Module}
+                        # 'Module' => $ModuleForRef->{$Module}->{Module}
                     },
                 );
                 $UpdateFlag = 1;
             }
+
+            # active fred module todos
+            if (!$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}) {
+                # FIXME Errorhandling!
+                $Self->{FredObject}->ActivateModuleTodos(
+                    ModuleName => $Module,
+                );
+            }
+
+            # deactivate fredmodule todos
+            if ($ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module}) {
+                # FIXME Errorhandling!
+                $Self->{FredObject}->DeactivateModuleTodos(
+                    ModuleName => $Module,
+                );
+            }
         }
+        # this function is neseccary to finish the sysconfig update
         if ($UpdateFlag) {
             $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
         }

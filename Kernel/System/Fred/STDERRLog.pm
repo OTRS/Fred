@@ -2,7 +2,7 @@
 # Kernel/System/Fred/STDERRLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.1 2007-09-21 08:09:09 tr Exp $
+# $Id: STDERRLog.pm,v 1.2 2007-09-24 14:32:19 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -105,6 +105,37 @@ sub DataGet {
     return 1;
 }
 
+=item ActivateModuleTodos()
+
+Do all jobs which are necessary to activate this special module.
+
+    $FredObject->ActivateModuleTodos(
+        ModuleName => $ModuleName,
+    );
+
+=cut
+
+sub ActivateModuleTodos {
+    my $Self  = shift;
+
+    return 1;
+}
+
+=item DeactivateModuleTodos()
+
+Do all jobs which are necessary to deactivate this special module.
+
+    $FredObject->DeactivateModuleTodos(
+        ModuleName => $ModuleName,
+    );
+
+=cut
+
+sub DeactivateModuleTodos {
+    my $Self  = shift;
+    return 1;
+}
+
 1;
 
 =back
@@ -121,6 +152,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-21 08:09:09 $
+$Revision: 1.2 $ $Date: 2007-09-24 14:32:19 $
 
 =cut

@@ -1,0 +1,49 @@
+# --
+# DevelFredSmallProf.dtl - a frontend to show the SmallProf result table
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# --
+# $Id: DevelFredSmallProf.dtl,v 1.1 2007-09-24 14:32:18 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
+  <tr>
+    <td bgcolor="ba0f0f">
+      <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+          <td colspan="6" bgcolor="ba0f0f">
+            <b><font color="#ffffff">Fred-SmallProf</font></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            $Text{"Calls"}
+          </td>
+          <td>
+            $Text{"Time executing (ms)"}
+          </td>
+          <td>
+            $Text{"Time expended (ms)"}
+          </td>
+          <td>
+            $Text{"File"}
+          </td>
+          <td>
+            $Text{"Line"}
+          </td>
+          <td>
+            $Text{"Text"}
+          </td>
+        </tr>
+$Data{"HTMLLines"}
+        <tr>
+          <td colspan="6">
+            $Text{"For more information, especially 'time execution' and 'time expended' read perldoc SmallProf!"}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

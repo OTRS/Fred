@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.6 2007-09-21 07:48:48 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.7 2007-09-24 14:32:18 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -65,7 +65,6 @@ sub new {
 sub Run {
     my $Self  = shift;
     my %Param = @_;
-    my $OutputConsole;
 
     # is a check because OTRS2.2 don't deliver here a LayoutObject
     if ( !$Self->{LayoutObject} ) {
@@ -89,27 +88,6 @@ sub Run {
         }
     }
 
-    # create the console table
-    my $Console = 'Activated modules: ';
-    for my $Module ( keys %{$ModulesDataRef} ) {
-        $Console .= $Module . " - ";
-    }
-    $Console =~ s/ - $//;
-    if ( ${ $Param{Data} } !~ /Fred-Setting/ ) {
-        if ( ${ $Param{Data} } !~ /name="Action" value="Login"/ ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'Setting',
-                Data => {                }
-            );
-        }
-        $OutputConsole = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredConsole',
-            Data         => {
-                Text    => $Console,
-            },
-        );
-    }
-
     # load the activated modules
     $Self->{FredObject}->DataGet(
         FredModulesRef => $ModulesDataRef,
@@ -119,6 +97,10 @@ sub Run {
 
     # build the content string
     my $Output = '';
+    if ($ModulesDataRef->{Console}->{Output}) {
+        $Output .= $ModulesDataRef->{Console}->{Output};
+        delete $ModulesDataRef->{Console};
+    }
     for my $Module ( %{$ModulesDataRef} ) {
         if ( $ModulesDataRef->{$Module}->{Output} ) {
             $Output .= $ModulesDataRef->{$Module}->{Output};
@@ -126,13 +108,8 @@ sub Run {
     }
 
     # include the fred output in the original output
-    if ( ${ $Param{Data} } =~ s/(\<body(|.+?)\>)/$1\n$OutputConsole$Output\n\n\n\n/mx ) {
-
-        # ?
-    }
-    elsif ( ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx ) {
-
-        # ?
+    if ( ${ $Param{Data} } !~ s/(\<body(|.+?)\>)/$1\n$Output\n\n\n\n/mx ) {
+        ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx
     }
 
     return 1;
@@ -154,6 +131,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2007-09-21 07:48:48 $
+$Revision: 1.7 $ $Date: 2007-09-24 14:32:18 $
 
 =cut

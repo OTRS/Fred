@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.1 2007-09-21 07:51:06 tr Exp $
+# $Id: Fred.pm,v 1.2 2007-09-24 14:32:18 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -77,7 +77,7 @@ sub new {
 Evaluate the several data of all fred modules and add them
 on the FredModules reference.
 
-    $BackendObject = $FredObject->DataGet(
+    $FredObject->DataGet(
         FredModulesRef => $FredModulesRef,
     );
 
@@ -110,10 +110,81 @@ sub DataGet {
         # get module data
         if ($BackendObject) {
             $BackendObject->DataGet(
-                ModuleRef   => $Param{FredModulesRef}->{$ModuleName},
-                HTMLDataRef => $Param{HTMLDataRef},
+                ModuleRef      => $Param{FredModulesRef}->{$ModuleName},
+                HTMLDataRef    => $Param{HTMLDataRef},
+                FredModulesRef => $Param{FredModulesRef}
             );
         }
+    }
+
+    return 1;
+}
+
+=item ActivateModuleTodos()
+
+Do all jobs which are necessary to activate a fred module.
+
+    $FredObject->ActivateModuleTodos(
+        ModuleName => $ModuleName,
+    );
+
+=cut
+
+sub ActivateModuleTodos {
+    my $Self  = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    if ( !$Param{ModuleName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need ModuleName!",
+        );
+        return;
+    }
+
+    # load backend
+    my $BackendObject = $Self->_LoadBackend( ModuleName => $Param{ModuleName} );
+
+    # get module data
+    if ($BackendObject) {
+        # FIXME Errorhandling
+        $BackendObject->ActivateModuleTodos();
+    }
+
+    return 1;
+}
+
+=item DeactivateModuleTodos()
+
+Do all jobs which are necessary to deactivate a fred module.
+
+    $FredObject->DeactivateModuleTodos(
+        ModuleName => $ModuleName,
+    );
+
+=cut
+
+sub DeactivateModuleTodos {
+    my $Self  = shift;
+    my %Param = @_;
+
+    # check needed stuff
+    if ( !$Param{ModuleName} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need ModuleName!",
+        );
+        return;
+    }
+
+    # load backend
+    my $BackendObject = $Self->_LoadBackend( ModuleName => $Param{ModuleName} );
+
+    # get module data
+    if ($BackendObject) {
+        # FIXME Errorhandling
+        $BackendObject->DeactivateModuleTodos();
     }
 
     return 1;
@@ -180,7 +251,7 @@ sub InsertLayoutObject {
     my $File  = $Self->{ConfigObject}->Get('Home') . "/Kernel/Output/HTML/Layout.pm";
 
     if ( -l "$File" ) {
-        die 'Can\'t manipulate Layout.pm because it is a symlink!';
+        die 'Can\'t manipulate $File because it is a symlink!';
     }
 
     my $InSub;
@@ -206,7 +277,7 @@ sub InsertLayoutObject {
     close $FilehandleII;
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the Layout.pm!',
+        Message  => 'FRED manipulated the $File!',
     );
     return 1;
 }
@@ -227,6 +298,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-21 07:51:06 $
+$Revision: 1.2 $ $Date: 2007-09-24 14:32:18 $
 
 =cut
