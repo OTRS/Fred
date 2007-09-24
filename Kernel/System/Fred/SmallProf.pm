@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.1 2007-09-24 14:32:19 tr Exp $
+# $Id: SmallProf.pm,v 1.2 2007-09-24 14:54:22 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -161,6 +161,14 @@ sub ActivateModuleTodos {
         Priority => 'error',
         Message  => 'FRED manipulated the $File!',
     );
+
+    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
+    open my $FilehandleIII, '>', $SmallProfFile || die "FILTER: Can't write $SmallProfFile !\n";
+    print $FilehandleIII "%DB::packages = ( 'Kernel::Output::HTML::Layout' => 1, );\n";
+    print $FilehandleIII "\$DB::drop_zeros = 1;\n";
+    print $FilehandleIII "\$DB::grep_format = 1;\n";
+    close $FilehandleIII;
+
     return 1;
 }
 
@@ -208,6 +216,10 @@ sub DeactivateModuleTodos {
         Priority => 'error',
         Message  => 'FRED manipulated the $File!',
     );
+
+    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
+    system ("rm $SmallProfFile");
+
     return 1;
 }
 
@@ -227,6 +239,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-24 14:32:19 $
+$Revision: 1.2 $ $Date: 2007-09-24 14:54:22 $
 
 =cut
