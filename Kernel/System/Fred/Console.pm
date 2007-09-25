@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.1 2007-09-24 14:32:19 tr Exp $
+# $Id: Console.pm,v 1.2 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -123,13 +123,13 @@ sub ActivateModuleTodos {
         die 'Can\'t manipulate $File because it is a symlink!';
     }
 
-    open my $Filehandle, '<', $File  || die "FILTER: Can't open $File !\n";
+    open my $Filehandle, '<', $File  || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "FILTER: Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     print $FilehandleII "#!/usr/bin/perl -w -d:SmallProf\n";
     print $FilehandleII "# FRED - manipulated\n";
     for my $Line (@Lines) {
@@ -163,7 +163,7 @@ sub DeactivateModuleTodos {
     }
 
     # read the index.pl file
-    open my $Filehandle, '<', $File  || die "FILTER: Can't open $File !\n";
+    open my $Filehandle, '<', $File  || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
@@ -178,7 +178,7 @@ sub DeactivateModuleTodos {
     }
 
     # save the index.pl file
-    open my $FilehandleII, '>', $File || die "FILTER: Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
@@ -206,6 +206,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-24 14:32:19 $
+$Revision: 1.2 $ $Date: 2007-09-25 10:05:13 $
 
 =cut

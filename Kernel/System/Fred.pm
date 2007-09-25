@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.2 2007-09-24 14:32:18 tr Exp $
+# $Id: Fred.pm,v 1.3 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -104,6 +104,7 @@ sub DataGet {
     }
 
     for my $ModuleName ( keys %{ $Param{FredModulesRef} } ) {
+
         # load backend
         my $BackendObject = $Self->_LoadBackend( ModuleName => $ModuleName );
 
@@ -148,6 +149,7 @@ sub ActivateModuleTodos {
 
     # get module data
     if ($BackendObject) {
+
         # FIXME Errorhandling
         $BackendObject->ActivateModuleTodos();
     }
@@ -183,6 +185,7 @@ sub DeactivateModuleTodos {
 
     # get module data
     if ($BackendObject) {
+
         # FIXME Errorhandling
         $BackendObject->DeactivateModuleTodos();
     }
@@ -255,7 +258,7 @@ sub InsertLayoutObject {
     }
 
     my $InSub;
-    open my $Filehandle, '<', $File  || die "FILTER: Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
         if ( $Line =~ /sub Print {/ ) {
@@ -270,7 +273,7 @@ sub InsertLayoutObject {
     }
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "FILTER: Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
@@ -298,6 +301,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-24 14:32:18 $
+$Revision: 1.3 $ $Date: 2007-09-25 10:05:13 $
 
 =cut

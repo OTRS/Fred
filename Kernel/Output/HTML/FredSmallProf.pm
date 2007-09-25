@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSmallProf.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSmallProf.pm,v 1.1 2007-09-24 14:32:18 tr Exp $
+# $Id: FredSmallProf.pm,v 1.2 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -34,7 +34,7 @@ All layout functions of SmallProf object
 
 create a object
 
-    $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
+    $BackendObject = Kernel::Output::HTML::FredSmallProf->new(
         %Param,
     );
 
@@ -80,8 +80,8 @@ sub CreateFredOutput {
         return;
     }
 
+    # prepare the profiling data for a better readability
     for my $Line ( @{ ${ $Param{ModuleRef} }{Data} } ) {
-
         for my $TD (@{$Line}) {
             $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
         }
@@ -95,10 +95,21 @@ sub CreateFredOutput {
                     . "        </tr>";
     }
 
+    # get all packages which SmallProf checks
+    my $Packages = '';
+    for my $Package ( @{ ${ $Param{ModuleRef} }{Packages} } ) {
+        $Packages .= "$Package - ";
+    }
+    $Packages =~ s{\s-\s$}{}mx;
+
+    # show the profiling data
     if ($HTMLLines) {
         ${ $Param{ModuleRef} }{Output} = $Self->{LayoutObject}->Output(
             TemplateFile => 'DevelFredSmallProf',
-            Data         => { HTMLLines => $HTMLLines, },
+            Data         => {
+                HTMLLines => $HTMLLines,
+                Packages  => $Packages,
+            },
         );
     }
 
@@ -121,6 +132,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-24 14:32:18 $
+$Revision: 1.2 $ $Date: 2007-09-25 10:05:13 $
 
 =cut

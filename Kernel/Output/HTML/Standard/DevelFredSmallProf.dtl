@@ -2,7 +2,7 @@
 # DevelFredSmallProf.dtl - a frontend to show the SmallProf result table
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSmallProf.dtl,v 1.1 2007-09-24 14:32:18 tr Exp $
+# $Id: DevelFredSmallProf.dtl,v 1.2 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,6 +15,11 @@
         <tr>
           <td colspan="6" bgcolor="ba0f0f">
             <b><font color="#ffffff">Fred-SmallProf</font></b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6">
+            $Text{"Profiled packages:"} $QData{"Packages"}
           </td>
         </tr>
         <tr>
@@ -41,6 +46,11 @@ $Data{"HTMLLines"}
         <tr>
           <td colspan="6">
             $Text{"For more information, especially 'time execution' and 'time expended' read perldoc SmallProf!"}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6">
+            $Text{"If you change the package config you have to reload this side two times!"}
           </td>
         </tr>
       </table>

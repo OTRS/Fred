@@ -2,7 +2,7 @@
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSetting.dtl,v 1.3 2007-09-24 14:32:18 tr Exp $
+# $Id: DevelFredSetting.dtl,v 1.4 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,7 +26,7 @@
               <input type="checkbox" name="FredModule" value="$QData{"FredModule"}" $Data{"Checked"}>
               $QData{"FredModule"}
 <!-- dtl:block:Config -->
-              <a href="$Env{"Baselink"}Action=AdminSysConfig&Subaction=Edit&SysConfigSubGroup=SmallProf&SysConfigGroup=Fred">($Text{"Config"})</a>
+              <a href="$Env{"Baselink"}Action=AdminSysConfig&Subaction=Edit&SysConfigSubGroup=SmallProf&SysConfigGroup=Fred"  onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.resizeTo(900,500)">($Text{"Config"})</a>
 <!-- dtl:block:Config -->
             </td>
           </tr>

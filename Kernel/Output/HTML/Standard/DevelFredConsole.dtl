@@ -2,7 +2,7 @@
 # DevelFredConsole.dtl - a html console for a better fred handling
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredConsole.dtl,v 1.1 2007-09-21 07:49:26 tr Exp $
+# $Id: DevelFredConsole.dtl,v 1.2 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@
           </td>
           <td align="right">
 <!-- dtl:block:Setting -->
-            <a href="$Env{"Baselink"}Action=DevelFred&Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=500,top=450');" target="setting">setting</a>
+            <a href="$Env{"Baselink"}Action=DevelFred&Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">setting</a>
 <!-- dtl:block:Setting -->
             &nbsp;
           </td>

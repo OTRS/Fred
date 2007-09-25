@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.2 2007-09-24 14:54:22 tr Exp $
+# $Id: SmallProf.pm,v 1.3 2007-09-25 10:05:13 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -71,44 +71,72 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
-    my $Path  = $Self->{ConfigObject}->Get('Home'). "/bin/cgi-bin/";
+    my $Self       = shift;
+    my %Param      = @_;
+    my $Path       = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/";
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::SmallProf');
     my @Lines;
 
     # check needed stuff
-    if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need ModuleRef!",
-        );
-        return;
+    for my $NeededRef (qw(HTMLDataRef ModuleRef)) {
+        if ( !$Param{$NeededRef} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $NeededRef!",
+            );
+            return;
+        }
     }
 
-    system "cp $Path/smallprof.out $Path/FredSmallProf.out";
-    if ( open my $Filehandle, '<', $Path . 'FredSmallProf.out' ) {
-        while ( my $Line = <$Filehandle> ) {
-            if ($Line =~ /^\//) {
-                if ($Line =~ /^.*?cgi-bin\/\.\.\/\.\.\/(.+?):(\d+?):(\d+?):(\d+?):(\d+?):\s*(.*?)$/) {
-                    push @Lines, [$1, $2, $3, $4, $5, $6];
-                }
+    # in this two cases it makes no sense to generate the profiling list
+    if (${$Param{HTMLDataRef}} !~ /\<body.*?\>/ ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'This page deliver the HTML by many separate output calls.'
+                . ' Please use the usual way to interpret SmallProf',
+        );
+        return 1;
+    }
+    if (${$Param{HTMLDataRef}} =~ /Fred-Setting/) {
+        return 1;
+    }
 
-                # alternative solution 2
-                # my @Elements = split (':',$Line);
-                # $Elements[0] =~ s/^.*?cgi-bin\/\.\.\/\.\.\///;
-                # push @Lines, \@Elements;
+    # find out which packages are checked by SmallProf
+    my @Packages = keys %DB::packages;
+    my $CVSCheckProblem = \%DB::packages; # sorry, this is because of the CVSChecker
+    if ( !$Packages[0] ) {
+        $Packages[0] = 'all';
+    }
+    ${ $Param{ModuleRef} }{Packages} = \@Packages;
+
+    # catch the needed profiling data
+    system "cp $Path/smallprof.out $Path/FredSmallProf.out";
+
+    if ( open my $Filehandle, '<', $Path . 'FredSmallProf.out' ) {
+
+        # convert the file in useable data
+        while ( my $Line = <$Filehandle> ) {
+            if ( $Line =~ /(.+?):(\d+?):(\d+?):(\d+?):(\d+?):\s*(.*?)$/ ) {
+                push @Lines, [ $1, $2, $3, $4, $5, $6 ];
             }
+
+            # alternative solution 2
+            # my @Elements = split (':',$Line);
+            # $Elements[0] =~ s/^.*?cgi-bin\/\.\.\/\.\.\///;
+            # push @Lines, \@Elements;
         }
 
-        @Lines = sort {$b->[$Config_Ref->{OrderBy}] <=> $a->[$Config_Ref->{OrderBy}]} @Lines;
-
-        if ($Config_Ref->{OrderBy} == 1) {
+        # define the order of the profiling data
+        @Lines = sort { $b->[ $Config_Ref->{OrderBy} ] <=> $a->[ $Config_Ref->{OrderBy} ] } @Lines;
+        if ( $Config_Ref->{OrderBy} == 1 ) {
             @Lines = reverse @Lines;
         }
 
-        splice @Lines, $Config_Ref->{ShownLines};
-        ${ $Param{ModuleRef} }{Data} = \@Lines;
+        # show only so many lines as wanted
+        if (@Lines) {
+            splice @Lines, $Config_Ref->{ShownLines};
+            ${ $Param{ModuleRef} }{Data} = \@Lines;
+        }
 
         # alternative solution 1
         # while ( my $Line = <$Filehandle> ) {
@@ -120,8 +148,10 @@ sub DataGet {
         # }
         # @Lines = sort {$b->[1] <=> $a->[1]} @Lines;
         # ${ $Param{ModuleRef} }{Data} = \@Lines;
+
         close $Filehandle;
     }
+
     return 1;
 }
 
@@ -140,31 +170,46 @@ sub ActivateModuleTodos {
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
 
+    # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
         die 'Can\'t manipulate $File because it is a symlink!';
     }
 
-    open my $Filehandle, '<', $File  || die "FILTER: Can't open $File !\n";
+    # to use SmallProf I have to manepulate the index.pl file
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "FILTER: Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     print $FilehandleII "#!/usr/bin/perl -w -d:SmallProf\n";
     print $FilehandleII "# FRED - manipulated\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
     close $FilehandleII;
+
+    # create a info for the user
     $Self->{LogObject}->Log(
         Priority => 'error',
         Message  => 'FRED manipulated the $File!',
     );
 
+    # create the configuration file for the SmallProf module
     my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
-    open my $FilehandleIII, '>', $SmallProfFile || die "FILTER: Can't write $SmallProfFile !\n";
-    print $FilehandleIII "%DB::packages = ( 'Kernel::Output::HTML::Layout' => 1, );\n";
+    open my $FilehandleIII, '>', $SmallProfFile || die "Can't write $SmallProfFile !\n";
+    print $FilehandleIII "# FRED - manipulated don't edit this file!\n";
+    print $FilehandleIII "# use ../../ as lib location\n";
+    print $FilehandleIII "use FindBin qw(\$Bin);\n";
+    print $FilehandleIII "use lib \"\$Bin/../..\";\n";
+    print $FilehandleIII "use Kernel::Config;\n";
+    print $FilehandleIII "my \$ConfigObject = Kernel::Config->new();\n";
+    print $FilehandleIII "if (\$ConfigObject->Get('Fred::SmallProf')->{Packages}) {\n";
+    print $FilehandleIII "    my \@Array = \@{ \$ConfigObject->Get('Fred::SmallProf')->{Packages} };\n";
+    print $FilehandleIII "    my \%Hash = map { \$_ => 1; } \@Array;\n";
+    print $FilehandleIII "    \%DB::packages = \%Hash;\n";
+    print $FilehandleIII "}\n";
     print $FilehandleIII "\$DB::drop_zeros = 1;\n";
     print $FilehandleIII "\$DB::grep_format = 1;\n";
     close $FilehandleIII;
@@ -187,27 +232,28 @@ sub DeactivateModuleTodos {
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
 
+    # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
         die 'Can\'t manipulate $File because it is a symlink!';
     }
 
     # read the index.pl file
-    open my $Filehandle, '<', $File  || die "FILTER: Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
     close $Filehandle;
 
     # remove the manipulated lines
-    if ($Lines[0] =~ /#!\/usr\/bin\/perl -w -d:SmallProf/) {
+    if ( $Lines[0] =~ /#!\/usr\/bin\/perl -w -d:SmallProf/ ) {
         shift @Lines;
     }
-    if ($Lines[0] =~ /# FRED - manipulated/) {
+    if ( $Lines[0] =~ /# FRED - manipulated/ ) {
         shift @Lines;
     }
 
     # save the index.pl file
-    open my $FilehandleII, '>', $File || die "FILTER: Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
@@ -217,8 +263,9 @@ sub DeactivateModuleTodos {
         Message  => 'FRED manipulated the $File!',
     );
 
+    # delete the .smallprof because it is no longer needed
     my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
-    system ("rm $SmallProfFile");
+    system("rm $SmallProfFile");
 
     return 1;
 }
@@ -239,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-24 14:54:22 $
+$Revision: 1.3 $ $Date: 2007-09-25 10:05:13 $
 
 =cut

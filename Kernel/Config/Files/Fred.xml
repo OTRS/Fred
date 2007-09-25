@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.8 2007-09-24 14:32:18 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.9 2007-09-25 10:05:13 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -96,12 +96,23 @@
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
-            <Option SelectedID="3">
+            <Option SelectedID="4">
                 <Item Key="1">Line</Item>
                 <Item Key="2">Calls</Item>
                 <Item Key="3">Time executing</Item>
                 <Item Key="4">Time expended</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::SmallProf###Packages" Required="0" Valid="0">
+        <Description Lang="en">Check only the following packages in SmallProf.</Description>
+        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprüft werden.</Description>
+        <Group>Fred</Group>
+        <SubGroup>SmallProf</SubGroup>
+        <Setting>
+            <Array>
+                <Item>Kernel::Output::HTML::Layout</Item>
+            </Array>
         </Setting>
     </ConfigItem>
 <!--    <ConfigItem Name="Fred::CVSFilter" Required="0" Valid="1">
