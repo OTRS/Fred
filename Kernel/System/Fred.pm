@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.3 2007-09-25 10:05:13 tr Exp $
+# $Id: Fred.pm,v 1.4 2007-09-25 21:32:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -45,10 +45,6 @@ create a object
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
     );
-#    my $DBObject = Kernel::System::DB->new(
-#        ConfigObject => $ConfigObject,
-#        LogObject => $LogObject,
-#    );
     my $MainObject = Kernel::System::Main->new(
         LogObject => $LogObject,
         ConfigObject => $ConfigObject,
@@ -91,14 +87,14 @@ sub DataGet {
     if ( !$Param{FredModulesRef} || ref( $Param{FredModulesRef} ) ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need FredModulesRef!",
+            Message  => 'Need FredModulesRef!',
         );
         return;
     }
     if ( !$Param{HTMLDataRef} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need HTMLDataRef!",
+            Message  => 'Need HTMLDataRef!',
         );
         return;
     }
@@ -113,7 +109,7 @@ sub DataGet {
             $BackendObject->DataGet(
                 ModuleRef      => $Param{FredModulesRef}->{$ModuleName},
                 HTMLDataRef    => $Param{HTMLDataRef},
-                FredModulesRef => $Param{FredModulesRef}
+                FredModulesRef => $Param{FredModulesRef},
             );
         }
     }
@@ -139,7 +135,7 @@ sub ActivateModuleTodos {
     if ( !$Param{ModuleName} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need ModuleName!",
+            Message  => 'Need ModuleName!',
         );
         return;
     }
@@ -152,9 +148,11 @@ sub ActivateModuleTodos {
 
         # FIXME Errorhandling
         $BackendObject->ActivateModuleTodos();
+
+        return 1;
     }
 
-    return 1;
+    return;
 }
 
 =item DeactivateModuleTodos()
@@ -175,7 +173,7 @@ sub DeactivateModuleTodos {
     if ( !$Param{ModuleName} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need ModuleName!",
+            Message  => 'Need ModuleName!',
         );
         return;
     }
@@ -188,9 +186,11 @@ sub DeactivateModuleTodos {
 
         # FIXME Errorhandling
         $BackendObject->DeactivateModuleTodos();
+
+        return 1;
     }
 
-    return 1;
+    return;
 }
 
 =item _LoadBackend()
@@ -206,34 +206,28 @@ load a xml item module
 sub _LoadBackend {
     my $Self  = shift;
     my %Param = @_;
-    my $BackendObject;
 
-    # module ref
+    # check needed stuff
     if ( !$Param{ModuleName} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need ModuleName!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ModuleName!',
+        );
         return;
     }
 
-    # use the caching mechanism later if required
-
-    # check if object is cached
-    #if ( $Self->{ 'Cache::_LoadXMLTypeBackend::' . $Param{Type} } ) {
-    #    return $Self->{ 'Cache::_LoadXMLTypeBackend::' . $Param{Type} };
-    #}
-
-    # create new instance
-    my $GenericModule = "Kernel::System::Fred::$Param{ModuleName}";
+    # load backend
+    my $GenericModule = 'Kernel::System::Fred::' . $Param{ModuleName};
     if ( $Self->{MainObject}->Require($GenericModule) ) {
-        $BackendObject = $GenericModule->new( %{$Self}, %Param, );
+        my $BackendObject = $GenericModule->new( %{$Self}, %Param, );
+
+        if ($BackendObject) {
+            # return object
+            return $BackendObject;
+        }
     }
 
-    # cache object
-    #if ($BackendObject) {
-    #    $Self->{ '_LoadXMLTypeBackend::' . $Param{Type} } = $BackendObject;
-    #}
-
-    # return object
-    return $BackendObject;
+    return;
 }
 
 =item InsertLayoutObject()
@@ -251,12 +245,13 @@ FRED in OTRS2.2 Layout.pm
 sub InsertLayoutObject {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/Kernel/Output/HTML/Layout.pm";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Layout.pm';
 
     if ( -l "$File" ) {
         die 'Can\'t manipulate $File because it is a symlink!';
     }
 
+    # read file
     my $InSub;
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
@@ -273,14 +268,17 @@ sub InsertLayoutObject {
     }
     close $Filehandle;
 
+    # write file
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
     close $FilehandleII;
+
+    # log the manipulation
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
+        Message  => "FRED manipulated the $File!",
     );
     return 1;
 }
@@ -301,6 +299,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-25 10:05:13 $
+$Revision: 1.4 $ $Date: 2007-09-25 21:32:43 $
 
 =cut
