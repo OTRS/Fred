@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.2 2007-09-25 10:05:13 tr Exp $
+# $Id: Console.pm,v 1.3 2007-09-25 12:30:39 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -116,30 +116,6 @@ Do all jobs which are necessary to activate this special module.
 
 sub ActivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
-
-    if ( -l "$File" ) {
-        die 'Can\'t manipulate $File because it is a symlink!';
-    }
-
-    open my $Filehandle, '<', $File  || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
-    close $Filehandle;
-
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    print $FilehandleII "#!/usr/bin/perl -w -d:SmallProf\n";
-    print $FilehandleII "# FRED - manipulated\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
-    close $FilehandleII;
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
-    );
     return 1;
 }
 
@@ -155,38 +131,6 @@ Do all jobs which are necessary to deactivate this special module.
 
 sub DeactivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
-
-    if ( -l "$File" ) {
-        die 'Can\'t manipulate $File because it is a symlink!';
-    }
-
-    # read the index.pl file
-    open my $Filehandle, '<', $File  || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
-    close $Filehandle;
-
-    # remove the manipulated lines
-    if ($Lines[0] =~ /#!\/usr\/bin\/perl -w -d:SmallProf/) {
-        shift @Lines;
-    }
-    if ($Lines[0] =~ /# FRED - manipulated/) {
-        shift @Lines;
-    }
-
-    # save the index.pl file
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
-    close $FilehandleII;
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
-    );
     return 1;
 }
 
@@ -206,6 +150,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-25 10:05:13 $
+$Revision: 1.3 $ $Date: 2007-09-25 12:30:39 $
 
 =cut

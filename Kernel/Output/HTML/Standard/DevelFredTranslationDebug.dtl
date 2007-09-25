@@ -1,0 +1,24 @@
+# --
+# DevelFredTranslationDebug.dtl - a frontend to show the translation debugging
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# --
+# $Id: DevelFredTranslationDebug.dtl,v 1.1 2007-09-25 12:30:39 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
+  <tr>
+    <td bgcolor="ba0f0f">
+      <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+          <td bgcolor="ba0f0f">
+            <b><font color="#ffffff">Fred-TranslationDebug</font></b>
+          </td>
+        </tr>
+$Data{"HTMLLines"}
+      </table>
+    </td>
+  </tr>
+</table>

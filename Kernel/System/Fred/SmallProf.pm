@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.3 2007-09-25 10:05:13 tr Exp $
+# $Id: SmallProf.pm,v 1.4 2007-09-25 12:30:39 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -175,7 +175,7 @@ sub ActivateModuleTodos {
         die 'Can\'t manipulate $File because it is a symlink!';
     }
 
-    # to use SmallProf I have to manepulate the index.pl file
+    # to use SmallProf I have to manipulate the index.pl file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
@@ -286,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-25 10:05:13 $
+$Revision: 1.4 $ $Date: 2007-09-25 12:30:39 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/Fred/STDERRLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.2 2007-09-24 14:32:19 tr Exp $
+# $Id: STDERRLog.pm,v 1.3 2007-09-25 12:30:39 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -75,20 +75,24 @@ sub DataGet {
     my %Param = @_;
 
     # check needed stuff
-    if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need ModuleRef!",
-        );
-        return;
+    for my $Needed_Ref (qw( ModuleRef)) {
+        if ( !$Param{$Needed_Ref} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed_Ref!",
+            );
+            return;
+        }
     }
 
-    # open the fred.log file to get the STDERR messages
-    my $File = $Self->{ConfigObject}->Get('Home') . "/var/fred.log";
+    # open the STDERR.log file to get the STDERR messages
+    my $File = $Self->{ConfigObject}->Get('Home') . "/var/fred/STDERR.log";
     if ( open my $Filehandle, '<', $File ) {
         my @Row        = <$Filehandle>;
         my @ReverseRow = reverse(@Row);
         my @LogMessages;
+
+        # get the whole information
         for my $Line (@ReverseRow) {
             if ( $Line =~ /FRED/ ) {
                 last;
@@ -118,6 +122,11 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self  = shift;
 
+    # check if the needed path is available
+    my $Path = $Self->{ConfigObject}->Get('Home') . '/var/fred';
+    if (!-e $Path) {
+        system "mkdir $Path";
+    }
     return 1;
 }
 
@@ -152,6 +161,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-24 14:32:19 $
+$Revision: 1.3 $ $Date: 2007-09-25 12:30:39 $
 
 =cut

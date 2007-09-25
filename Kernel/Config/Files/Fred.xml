@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.9 2007-09-25 10:05:13 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.10 2007-09-25 12:30:39 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -40,6 +40,18 @@
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
         <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das Cpan-Modul HTML::lint ist hierfür notwendig.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <!--<Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>-->
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
+        <Description Lang="en">Turn on if you want the translation debugger.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Übersetzungsdebugger genutzt werden soll.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>

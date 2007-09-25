@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.5 2007-09-24 14:32:18 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.6 2007-09-25 12:30:39 tr Exp $</CVS>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
     <Vendor>OTRS GmbH</Vendor>
@@ -16,12 +16,14 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/FredSmallProf.pm"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/FredTranslationLog.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSetting.dtl"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.dtl"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSmallProf.dtl"></File>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.dtl"></File>
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"></File>
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"></File>
         <File Permission="644" Location="Kernel/System/Fred.pm"></File>
@@ -29,6 +31,7 @@
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"></File>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"></File>
         <File Permission="644" Location="Kernel/System/Fred/SmallProf.pm"></File>
+        <File Permission="644" Location="Kernel/System/Fred/TranslationDebug.pm"></File>
         <File Permission="644" Location="Kernel/Modules/DevelFred.pm"></File>
     </Filelist>
 </otrs_package>
