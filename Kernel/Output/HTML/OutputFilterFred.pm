@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.7 2007-09-24 14:32:18 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.8 2007-09-25 21:52:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -79,7 +79,7 @@ sub Run {
         return 1;
     }
 
-    # get all activated modules
+    # get data of the activated modules
     my $ModuleForRef   = $Self->{ConfigObject}->Get('Fred::Module');
     my $ModulesDataRef = {};
     for my $Module ( keys %{$ModuleForRef} ) {
@@ -93,6 +93,8 @@ sub Run {
         FredModulesRef => $ModulesDataRef,
         HTMLDataRef    => $Param{Data},
     );
+
+    # create freds output
     $Self->{LayoutObject}->CreateFredOutput( FredModulesRef => $ModulesDataRef );
 
     # build the content string
@@ -101,10 +103,8 @@ sub Run {
         $Output .= $ModulesDataRef->{Console}->{Output};
         delete $ModulesDataRef->{Console};
     }
-    for my $Module ( %{$ModulesDataRef} ) {
-        if ( $ModulesDataRef->{$Module}->{Output} ) {
-            $Output .= $ModulesDataRef->{$Module}->{Output};
-        }
+    for my $Module ( keys %{$ModulesDataRef} ) {
+        $Output .= $ModulesDataRef->{$Module}->{Output} || '';
     }
 
     # include the fred output in the original output
@@ -131,6 +131,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2007-09-24 14:32:18 $
+$Revision: 1.8 $ $Date: 2007-09-25 21:52:09 $
 
 =cut

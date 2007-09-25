@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFred.pm - provides generic HTML output for fred
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: LayoutFred.pm,v 1.1 2007-09-21 07:48:29 tr Exp $
+# $Id: LayoutFred.pm,v 1.2 2007-09-25 21:52:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =item CreateFredOutput()
@@ -36,7 +36,7 @@ sub CreateFredOutput {
     if ( !$Param{FredModulesRef} || ref( $Param{FredModulesRef} ) ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need FredModulesRef!",
+            Message  => 'Need FredModulesRef!',
         );
         return;
     }
@@ -68,34 +68,31 @@ load a special fred layout backends
 sub _LoadLayoutBackend {
     my $Self  = shift;
     my %Param = @_;
-    my $BackendObject;
 
-    # module ref
+    # check needed stuff
     if ( !$Param{ModuleName} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need ModuleName!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ModuleName!',
+        );
         return;
     }
 
-    # use the caching mechanism later if required
-
-    # check if object is cached
-    #if ( $Self->{ 'Cache::_LoadXMLTypeBackend::' . $Param{Type} } ) {
-    #    return $Self->{ 'Cache::_LoadXMLTypeBackend::' . $Param{Type} };
-    #}
-
-    # create new instance
-    my $GenericModule = "Kernel::Output::HTML::Fred$Param{ModuleName}";
+    # load backend
+    my $GenericModule = 'Kernel::Output::HTML::Fred' . $Param{ModuleName};
     if ( $Self->{MainObject}->Require($GenericModule) ) {
-        $Self->{LayoutObject} = $Self;
-        $BackendObject = $GenericModule->new( %{$Self}, %Param, );
+        my $BackendObject = $GenericModule->new(
+            %{$Self},
+            %Param,
+            LayoutObject => $Self,
+        );
+
+        if ($BackendObject) {
+            return $BackendObject;
+        }
     }
 
-    # cache object
-    #if ($BackendObject) {
-    #    $Self->{ '_LoadXMLTypeBackend::' . $Param{Type} } = $BackendObject;
-    #}
-
-    return $BackendObject;
+    return;
 }
 
 1;
@@ -112,6 +109,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-21 07:48:29 $
+$Revision: 1.2 $ $Date: 2007-09-25 21:52:09 $
 
 =cut
