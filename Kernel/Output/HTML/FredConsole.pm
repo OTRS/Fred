@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredConsole.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredConsole.pm,v 1.1 2007-09-24 14:32:54 tr Exp $
+# $Id: FredConsole.pm,v 1.2 2007-09-26 10:02:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -75,29 +75,25 @@ sub CreateFredOutput {
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need ModuleRef!",
+            Message  => 'Need ModuleRef!',
         );
         return;
     }
 
     # create the console table
     my $Console = 'Activated modules: ';
-    for my $Module (@{ ${ $Param{ModuleRef} }{Data} }) {
-        $Console .= $Module . " - ";
-    }
-    $Console =~ s/ - $//;
+    $Console .= join ' - ', @{ $Param{ModuleRef}->{Data} };
 
-    if ( ${ $Param{ModuleRef} }{Status} ) {
-        if ( ${ $Param{ModuleRef} }{Setting} ) {
+    if ( $Param{ModuleRef}->{Status} ) {
+        if ( $Param{ModuleRef}->{Setting} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'Setting',
-                Data => {},
             );
         }
-        ${ $Param{ModuleRef} }{Output} = $Self->{LayoutObject}->Output(
+        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
             TemplateFile => 'DevelFredConsole',
             Data         => {
-                Text    => $Console,
+                Text => $Console,
             },
         );
     }
@@ -121,6 +117,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-24 14:32:54 $
+$Revision: 1.2 $ $Date: 2007-09-26 10:02:58 $
 
 =cut

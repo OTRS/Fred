@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.1 2007-09-26 08:00:41 tr Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.2 2007-09-26 10:02:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,4 +26,8 @@ $Data{"HTMLLines"}
       </table>
     </td>
   </tr>
+</table>
+# just a small space
+<table cellspacing="1" cellpadding="0" width="100%">
+  <tr><td></td></tr>
 </table>

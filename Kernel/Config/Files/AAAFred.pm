@@ -2,7 +2,7 @@
 # AAAFred.pm - the config to bind STDERR to an log file usable for fred
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: AAAFred.pm,v 1.6 2007-09-26 06:08:30 tr Exp $
+# $Id: AAAFred.pm,v 1.7 2007-09-26 10:02:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -12,9 +12,9 @@
 if ($ENV{HTTP_USER_AGENT}) {
 
     # check if the needed path is available
-    my $Path = $Self->{'Home'} . '/var/fred';
+    my $Path = $Self->{Home} . '/var/fred';
     if (!-e $Path) {
-        system "mkdir $Path";
+        mkdir $Path;
     }
 
     my $File = $Self->{Home} . '/var/fred/STDERR.log';
