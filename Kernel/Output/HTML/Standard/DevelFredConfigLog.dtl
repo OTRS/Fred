@@ -1,0 +1,40 @@
+# --
+# DevelFredConfigLog.dtl - a frontend to show the config debugging
+# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# --
+# $Id: DevelFredConfigLog.dtl,v 1.1 2007-09-26 10:37:41 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# --
+<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
+  <tr>
+    <td bgcolor="ba0f0f">
+      <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+          <td bgcolor="ba0f0f">
+            <b><font color="#ffffff">Fred-Config-Log</font></b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+
+            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2">
+              <tr>
+                <td align="right">Number</td>
+                <td>Config</td>
+                <td>Status</td>
+              </tr>
+$Data{"HTMLLines"}
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+# just a small space
+<table cellspacing="1" cellpadding="0" width="100%">
+  <tr><td></td></tr>
+</table>
