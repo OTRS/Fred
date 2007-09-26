@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.10 2007-09-26 10:02:58 mh Exp $
+# $Id: OutputFilterFred.pm,v 1.11 2007-09-26 12:07:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -68,6 +68,14 @@ sub Run {
 
     # is a check because OTRS2.2 don't deliver here a LayoutObject
     if ( !$Self->{LayoutObject} ) {
+        return 1;
+    }
+
+    # do nothing if output is a attachment
+    if (${ $Param{Data} } =~ /^Content-Disposition: attachment;/mi
+        || ${ $Param{Data} } =~ /^Content-Disposition: inline;/mi
+    ) {
+        print STDERR "ATTACHMENT\n";
         return 1;
     }
 
@@ -132,6 +140,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2007-09-26 10:02:58 $
+$Revision: 1.11 $ $Date: 2007-09-26 12:07:57 $
 
 =cut
