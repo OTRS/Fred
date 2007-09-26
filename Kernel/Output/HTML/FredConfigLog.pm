@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredConfigLog.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredConfigLog.pm,v 1.1 2007-09-26 10:37:41 tr Exp $
+# $Id: FredConfigLog.pm,v 1.2 2007-09-26 10:56:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -75,12 +75,12 @@ sub CreateFredOutput {
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need ModuleRef!",
+            Message  => 'Need ModuleRef!',
         );
         return;
     }
 
-    for my $Line ( @{ ${ $Param{ModuleRef} }{Data} } ) {
+    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
         for my $TD (@{$Line}) {
             $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
         }
@@ -95,9 +95,11 @@ sub CreateFredOutput {
     }
 
     if ($HTMLLines) {
-        ${ $Param{ModuleRef} }{Output} = $Self->{LayoutObject}->Output(
+        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
             TemplateFile => 'DevelFredConfigLog',
-            Data         => { HTMLLines => $HTMLLines, },
+            Data         => {
+                HTMLLines => $HTMLLines,
+            },
         );
     }
 
@@ -120,6 +122,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-26 10:37:41 $
+$Revision: 1.2 $ $Date: 2007-09-26 10:56:37 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.1 2007-09-26 10:37:41 tr Exp $
+# $Id: ConfigLog.pm,v 1.2 2007-09-26 10:56:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -79,7 +79,7 @@ sub DataGet {
     my @LogMessages;
 
     # open the TranslationDebug.log file to get the untranslated words
-    my $File = $Self->{ConfigObject}->Get('Home') . "/var/fred/Config.log";
+    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/Config.log';
     if ( open my $Filehandle, '<', $File ) {
         my @Row        = <$Filehandle>;
         my @ReverseRow = reverse(@Row);
@@ -110,7 +110,7 @@ sub DataGet {
         push @LogMessages, \@SplitedLine;
     }
 
-    ${ $Param{ModuleRef} }{Data} = \@LogMessages ;
+    $Param{ModuleRef}->{Data} = \@LogMessages ;
     return 1;
 }
 
@@ -128,11 +128,11 @@ sub ActivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
 
-    my $File = $Self->{ConfigObject}->Get('Home') . "/Kernel/Config/Defaults.pm";
+    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Config/Defaults.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
-        die 'Can\'t manipulate $File because it is a symlink!';
+        die "Can't manipulate $File because it is a symlink!";
     }
 
     # to use TranslationDebug I have to manipulate the Language.pm file
@@ -171,7 +171,7 @@ sub ActivateModuleTodos {
     # check if the needed path is available
     my $Path = $Self->{ConfigObject}->Get('Home') . '/var/fred';
     if ( !-e $Path ) {
-        system "mkdir $Path";
+        mkdir $Path;
     }
 
     return 1;
@@ -190,11 +190,11 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/Kernel/Config/Defaults.pm";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Config/Defaults.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
-        die 'Can\'t manipulate $File because it is a symlink!';
+        die "Can't manipulate $File because it is a symlink!";
     }
 
     # to use TranslationDebugger I have to manipulate the Language.pm file
@@ -270,6 +270,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-26 10:37:41 $
+$Revision: 1.2 $ $Date: 2007-09-26 10:56:37 $
 
 =cut
