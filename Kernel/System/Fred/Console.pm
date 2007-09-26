@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.3 2007-09-25 12:30:39 tr Exp $
+# $Id: Console.pm,v 1.4 2007-09-26 08:11:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -91,16 +91,16 @@ sub DataGet {
             push @Modules, $Module;
         }
     }
-
-    ${ $Param{ModuleRef} }{Data} = \@Modules;
+    $Param{ModuleRef}->{Data} = \@Modules;
 
     if (${$Param{HTMLDataRef}} !~ /Fred-Setting/ && ${$Param{HTMLDataRef}} =~ /\<body.*?\>/ ) {
-        ${ $Param{ModuleRef} }{Status} = 1;
+        $Param{ModuleRef}->{Status} = 1;
     }
 
     if ( ${$Param{HTMLDataRef}} !~ /name="Action" value="Login"/ ) {
-        ${ $Param{ModuleRef} }{Setting} = 1;
+        $Param{ModuleRef}->{Setting} = 1;
     }
+
     return 1;
 }
 
@@ -115,7 +115,6 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
     return 1;
 }
 
@@ -130,7 +129,6 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
     return 1;
 }
 
@@ -150,6 +148,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-25 12:30:39 $
+$Revision: 1.4 $ $Date: 2007-09-26 08:11:52 $
 
 =cut

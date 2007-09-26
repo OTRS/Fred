@@ -2,7 +2,7 @@
 # Kernel/System/Fred/HTMLCheck.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: HTMLCheck.pm,v 1.2 2007-09-24 14:32:19 tr Exp $
+# $Id: HTMLCheck.pm,v 1.3 2007-09-26 08:11:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -106,7 +106,7 @@ sub DataGet {
     }
 
     if (@HTMLLintMessages) {
-        ${ $Param{ModuleRef} }{Data} = \@HTMLLintMessages;
+        $Param{ModuleRef}->{Data} = \@HTMLLintMessages;
     }
 
     return 1;
@@ -123,8 +123,6 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
-
     return 1;
 }
 
@@ -139,7 +137,6 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
     return 1;
 }
 
@@ -159,6 +156,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-24 14:32:19 $
+$Revision: 1.3 $ $Date: 2007-09-26 08:11:52 $
 
 =cut

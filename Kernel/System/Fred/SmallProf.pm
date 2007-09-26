@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.4 2007-09-25 12:30:39 tr Exp $
+# $Id: SmallProf.pm,v 1.5 2007-09-26 08:11:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -73,7 +73,7 @@ And add the data to the module ref.
 sub DataGet {
     my $Self       = shift;
     my %Param      = @_;
-    my $Path       = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/";
+    my $Path       = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/';
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::SmallProf');
     my @Lines;
 
@@ -107,7 +107,7 @@ sub DataGet {
     if ( !$Packages[0] ) {
         $Packages[0] = 'all';
     }
-    ${ $Param{ModuleRef} }{Packages} = \@Packages;
+    $Param{ModuleRef}->{Packages} = \@Packages;
 
     # catch the needed profiling data
     system "cp $Path/smallprof.out $Path/FredSmallProf.out";
@@ -120,10 +120,10 @@ sub DataGet {
                 push @Lines, [ $1, $2, $3, $4, $5, $6 ];
             }
 
-            # alternative solution 2
-            # my @Elements = split (':',$Line);
-            # $Elements[0] =~ s/^.*?cgi-bin\/\.\.\/\.\.\///;
-            # push @Lines, \@Elements;
+#            # alternative solution 2
+#            my @Elements = split (':',$Line);
+#            $Elements[0] =~ s/^.*?cgi-bin\/\.\.\/\.\.\///;
+#            push @Lines, \@Elements;
         }
 
         # define the order of the profiling data
@@ -135,19 +135,19 @@ sub DataGet {
         # show only so many lines as wanted
         if (@Lines) {
             splice @Lines, $Config_Ref->{ShownLines};
-            ${ $Param{ModuleRef} }{Data} = \@Lines;
+            $Param{ModuleRef}->{Data} = \@Lines;
         }
 
-        # alternative solution 1
-        # while ( my $Line = <$Filehandle> ) {
-        #     if ($Line =~ /^\s*?[1-9]/) {
-        #         if ($Line =~ /^\s*?(\d+?)\s+?(\d.+?)\s+?(\d.+?)\s+?(\d+?):(.*?)$/) {
-        #             push @Lines, [$1, $2, $3, $4, $5];
-        #         }
-        #     }
-        # }
-        # @Lines = sort {$b->[1] <=> $a->[1]} @Lines;
-        # ${ $Param{ModuleRef} }{Data} = \@Lines;
+#        # alternative solution 1
+#        while ( my $Line = <$Filehandle> ) {
+#            if ($Line =~ /^\s*?[1-9]/) {
+#                if ($Line =~ /^\s*?(\d+?)\s+?(\d.+?)\s+?(\d.+?)\s+?(\d+?):(.*?)$/) {
+#                    push @Lines, [$1, $2, $3, $4, $5];
+#                }
+#            }
+#        }
+#        @Lines = sort {$b->[1] <=> $a->[1]} @Lines;
+#        $Param{ModuleRef}->{Data} = \@Lines;
 
         close $Filehandle;
     }
@@ -168,7 +168,7 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -193,11 +193,11 @@ sub ActivateModuleTodos {
     # create a info for the user
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
+        Message  => "FRED manipulated the $File!",
     );
 
     # create the configuration file for the SmallProf module
-    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
+    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/.smallprof';
     open my $FilehandleIII, '>', $SmallProfFile || die "Can't write $SmallProfFile !\n";
     print $FilehandleIII "# FRED - manipulated don't edit this file!\n";
     print $FilehandleIII "# use ../../ as lib location\n";
@@ -230,7 +230,7 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -260,12 +260,12 @@ sub DeactivateModuleTodos {
     close $FilehandleII;
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
+        Message  => "FRED manipulated the $File!",
     );
 
     # delete the .smallprof because it is no longer needed
-    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/.smallprof";
-    system("rm $SmallProfFile");
+    my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/.smallprof';
+    unlink $SmallProfFile;
 
     return 1;
 }
@@ -286,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-09-25 12:30:39 $
+$Revision: 1.5 $ $Date: 2007-09-26 08:11:52 $
 
 =cut

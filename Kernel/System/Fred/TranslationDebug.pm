@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.1 2007-09-25 12:30:39 tr Exp $
+# $Id: TranslationDebug.pm,v 1.2 2007-09-26 08:11:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -75,10 +75,10 @@ sub DataGet {
     my %Param = @_;
 
     # open the TranslationDebug.log file to get the untranslated words
-    my $File = $Self->{ConfigObject}->Get('Home') . "/var/fred/TranslationDebug.log";
+    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
     if ( open my $Filehandle, '<', $File ) {
         my @Row        = <$Filehandle>;
-        my @ReverseRow = reverse(@Row);
+        my @ReverseRow = reverse @Row;
         my @LogMessages;
 
         # get the whole information
@@ -91,7 +91,7 @@ sub DataGet {
         close $Filehandle;
 
         $Self->InsertWord(What => "FRED\n");
-        ${ $Param{ModuleRef} }{Data} = \@LogMessages;
+        $Param{ModuleRef}->{Data} = \@LogMessages;
     }
 
     return 1;
@@ -111,7 +111,7 @@ sub ActivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
 
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/Kernel/Language.pm";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -141,7 +141,7 @@ sub ActivateModuleTodos {
     # check if the needed path is available
     my $Path = $Self->{ConfigObject}->Get('Home') . '/var/fred';
     if (!-e $Path) {
-        system "mkdir $Path";
+        mkdir $Path;
     }
 
     return 1;
@@ -160,7 +160,7 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/Kernel/Language.pm";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -211,7 +211,7 @@ sub InsertWord {
     if ( !$Param{What} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Need What!",
+            Message  => 'Need What!',
         );
         return;
     }
@@ -241,6 +241,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-25 12:30:39 $
+$Revision: 1.2 $ $Date: 2007-09-26 08:11:52 $
 
 =cut

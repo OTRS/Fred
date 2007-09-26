@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.1 2007-09-26 06:08:30 tr Exp $
+# $Id: DProf.pm,v 1.2 2007-09-26 08:11:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -71,8 +71,8 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self       = shift;
-    my %Param      = @_;
+    my $Self  = shift;
+    my %Param = @_;
     my @Lines;
 
     # check needed stuff
@@ -91,7 +91,7 @@ sub DataGet {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'This page deliver the HTML by many separate output calls.'
-                . ' Please use the usual way to interpret SmallProf',
+                . ' Please use the usual way to interpret DProf',
         );
         return 1;
     }
@@ -100,7 +100,7 @@ sub DataGet {
     }
 
     # catch the needed profiling data
-    my $Path       = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/";
+    my $Path = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/';
     system "cp $Path/tmon.out $Path/DProf.out";
 
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::DProf');
@@ -136,8 +136,8 @@ sub DataGet {
                 }
             }
         }
-        ${ $Param{ModuleRef} }{Data} = \@ProfilingResults;
-        ${ $Param{ModuleRef} }{TotalTime} = $TotalTime;
+        $Param{ModuleRef}->{Data} = \@ProfilingResults;
+        $Param{ModuleRef}->{TotalTime} = $TotalTime;
     }
     else {
         if (open my $Filehandle, "dprofpp -FT $Path/DProf.out |") {
@@ -148,7 +148,7 @@ sub DataGet {
             }
             close $Filehandle;
         }
-        ${ $Param{ModuleRef} }{FunctionTree} = \@ProfilingResults;
+        $Param{ModuleRef}->{FunctionTree} = \@ProfilingResults;
     }
 
     return 1;
@@ -167,7 +167,7 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -192,7 +192,7 @@ sub ActivateModuleTodos {
     # create a info for the user
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
+        Message  => "FRED manipulated the $File!",
     );
 
     return 1;
@@ -211,7 +211,7 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self  = shift;
     my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . "/bin/cgi-bin/index.pl";
+    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     if ( -l "$File" ) {
@@ -241,7 +241,7 @@ sub DeactivateModuleTodos {
     close $FilehandleII;
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => 'FRED manipulated the $File!',
+        Message  => "FRED manipulated the $File!",
     );
 
     return 1;
@@ -263,6 +263,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-09-26 06:08:30 $
+$Revision: 1.2 $ $Date: 2007-09-26 08:11:52 $
 
 =cut
