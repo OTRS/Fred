@@ -2,7 +2,7 @@
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSetting.dtl,v 1.5 2007-09-26 06:08:30 tr Exp $
+# $Id: DevelFredSetting.dtl,v 1.6 2007-09-26 12:07:22 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -38,7 +38,7 @@
           </tr>
           <tr>
             <td align="right">
-              <input type="submit" value="$Text{"Save"}" class="button" onClick="window.close()">
+              <input type="submit" value="$Text{"Save"}" class="button">
             </td>
           </tr>
         </table>

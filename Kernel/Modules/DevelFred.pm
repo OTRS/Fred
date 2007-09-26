@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.4 2007-09-26 06:08:30 tr Exp $
+# $Id: DevelFred.pm,v 1.5 2007-09-26 12:07:22 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -227,7 +227,7 @@ sub Run {
         if ($UpdateFlag) {
             $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
         }
-        $Self->{LayoutObject}->FatalError(Message => "Now the browser should be closed");
+        return $Self->{LayoutObject}->Redirect(OP => "Action=DevelFred&Subaction=Setting");
     }
     return 1;
 }
