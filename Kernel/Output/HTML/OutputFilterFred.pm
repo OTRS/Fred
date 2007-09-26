@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.8 2007-09-25 21:52:09 mh Exp $
+# $Id: OutputFilterFred.pm,v 1.9 2007-09-26 08:00:41 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -76,6 +76,7 @@ sub Run {
         && ${ $Param{Data} } =~ /^location:/mi
         && length( ${ $Param{Data} } ) < 800 )
     {
+        print STDERR "REDIRECT\n";
         return 1;
     }
 
@@ -131,6 +132,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2007-09-25 21:52:09 $
+$Revision: 1.9 $ $Date: 2007-09-26 08:00:41 $
 
 =cut
