@@ -2,7 +2,7 @@
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSetting.dtl,v 1.4 2007-09-25 10:05:13 tr Exp $
+# $Id: DevelFredSetting.dtl,v 1.5 2007-09-26 06:08:30 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -26,11 +26,16 @@
               <input type="checkbox" name="FredModule" value="$QData{"FredModule"}" $Data{"Checked"}>
               $QData{"FredModule"}
 <!-- dtl:block:Config -->
-              <a href="$Env{"Baselink"}Action=AdminSysConfig&Subaction=Edit&SysConfigSubGroup=SmallProf&SysConfigGroup=Fred"  onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.resizeTo(900,500)">($Text{"Config"})</a>
+              <a href="$Env{"Baselink"}Action=AdminSysConfig&Subaction=Edit&SysConfigSubGroup=$Data{"ModuleName"}&SysConfigGroup=Fred"  onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.resizeTo(900,500)">($Text{"Config"})</a>
 <!-- dtl:block:Config -->
             </td>
           </tr>
 <!-- dtl:block:FredModule -->
+          <tr>
+            <td>
+              $Text{"Attention: You can't use SmallProf and DProf at the same time!"}
+            </td>
+          </tr>
           <tr>
             <td align="right">
               <input type="submit" value="$Text{"Save"}" class="button" onClick="window.close()">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.10 2007-09-25 12:30:39 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.11 2007-09-26 06:08:30 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -28,6 +28,18 @@
     <ConfigItem Name="Fred::Module###SmallProf" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the SmallProf profiling function.</Description>
         <Description Lang="de">Hier aktivieren, wenn man die SmallProf-Profiling Funktion nutzen möchte.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <!--<Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>-->
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::Module###DProf" Required="0" Valid="1">
+        <Description Lang="en">Turn on if you want to use the DProf profiling function.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die DProf-Profiling Funktion nutzen möchte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -125,6 +137,40 @@
             <Array>
                 <Item>Kernel::Output::HTML::Layout</Item>
             </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::DProf###ShownLines" Required="0" Valid="1">
+        <Description Lang="en">Here you can insert the number of shown profiling functions (max 40).</Description>
+        <Description Lang="de">Hier kann die Anzahl der angezeigten ausgewerteten Funktionen angegeben werden (maximal 40).</Description>
+        <Group>Fred</Group>
+        <SubGroup>DProf</SubGroup>
+        <Setting>
+            <String Regex="">15</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::DProf###OrderBy" Required="0" Valid="1">
+        <Description Lang="en">Which order should the profiling data have?</Description>
+        <Description Lang="de">Nach welcher Reihenfolge sollen die Profilingdaten geordnet werden?</Description>
+        <Group>Fred</Group>
+        <SubGroup>DProf</SubGroup>
+        <Setting>
+            <Option SelectedID="Time">
+                <Item Key="Name">Name</Item>
+                <Item Key="Calls">Calls</Item>
+                <Item Key="Time">ExclTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::DProf###FunctionTree" Required="0" Valid="1">
+        <Description Lang="en">Show the function tree.</Description>
+        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und Äbhängigkeit in welcher die Funktionen aufgerufen werden.</Description>
+        <Group>Fred</Group>
+        <SubGroup>DProf</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 <!--    <ConfigItem Name="Fred::CVSFilter" Required="0" Valid="1">
