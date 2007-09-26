@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.2 2007-09-26 10:02:58 mh Exp $
+# $Id: FredSQLLog.pm,v 1.3 2007-09-26 10:28:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -81,7 +81,9 @@ sub CreateFredOutput {
     }
 
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
-        map $Self->{LayoutObject}->Ascii2Html(Text => $_), @{$Line};
+        for my $TD (@{$Line}) {
+            $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
+        }
         $HTMLLines .= "        <tr>\n"
                     . "          <td>$Line->[0]</td>\n"
                     . "          <td>$Line->[1]</td>\n"
@@ -117,6 +119,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-26 10:02:58 $
+$Revision: 1.3 $ $Date: 2007-09-26 10:28:09 $
 
 =cut
