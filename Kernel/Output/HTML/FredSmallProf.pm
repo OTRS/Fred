@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSmallProf.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSmallProf.pm,v 1.2 2007-09-25 10:05:13 tr Exp $
+# $Id: FredSmallProf.pm,v 1.3 2007-09-26 04:38:08 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
+$VERSION = '$Revision: 1.3 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -58,7 +58,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the STDERR log
+create the output of the SmallProf profiling tool
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -132,6 +132,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-25 10:05:13 $
+$Revision: 1.3 $ $Date: 2007-09-26 04:38:08 $
 
 =cut
