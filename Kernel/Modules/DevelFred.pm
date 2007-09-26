@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.5 2007-09-26 12:07:22 tr Exp $
+# $Id: DevelFred.pm,v 1.6 2007-09-26 13:13:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -148,7 +148,7 @@ sub Run {
     elsif ($Self->{Subaction} eq 'Setting') {
         my $ModuleForRef = $Self->{ConfigObject}->Get('Fred::Module');
         delete $ModuleForRef->{Console};
-        for my $Module (keys %{$ModuleForRef}) {
+        for my $Module (sort keys %{$ModuleForRef}) {
             my $Checked = '';
             if ($ModuleForRef->{$Module}->{Active}) {
                 $Checked = 'checked="checked"';
@@ -201,7 +201,7 @@ sub Run {
                     Key => "Fred::Module###$Module",
                     Value => {
                         'Active' => $SelectedModules{$Module} || 0,
-                        # 'Module' => $ModuleForRef->{$Module}->{Module}
+#                        'Module' => $ModuleForRef->{$Module}->{Module}
                     },
                 );
                 $UpdateFlag = 1;
