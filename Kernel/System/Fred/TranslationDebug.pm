@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.3 2007-09-26 09:33:07 mh Exp $
+# $Id: TranslationDebug.pm,v 1.4 2007-09-26 11:29:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -138,12 +138,6 @@ sub ActivateModuleTodos {
     }
     close $FilehandleII;
 
-    # check if the needed path is available
-    my $Path = $Self->{ConfigObject}->Get('Home') . '/var/fred';
-    if (!-e $Path) {
-        mkdir $Path;
-    }
-
     return 1;
 }
 
@@ -241,6 +235,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-26 09:33:07 $
+$Revision: 1.4 $ $Date: 2007-09-26 11:29:51 $
 
 =cut

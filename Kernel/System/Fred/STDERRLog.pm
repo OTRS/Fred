@@ -2,7 +2,7 @@
 # Kernel/System/Fred/STDERRLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.5 2007-09-26 08:11:52 mh Exp $
+# $Id: STDERRLog.pm,v 1.6 2007-09-26 11:29:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -123,13 +123,6 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
-
-    # check if the needed path is available
-    my $Path = $Self->{ConfigObject}->Get('Home') . '/var/fred';
-    if (!-e $Path) {
-        mkdir $Path;
-    }
     return 1;
 }
 
@@ -163,6 +156,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-09-26 08:11:52 $
+$Revision: 1.6 $ $Date: 2007-09-26 11:29:51 $
 
 =cut
