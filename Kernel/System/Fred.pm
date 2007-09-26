@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.4 2007-09-25 21:32:43 mh Exp $
+# $Id: Fred.pm,v 1.5 2007-09-26 09:33:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -248,7 +248,7 @@ sub InsertLayoutObject {
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Layout.pm';
 
     if ( -l "$File" ) {
-        die 'Can\'t manipulate $File because it is a symlink!';
+        die "Can't manipulate $File because it is a symlink!";
     }
 
     # read file
@@ -299,6 +299,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-09-25 21:32:43 $
+$Revision: 1.5 $ $Date: 2007-09-26 09:33:07 $
 
 =cut
