@@ -2,7 +2,7 @@
 # DevelFredSTDERRLog.dtl - a frontend to show the STDERR log
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSTDERRLog.dtl,v 1.1 2007-09-21 07:49:26 tr Exp $
+# $Id: DevelFredSTDERRLog.dtl,v 1.2 2007-09-26 06:49:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -21,4 +21,8 @@ $Data{"HTMLLines"}
       </table>
     </td>
   </tr>
+</table>
+# just a small space
+<table cellspacing="1" cellpadding="0" width="100%">
+  <tr><td></td></tr>
 </table>
