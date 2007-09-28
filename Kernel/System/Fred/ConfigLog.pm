@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.3 2007-09-26 11:29:51 mh Exp $
+# $Id: ConfigLog.pm,v 1.4 2007-09-28 06:58:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -156,12 +156,13 @@ sub ActivateModuleTodos {
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::ConfigLog;\n";
             print $FilehandleII "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n";
+            print $FilehandleII "my \$Caller = caller();\n";
             print $FilehandleII "if (\$Self->{\$What}) { # FRED - manipulated\n";
-            print $FilehandleII "    \$ConfigLogObject->InsertWord(What => \"\$What;True\", Home => \$Self->{Home});\n";
+            print $FilehandleII "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n";
             print $FilehandleII "}                     # FRED - manipulated\n";
             print $FilehandleII "else {                # FRED - manipulated\n";
             print $FilehandleII
-                "    \$ConfigLogObject->InsertWord(What => \"\$What;False\", Home => \$Self->{Home});\n";
+                "    \$ConfigLogObject->InsertWord(What => \"\$What;False;\$Caller;\", Home => \$Self->{Home});\n";
             print $FilehandleII "}                     # FRED - manipulated\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
@@ -205,11 +206,12 @@ sub DeactivateModuleTodos {
         "# FRED - manipulated\n"                                                                 => 1,
         "use Kernel::System::Fred::ConfigLog;\n"                                                 => 1,
         "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n"                       => 1,
+        "my \$Caller = caller();\n"                                                              => 1,
         "if (\$Self->{\$What}) { # FRED - manipulated\n"                                         => 1,
-        "    \$ConfigLogObject->InsertWord(What => \"\$What;True\", Home => \$Self->{Home});\n"  => 1,
+        "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n"  => 1,
         "}                     # FRED - manipulated\n"                                           => 1,
         "else {                # FRED - manipulated\n"                                           => 1,
-        "    \$ConfigLogObject->InsertWord(What => \"\$What;False\", Home => \$Self->{Home});\n" => 1,
+        "    \$ConfigLogObject->InsertWord(What => \"\$What;False;\$Caller;\", Home => \$Self->{Home});\n" => 1,
     );
 
     for my $Line (@Lines) {
@@ -264,6 +266,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-26 11:29:51 $
+$Revision: 1.4 $ $Date: 2007-09-28 06:58:23 $
 
 =cut

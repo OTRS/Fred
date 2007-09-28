@@ -2,7 +2,7 @@
 # DevelFredConfigLog.dtl - a frontend to show the config debugging
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredConfigLog.dtl,v 1.1 2007-09-26 10:37:41 tr Exp $
+# $Id: DevelFredConfigLog.dtl,v 1.2 2007-09-28 06:58:23 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,6 +25,7 @@
                 <td align="right">Number</td>
                 <td>Config</td>
                 <td>Status</td>
+                <td>Package</td>
               </tr>
 $Data{"HTMLLines"}
             </table>
