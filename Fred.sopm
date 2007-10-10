@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.13 2007-10-10 11:12:17 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.14 2007-10-10 11:18:28 tr Exp $</CVS>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
     <ModuleRequired Version="2.02">HTML::Lint</ModuleRequired>
@@ -18,40 +18,40 @@
     Welcome!&lt;br&gt;
     &lt;br&gt;
     First of all you should install the necessary perl modules&lt;br&gt;
-    &amp;&amp;* Devel::SmallProf&lt;br&gt;
-    &amp;&amp;* Devel::DProf&lt;br&gt;
-    &amp;&amp;* HTML::Lint&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* Devel::SmallProf&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* Devel::DProf&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* HTML::Lint&lt;br&gt;
     &lt;br&gt;
     &lt;br&gt;
     What can Fred do?&lt;br&gt;
     &lt;br&gt;
     To date, Fred has the following features:&lt;br&gt;
-    &amp;&amp;* HTMLCheck:&lt;br&gt;
-    &amp;&amp;&amp;&amp;the HTML output is checked by means of HTML::Lint&lt;br&gt;
-    &amp;&amp;* STDERRLog:&lt;br&gt;
-    &amp;&amp;&amp;&amp;every entry contained in STDERR is displayed&lt;br&gt;
-    &amp;&amp;* TranslationDebug:&lt;br&gt;
-    &amp;&amp;&amp;&amp;displays all translation attempts of the current request which failed.&lt;br&gt;
-    &amp;&amp;* SQLLog:&lt;br&gt;
-    &amp;&amp;&amp;&amp;lists all SQL statements of the current request&lt;br&gt;
-    &amp;&amp;* ConfigLog:&lt;br&gt;
-    &amp;&amp;&amp;&amp;lists all !ConfigGet requests, indicating their frequency&lt;br&gt;
-    &amp;&amp;* DProf:&lt;br&gt;
-    &amp;&amp;&amp;&amp;a profiling tool which evaluates the time required for each function to be executed&lt;br&gt;
-    &amp;&amp;* SmallProf:&lt;br&gt;
-    &amp;&amp;&amp;&amp;a profiling tool performing a line-by-line code evaluation&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* HTMLCheck:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;the HTML output is checked by means of HTML::Lint&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* STDERRLog:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;every entry contained in STDERR is displayed&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* TranslationDebug:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;displays all translation attempts of the current request which failed.&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* SQLLog:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;lists all SQL statements of the current request&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* ConfigLog:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;lists all !ConfigGet requests, indicating their frequency&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* DProf:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;a profiling tool which evaluates the time required for each function to be executed&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* SmallProf:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;a profiling tool performing a line-by-line code evaluation&lt;br&gt;
     &lt;br&gt;
     *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting".&lt;br&gt;
     &lt;br&gt;
     &lt;br&gt;
     What is Fred's current status?&lt;br&gt;
     &lt;br&gt;
-    &amp;&amp;* modular design:&lt;br&gt;
-    &amp;&amp;&amp;&amp;anybody can add a new module at any time&lt;br&gt;
-    &amp;&amp;* the modules' output is not yet sophisticated&lt;br&gt;
-    &amp;&amp;&amp;&amp;ideas for improving the output or sensible configurations will be very welcome&lt;br&gt;
-    &amp;&amp;* please extend Fred, if you have good ideas&lt;br&gt;
-    &amp;&amp;* if you have no time to implement your ideas yourselves, please enter them in dev mailinglist&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* modular design:&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;anybody can add a new module at any time&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* the modules' output is not yet sophisticated&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ideas for improving the output or sensible configurations will be very welcome&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* please extend Fred, if you have good ideas&lt;br&gt;
+    &amp;nbsp;&amp;nbsp;* if you have no time to implement your ideas yourselves, please enter them in dev mailinglist&lt;br&gt;
     &lt;br&gt;
     </IntroInstallPre>
     <Filelist>
