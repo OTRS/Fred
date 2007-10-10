@@ -2,14 +2,59 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.11 2007-09-26 10:37:41 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.12 2007-10-10 10:15:22 tr Exp $</CVS>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
+    <ModuleRequired Version="2.02">HTML::Lint</ModuleRequired>
+    <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
+    <ModuleRequired Version="19990108">Devel::DProf</ModuleRequired>
     <Vendor>OTRS GmbH</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">A tool to  support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
+    <IntroInstallPre>
+
+    Welcome!
+
+
+    First of all you should install the necessary perl modules
+        * Devel::SmallProf
+        * Devel::DProf
+        * HTML::Lint
+
+
+    What can Fred do?
+
+        To date, Fred has the following features:
+        * HTMLCheck:
+            the HTML output is checked by means of HTML::Lint
+        * STDERRLog:
+            every entry contained in STDERR is displayed
+        * TranslationDebug:
+            displays all translation attempts of the current request which failed.
+        * SQLLog:
+            lists all SQL statements of the current request
+        * ConfigLog:
+            lists all !ConfigGet requests, indicating their frequency
+        * DProf:
+            a profiling tool which evaluates the time required for each function to be executed
+        * SmallProf:
+            a profiling tool performing a line-by-line code evaluation
+
+    *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting".
+
+
+    What is Fred's current status?
+
+    * modular design:
+        anybody can add a new module at any time
+    * the modules' output is not yet sophisticated
+        ideas for improving the output or sensible configurations will be very welcome
+    * please extend Fred, if you have good ideas
+    * if you have no time to implement your ideas yourselves, please enter them in dev mailinglist
+
+    </IntroInstallPre>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"/>
