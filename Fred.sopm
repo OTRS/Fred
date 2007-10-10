@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.12 2007-10-10 10:15:22 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.13 2007-10-10 11:12:17 tr Exp $</CVS>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
     <ModuleRequired Version="2.02">HTML::Lint</ModuleRequired>
@@ -13,47 +13,46 @@
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">A tool to  support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
-    <IntroInstallPre>
-
-    Welcome!
-
-
-    First of all you should install the necessary perl modules
-        * Devel::SmallProf
-        * Devel::DProf
-        * HTML::Lint
-
-
-    What can Fred do?
-
-        To date, Fred has the following features:
-        * HTMLCheck:
-            the HTML output is checked by means of HTML::Lint
-        * STDERRLog:
-            every entry contained in STDERR is displayed
-        * TranslationDebug:
-            displays all translation attempts of the current request which failed.
-        * SQLLog:
-            lists all SQL statements of the current request
-        * ConfigLog:
-            lists all !ConfigGet requests, indicating their frequency
-        * DProf:
-            a profiling tool which evaluates the time required for each function to be executed
-        * SmallProf:
-            a profiling tool performing a line-by-line code evaluation
-
-    *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting".
-
-
-    What is Fred's current status?
-
-    * modular design:
-        anybody can add a new module at any time
-    * the modules' output is not yet sophisticated
-        ideas for improving the output or sensible configurations will be very welcome
-    * please extend Fred, if you have good ideas
-    * if you have no time to implement your ideas yourselves, please enter them in dev mailinglist
-
+    <IntroInstallPre Title="Fred" Lang="en" >
+    &lt;br&gt;
+    Welcome!&lt;br&gt;
+    &lt;br&gt;
+    First of all you should install the necessary perl modules&lt;br&gt;
+    &amp;&amp;* Devel::SmallProf&lt;br&gt;
+    &amp;&amp;* Devel::DProf&lt;br&gt;
+    &amp;&amp;* HTML::Lint&lt;br&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    What can Fred do?&lt;br&gt;
+    &lt;br&gt;
+    To date, Fred has the following features:&lt;br&gt;
+    &amp;&amp;* HTMLCheck:&lt;br&gt;
+    &amp;&amp;&amp;&amp;the HTML output is checked by means of HTML::Lint&lt;br&gt;
+    &amp;&amp;* STDERRLog:&lt;br&gt;
+    &amp;&amp;&amp;&amp;every entry contained in STDERR is displayed&lt;br&gt;
+    &amp;&amp;* TranslationDebug:&lt;br&gt;
+    &amp;&amp;&amp;&amp;displays all translation attempts of the current request which failed.&lt;br&gt;
+    &amp;&amp;* SQLLog:&lt;br&gt;
+    &amp;&amp;&amp;&amp;lists all SQL statements of the current request&lt;br&gt;
+    &amp;&amp;* ConfigLog:&lt;br&gt;
+    &amp;&amp;&amp;&amp;lists all !ConfigGet requests, indicating their frequency&lt;br&gt;
+    &amp;&amp;* DProf:&lt;br&gt;
+    &amp;&amp;&amp;&amp;a profiling tool which evaluates the time required for each function to be executed&lt;br&gt;
+    &amp;&amp;* SmallProf:&lt;br&gt;
+    &amp;&amp;&amp;&amp;a profiling tool performing a line-by-line code evaluation&lt;br&gt;
+    &lt;br&gt;
+    *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting".&lt;br&gt;
+    &lt;br&gt;
+    &lt;br&gt;
+    What is Fred's current status?&lt;br&gt;
+    &lt;br&gt;
+    &amp;&amp;* modular design:&lt;br&gt;
+    &amp;&amp;&amp;&amp;anybody can add a new module at any time&lt;br&gt;
+    &amp;&amp;* the modules' output is not yet sophisticated&lt;br&gt;
+    &amp;&amp;&amp;&amp;ideas for improving the output or sensible configurations will be very welcome&lt;br&gt;
+    &amp;&amp;* please extend Fred, if you have good ideas&lt;br&gt;
+    &amp;&amp;* if you have no time to implement your ideas yourselves, please enter them in dev mailinglist&lt;br&gt;
+    &lt;br&gt;
     </IntroInstallPre>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
