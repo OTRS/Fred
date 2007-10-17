@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSTDERRLog.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSTDERRLog.pm,v 1.3 2007-10-17 11:01:09 ea Exp $
+# $Id: FredSTDERRLog.pm,v 1.4 2007-10-17 11:34:34 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,9 +14,8 @@ package Kernel::Output::HTML::FredSTDERRLog;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -41,8 +40,7 @@ create a object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ($Type, %Param)  = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -67,12 +65,10 @@ create the output of the STDERR log
 =cut
 
 sub CreateFredOutput {
-    my $Self      = shift;
-    my %Param     = @_;
-    my $HTMLLines = '';
+    my ($Self, %Param) = @_;
 
     # check needed stuff
-    if ( !$Param{ModuleRef} ) {
+    if ( !$Param{ModuleRef}) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
@@ -80,20 +76,24 @@ sub CreateFredOutput {
         return;
     }
 
-    if (defined($Param{ModuleRef}->{Data})) {
-        for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
-            $HTMLLines .= "        <tr><td>$Line</td></tr>";
-        }
+    return if !$Param{ModuleRef}->{Data};
+    return if ref $Param{ModuleRef}->{Data} ne 'ARRAY';
+
+    # create html string
+    my $HTMLLines;
+    for my $Line ( reverse @{ $Param{ModuleRef}->{Data} }) {
+        $HTMLLines = "<tr><td>$Line</td></tr>";
     }
 
-    if ($HTMLLines) {
-        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredSTDERRLog',
-            Data         => {
-                HTMLLines => $HTMLLines,
-            },
-        );
-    }
+    return if !$HTMLLines;
+
+    # output the html
+    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredSTDERRLog',
+        Data         => {
+            HTMLLines => $HTMLLines,
+        },
+    );
 
     return 1;
 }
@@ -114,6 +114,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-10-17 11:01:09 $
+$Revision: 1.4 $ $Date: 2007-10-17 11:34:34 $
 
 =cut
