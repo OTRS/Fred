@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.4 2007-09-28 06:58:23 martin Exp $
+# $Id: ConfigLog.pm,v 1.5 2007-10-17 14:31:53 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -80,21 +80,23 @@ sub DataGet {
 
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/Config.log';
-    if ( open my $Filehandle, '<', $File ) {
-        my @Row        = <$Filehandle>;
-        my @ReverseRow = reverse(@Row);
-
-        # get the whole information
-        for my $Line (@ReverseRow) {
-            if ( $Line =~ /FRED/ ) {
-                last;
-            }
-            push @LogMessages, $Line;
-        }
-        close $Filehandle;
-        pop @LogMessages;
-        $Self->InsertWord( What => "FRED\n" );
+    my $Filehandle;
+    if ( !open $Filehandle, '<', $File ) {
+        print STDERR "Perhaps you don't have permission at /var/fred/\n" .
+            "Can't read /var/fred/Config.log";
+        return;
     }
+
+    # get the whole information
+    LINE:
+    for my $Line (reverse <$Filehandle>) {
+        last LINE if $Line =~ /FRED/;
+        push @LogMessages, $Line;
+    }
+
+    close $Filehandle;
+    pop @LogMessages;
+    $Self->InsertWord( What => "FRED\n" );
 
     my %IndividualConfig = ();
 
@@ -131,15 +133,11 @@ sub ActivateModuleTodos {
     my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Config/Defaults.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
-        die "Can't manipulate $File because it is a symlink!";
-    }
+    die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebug I have to manipulate the Language.pm file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
@@ -152,7 +150,8 @@ sub ActivateModuleTodos {
         if ( $SubGet eq 'Get' && $Line =~ /my \$Self = shift;/ ) {
             $SubGet .= 'Self';
         }
-        if ( $SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/ ) {
+        if ( ($SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/)                   # OTRS 2.2
+            || $SubGet eq 'Get' && $Line =~ /my \( \$Self, \$What \) = \@_;/) {        # OTRS 2.3
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::ConfigLog;\n";
             print $FilehandleII "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n";
@@ -266,6 +265,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-09-28 06:58:23 $
+$Revision: 1.5 $ $Date: 2007-10-17 14:31:53 $
 
 =cut

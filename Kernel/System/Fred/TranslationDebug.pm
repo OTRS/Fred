@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.4 2007-09-26 11:29:51 mh Exp $
+# $Id: TranslationDebug.pm,v 1.5 2007-10-17 14:31:53 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -76,23 +76,25 @@ sub DataGet {
 
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
-    if ( open my $Filehandle, '<', $File ) {
-        my @Row        = <$Filehandle>;
-        my @ReverseRow = reverse @Row;
-        my @LogMessages;
-
-        # get the whole information
-        for my $Line (@ReverseRow) {
-            if ( $Line =~ /FRED/ ) {
-                last;
-            }
-            push @LogMessages, $Line;
-        }
-        close $Filehandle;
-
-        $Self->InsertWord(What => "FRED\n");
-        $Param{ModuleRef}->{Data} = \@LogMessages;
+    my $Filehandle;
+    if ( ! open $Filehandle, '<', $File ) {
+        $Param{ModuleRef}->{Data} = [
+            "Perhaps you don't have permission at /var/fred/",
+            "Can't read /var/fred/TranslationDebug.log"
+        ];
+        return;
     }
+    my @LogMessages;
+
+    # get the whole information
+    LINE:
+    for my $Line (reverse <$Filehandle>) {
+        last LINE if $Line =~ /FRED/;
+        push @LogMessages, $Line;
+    }
+    close $Filehandle;
+    $Self->InsertWord(What => "FRED\n");
+    $Param{ModuleRef}->{Data} = \@LogMessages;
 
     return 1;
 }
@@ -114,15 +116,11 @@ sub ActivateModuleTodos {
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
-        die "Can't manipulate $File because it is a symlink!";
-    }
+    die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebug I have to manipulate the Language.pm file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
@@ -235,6 +233,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-09-26 11:29:51 $
+$Revision: 1.5 $ $Date: 2007-10-17 14:31:53 $
 
 =cut
