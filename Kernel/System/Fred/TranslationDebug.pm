@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.5 2007-10-17 14:31:53 tr Exp $
+# $Id: TranslationDebug.pm,v 1.6 2007-10-18 05:14:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -111,8 +111,6 @@ Do all jobs which are necessary to activate this special module.
 
 sub ActivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
-
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
@@ -120,7 +118,7 @@ sub ActivateModuleTodos {
 
     # to use TranslationDebug I have to manipulate the Language.pm file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    @Lines = <$Filehandle>;
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
@@ -151,20 +149,15 @@ Do all jobs which are necessary to deactivate this special module.
 
 sub DeactivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
-        die "Can't manipulate $File because it is a symlink!";
-    }
+    die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebugger I have to manipulate the Language.pm file
     # here I undo my manipulation
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
@@ -233,6 +226,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-10-17 14:31:53 $
+$Revision: 1.6 $ $Date: 2007-10-18 05:14:28 $
 
 =cut

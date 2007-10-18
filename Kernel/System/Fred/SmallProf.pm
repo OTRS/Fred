@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.6 2007-09-26 09:33:07 mh Exp $
+# $Id: SmallProf.pm,v 1.7 2007-10-18 05:14:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -97,9 +97,8 @@ sub DataGet {
         );
         return 1;
     }
-    if (${$Param{HTMLDataRef}} =~ /Fred-Setting/) {
-        return 1;
-    }
+
+    return 1 if ${$Param{HTMLDataRef}} =~ /Fred-Setting/;
 
     # find out which packages are checked by SmallProf
     my @Packages = keys %DB::packages;
@@ -119,11 +118,6 @@ sub DataGet {
             if ( $Line =~ /(.+?):(\d+?):(\d+?):(\d+?):(\d+?):\s*(.*?)$/ ) {
                 push @Lines, [ $1, $2, $3, $4, $5, $6 ];
             }
-
-#            # alternative solution 2
-#            my @Elements = split (':',$Line);
-#            $Elements[0] =~ s/^.*?cgi-bin\/\.\.\/\.\.\///;
-#            push @Lines, \@Elements;
         }
 
         # define the order of the profiling data
@@ -137,18 +131,6 @@ sub DataGet {
             splice @Lines, $Config_Ref->{ShownLines};
             $Param{ModuleRef}->{Data} = \@Lines;
         }
-
-#        # alternative solution 1
-#        while ( my $Line = <$Filehandle> ) {
-#            if ($Line =~ /^\s*?[1-9]/) {
-#                if ($Line =~ /^\s*?(\d+?)\s+?(\d.+?)\s+?(\d.+?)\s+?(\d+?):(.*?)$/) {
-#                    push @Lines, [$1, $2, $3, $4, $5];
-#                }
-#            }
-#        }
-#        @Lines = sort {$b->[1] <=> $a->[1]} @Lines;
-#        $Param{ModuleRef}->{Data} = \@Lines;
-
         close $Filehandle;
     }
 
@@ -167,19 +149,14 @@ Do all jobs which are necessary to activate this special module.
 
 sub ActivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
-        die "Can't manipulate $File because it is a symlink!";
-    }
+    die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use SmallProf I have to manipulate the index.pl file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
@@ -229,19 +206,14 @@ Do all jobs which are necessary to deactivate this special module.
 
 sub DeactivateModuleTodos {
     my $Self  = shift;
-    my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
-        die "Can't manipulate $File because it is a symlink!";
-    }
+    die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # read the index.pl file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     # remove the manipulated lines
@@ -286,6 +258,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2007-09-26 09:33:07 $
+$Revision: 1.7 $ $Date: 2007-10-18 05:14:28 $
 
 =cut

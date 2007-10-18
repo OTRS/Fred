@@ -2,7 +2,7 @@
 # Kernel/System/Fred/HTMLCheck.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: HTMLCheck.pm,v 1.3 2007-09-26 08:11:52 mh Exp $
+# $Id: HTMLCheck.pm,v 1.4 2007-10-18 05:14:28 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -86,23 +86,24 @@ sub DataGet {
     }
 
     # Check the HTML-Output with HTML::Lint
-    my @HTMLLintMessages;
-    if ($Self->{MainObject}->Require('HTML::Lint')) {
-        HTML::Lint->import();
-        my $HTMLLintObject = HTML::Lint->new( only_types => HTML::Lint::Error->STRUCTURE );
-        $HTMLLintObject->parse (${ $Param{HTMLDataRef} });
-
-        my $ErrorCounter = $HTMLLintObject->errors;
-        for my $Error ($HTMLLintObject->errors) {
-            my $String .= $Error->as_string;
-            if ($String !~ /Invalid character .+ should be written as /) {
-                push @HTMLLintMessages, $String;
-            }
-        }
-    } else {
+    if (!$Self->{MainObject}->Require('HTML::Lint')) {
         my $Text = 'The HTML-checker of Fred requires HTML::Lint to be installed!'
             . 'Please install HTML::Lint via CPAN or deactivate the HTML-checker via SysConfig.';
-        push @HTMLLintMessages, $Text;
+        $Param{ModuleRef}->{Data} = [$Text];
+        return;
+    }
+
+    HTML::Lint->import();
+    my $HTMLLintObject = HTML::Lint->new( only_types => HTML::Lint::Error->STRUCTURE );
+    $HTMLLintObject->parse (${ $Param{HTMLDataRef} });
+
+    my $ErrorCounter = $HTMLLintObject->errors;
+    my @HTMLLintMessages;
+    for my $Error ($HTMLLintObject->errors) {
+        my $String .= $Error->as_string;
+        if ($String !~ /Invalid character .+ should be written as /) {
+            push @HTMLLintMessages, $String;
+        }
     }
 
     if (@HTMLLintMessages) {
@@ -156,6 +157,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-26 08:11:52 $
+$Revision: 1.4 $ $Date: 2007-10-18 05:14:28 $
 
 =cut
