@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.6 2007-09-26 13:13:36 mh Exp $
+# $Id: DevelFred.pm,v 1.7 2007-10-22 14:15:52 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -56,8 +56,15 @@ sub Run {
     # ---------------------------------------------------------- #
     # show the overview
     # ---------------------------------------------------------- #
+
     if (!$Self->{Subaction}) {
-        $Self->{LayoutObject}->FatalError(Message => "Sorry, this side is currently under development!");
+        my $Version = $Self->{ConfigObject}->Get('Version');
+        if ($Version =~ m{ ^2\.1\. }msx) {
+            return $Self->_ActivateFredFor21();
+        }
+        else {
+            $Self->{LayoutObject}->FatalError(Message => "Sorry, this side is currently under development!");
+        }
     }
 #        my $Output   = '';
 #
@@ -232,4 +239,22 @@ sub Run {
     return 1;
 }
 
+sub _ActivateFredFor21 {
+    my ($Self) = @_;
+
+    my $Message = 'File already changed!';
+
+    if ($Self->{FredObject}->InsertLayoutObject21()) {
+        $Message = 'File changed!';
+    }
+
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $Self->{LayoutObject}->Notify(
+        Info     => $Message,
+        Priority => 'Error',
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+    return $Output;
+}
 1;

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.12 2007-09-26 13:21:01 mh Exp $
+# $Id: OutputFilterFred.pm,v 1.13 2007-10-22 14:15:52 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.12 $';
+$VERSION = '$Revision: 1.13 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -56,7 +56,7 @@ sub new {
 
         # insert LayoutObject entry in FilterContent function of the Layout.pm
         # this happens only in OTRS 2.2
-        $Self->{FredObject}->InsertLayoutObject();
+        $Self->{FredObject}->InsertLayoutObject22();
     }
 
     return $Self;
@@ -140,6 +140,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2007-09-26 13:21:01 $
+$Revision: 1.13 $ $Date: 2007-10-22 14:15:52 $
 
 =cut
