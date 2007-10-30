@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.6 2007-10-18 05:14:28 tr Exp $
+# $Id: TranslationDebug.pm,v 1.7 2007-10-30 09:44:32 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -90,10 +90,16 @@ sub DataGet {
     LINE:
     for my $Line (reverse <$Filehandle>) {
         last LINE if $Line =~ /FRED/;
+
+        chomp $Line;
+        next LINE if $Line eq '';
+
         push @LogMessages, $Line;
     }
     close $Filehandle;
+
     $Self->InsertWord(What => "FRED\n");
+
     $Param{ModuleRef}->{Data} = \@LogMessages;
 
     return 1;
@@ -226,6 +232,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2007-10-18 05:14:28 $
+$Revision: 1.7 $ $Date: 2007-10-30 09:44:32 $
 
 =cut
