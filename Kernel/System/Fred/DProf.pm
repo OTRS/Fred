@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.3 2007-09-26 09:33:07 mh Exp $
+# $Id: DProf.pm,v 1.4 2007-11-30 16:48:41 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -105,41 +105,9 @@ sub DataGet {
 
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::DProf');
     my @ProfilingResults;
-    if (!$Config_Ref->{FunctionTree}) {
-        my $ShownLines = $Config_Ref->{ShownLines} < 40 ? $Config_Ref->{ShownLines} : 40;
-        my $Options = "-F -O $ShownLines";
-        $Options .=   $Config_Ref->{OrderBy} eq 'Name'  ? ' -a'
-                    : $Config_Ref->{OrderBy} eq 'Calls' ? ' -l'
-                    :                                    '';
-        if (open my $Filehandle, "dprofpp $Options $Path/DProf.out |") {
-            while ( my $Line = <$Filehandle> ) {
-                if ( $Line =~ /^\s*?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)$/ ) {
-                    push @ProfilingResults, [ $1, $2, $3, $4, $5, $6, $7 ];
-                }
-            }
-            close $Filehandle;
-        }
 
-        shift @ProfilingResults;
-
-        my $TotalTime = 0;
-        for my $Time (@ProfilingResults) {
-            if ($Time->[1] ne '-') {
-                $TotalTime += $Time->[1];
-            }
-        }
-
-        if ($TotalTime) {
-            for my $Time (@ProfilingResults) {
-                if ($Time->[1] ne '-') {
-                    $Time->[0] = int($Time->[1] / $TotalTime * 10000) / 100;
-                }
-            }
-        }
-        $Param{ModuleRef}->{Data} = \@ProfilingResults;
-        $Param{ModuleRef}->{TotalTime} = $TotalTime;
-    }
-    else {
+    # returns the tree results of configured
+    if ($Config_Ref->{FunctionTree}) {
         if (open my $Filehandle, "dprofpp -FT $Path/DProf.out |") {
             my $Counter = 0;
             while ( my $Line = <$Filehandle> ) {
@@ -149,7 +117,55 @@ sub DataGet {
             close $Filehandle;
         }
         $Param{ModuleRef}->{FunctionTree} = \@ProfilingResults;
+
+        return 1;
+
     }
+
+    # show the common performance results
+    my $ShownLines = $Config_Ref->{ShownLines} < 40 ? $Config_Ref->{ShownLines} : 40;
+    my $Options = "-F -O $ShownLines";
+    $Options .=   $Config_Ref->{OrderBy} eq 'Name'  ? ' -a'
+                : $Config_Ref->{OrderBy} eq 'Calls' ? ' -l'
+                :                                    '';
+    if (open my $Filehandle, "dprofpp $Options $Path/DProf.out |") {
+        while ( my $Line = <$Filehandle> ) {
+            if ( $Line =~ /^\s*?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)$/ ) {
+                push @ProfilingResults, [ $1, $2, $3, $4, $5, $6, $7 ];
+            }
+            elsif ($Line =~ /^\s*?([^\s]+?)$/ ) {
+                $ProfilingResults[-1][6] .= $1;
+            }
+        }
+        close $Filehandle;
+    }
+
+    shift @ProfilingResults;
+
+    # remove disabled packages if necessary
+    if ($Config_Ref->{DisabledPackages}) {
+        my $DisabledPackages = join '|', @{$Config_Ref->{DisabledPackages}};
+        @ProfilingResults = grep { $_->[6] !~ m{^($DisabledPackages)::}x } @ProfilingResults;
+    }
+
+    # compute total time
+    my $TotalTime = 0;
+    for my $Time (@ProfilingResults) {
+        if ($Time->[1] ne '-') {
+            $TotalTime += $Time->[1];
+        }
+    }
+
+    if ($TotalTime) {
+        for my $Time (@ProfilingResults) {
+            if ($Time->[1] ne '-') {
+                $Time->[0] = int($Time->[1] / $TotalTime * 10000) / 100;
+            }
+        }
+    }
+
+    $Param{ModuleRef}->{Data} = \@ProfilingResults;
+    $Param{ModuleRef}->{TotalTime} = $TotalTime;
 
     return 1;
 }
@@ -263,6 +279,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-26 09:33:07 $
+$Revision: 1.4 $ $Date: 2007-11-30 16:48:41 $
 
 =cut

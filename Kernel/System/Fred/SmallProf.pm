@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.7 2007-10-18 05:14:28 tr Exp $
+# $Id: SmallProf.pm,v 1.8 2007-11-30 16:48:41 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -124,6 +124,12 @@ sub DataGet {
         @Lines = sort { $b->[ $Config_Ref->{OrderBy} ] <=> $a->[ $Config_Ref->{OrderBy} ] } @Lines;
         if ( $Config_Ref->{OrderBy} == 1 ) {
             @Lines = reverse @Lines;
+        }
+
+        # remove disabled files or path if necessary
+        if ($Config_Ref->{DisabledFiles}) {
+            my $DisabledFiles = join '|', @{$Config_Ref->{DisabledFiles}};
+            @Lines = grep { $_->[0] !~ m{^($DisabledFiles)}x } @Lines;
         }
 
         # show only so many lines as wanted
@@ -258,6 +264,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2007-10-18 05:14:28 $
+$Revision: 1.8 $ $Date: 2007-11-30 16:48:41 $
 
 =cut
