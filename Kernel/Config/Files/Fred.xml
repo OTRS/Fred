@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.15 2007-11-30 16:48:41 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.16 2007-12-05 06:10:12 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -21,6 +21,17 @@
         <Setting>
             <Hash>
                 <Item Key="Active">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
+        <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
+        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Active">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -230,6 +241,7 @@
         <Setting>
             <Array>
                 <Item>/usr/lib/perl5</Item>
+                <Item>../..//Kernel/System/Fred/</Item>
             </Array>
         </Setting>
     </ConfigItem>

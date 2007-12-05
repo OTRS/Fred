@@ -1,8 +1,8 @@
 # --
-# DevelFredSTDERRLog.dtl - a frontend to show the STDERR log
+# DevelFredBenchmark.dtl - a frontend to show the STDERR log
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFredSTDERRLog.dtl,v 1.3 2007-12-05 06:10:12 tr Exp $
+# $Id: DevelFredBenchmark.dtl,v 1.1 2007-12-05 06:10:12 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,10 +14,16 @@
       <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
         <tr>
           <td bgcolor="ba0f0f">
-            <b><font color="#ffffff">Fred-STDERRLog</font></b>
+            <b><font color="#ffffff">Fred-Benchmark</font></b>
           </td>
         </tr>
+        <tr>
+          <td>
+            <table>
 $Data{"HTMLLines"}
+            </table>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>

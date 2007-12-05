@@ -1,29 +1,29 @@
 # --
-# Kernel/Output/HTML/FredSTDERRLog.pm - layout backend module
+# Kernel/Output/HTML/FredBenchmark.pm - layout backend module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSTDERRLog.pm,v 1.5 2007-12-05 06:10:12 tr Exp $
+# $Id: FredBenchmark.pm,v 1.1 2007-12-05 06:10:12 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 # --
 
-package Kernel::Output::HTML::FredSTDERRLog;
+package Kernel::Output::HTML::FredBenchmark;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 =head1 NAME
 
-Kernel::Output::HTML::FredSTDERRLog - layout backend module
+Kernel::Output::HTML::FredBenchmark - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of STDERR log objects
+All layout functions of the benchmark object
 
 =over 4
 
@@ -33,7 +33,7 @@ All layout functions of STDERR log objects
 
 create a object
 
-    $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
+    $BackendObject = Kernel::Output::HTML::FredBenchmark->new(
         %Param,
     );
 
@@ -79,17 +79,20 @@ sub CreateFredOutput {
     return if !$Param{ModuleRef}->{Data};
     return if ref $Param{ModuleRef}->{Data} ne 'ARRAY';
 
-    # create html string
-    my $HTMLLines;
-    for my $Line ( reverse @{ $Param{ModuleRef}->{Data} }) {
-        $HTMLLines = "<tr><td>$Line</td></tr>";
+    my $HTMLLines = '';
+    for my $Line ( @{ $Param{ModuleRef}->{Data} }) {
+        $HTMLLines .= '<tr>';
+        for my $Cell (@{$Line}) {
+            $HTMLLines .= "<td>$Cell</td>";
+        }
+        $HTMLLines .= '</tr>';
     }
 
     return if !$HTMLLines;
 
     # output the html
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-        TemplateFile => 'DevelFredSTDERRLog',
+        TemplateFile => 'DevelFredBenchmark',
         Data         => {
             HTMLLines => $HTMLLines,
         },
@@ -114,6 +117,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-12-05 06:10:12 $
+$Revision: 1.1 $ $Date: 2007-12-05 06:10:12 $
 
 =cut

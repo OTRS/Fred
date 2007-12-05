@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.17 2007-11-30 16:48:41 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.18 2007-12-05 06:10:12 tr Exp $</CVS>
     <Framework>2.1.x</Framework>
     <Framework>2.2.x</Framework>
     <Framework>2.3.x</Framework>
@@ -65,6 +65,7 @@
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"/>
         <File Permission="644" Location="Kernel/Modules/DevelFred.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FredBenchmark.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
@@ -75,6 +76,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredBenchmark.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.dtl"/>
@@ -85,6 +87,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSQLLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
         <File Permission="644" Location="Kernel/System/Fred.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/Benchmark.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
