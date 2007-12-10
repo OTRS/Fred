@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Benchmark.pm
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: Benchmark.pm,v 1.1 2007-12-05 06:10:12 tr Exp $
+# $Id: Benchmark.pm,v 1.2 2007-12-10 12:08:48 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.2 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -85,7 +85,7 @@ sub DataGet {
         }
     }
 
-    my $TableRef = [];
+    my $TableRef = [["Can't find the benchmark table, please check your code an read the HOWTO for the benchmark module."]];
     if ($Self->{ConfigObject}->Get('Benchmark')) {
         $TableRef = $Self->{ConfigObject}->Get('Benchmark');
     }
@@ -138,6 +138,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-12-05 06:10:12 $
+$Revision: 1.2 $ $Date: 2007-12-10 12:08:48 $
 
 =cut
