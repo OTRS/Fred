@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.7 2007-10-22 14:15:52 tr Exp $
+# $Id: DevelFred.pm,v 1.8 2007-12-10 12:08:22 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -213,16 +213,15 @@ sub Run {
                 );
                 $UpdateFlag = 1;
             }
+        }
 
-            # active fred module todos
-            if (!$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}) {
-                # FIXME Errorhandling!
-                $Self->{FredObject}->ActivateModuleTodos(
-                    ModuleName => $Module,
-                );
-            }
+        # this function is neseccary to finish the sysconfig update
+        if ($UpdateFlag) {
+            $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
+        }
 
-            # deactivate fredmodule todos
+        # deactivate fredmodule todos
+        for my $Module (keys %{$ModuleForRef}) {
             if ($ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module}) {
                 # FIXME Errorhandling!
                 $Self->{FredObject}->DeactivateModuleTodos(
@@ -230,10 +229,17 @@ sub Run {
                 );
             }
         }
-        # this function is neseccary to finish the sysconfig update
-        if ($UpdateFlag) {
-            $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
+
+        # active fred module todos
+        for my $Module (keys %{$ModuleForRef}) {
+            if (!$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}) {
+                # FIXME Errorhandling!
+                $Self->{FredObject}->ActivateModuleTodos(
+                    ModuleName => $Module,
+                );
+            }
         }
+
         return $Self->{LayoutObject}->Redirect(OP => "Action=DevelFred&Subaction=Setting");
     }
     return 1;
