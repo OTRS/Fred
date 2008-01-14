@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredSTDERRLog.pm - layout backend module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
 # --
-# $Id: FredSTDERRLog.pm,v 1.5 2007-12-05 06:10:12 tr Exp $
+# $Id: FredSTDERRLog.pm,v 1.6 2008-01-14 15:00:06 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -82,7 +82,7 @@ sub CreateFredOutput {
     # create html string
     my $HTMLLines;
     for my $Line ( reverse @{ $Param{ModuleRef}->{Data} }) {
-        $HTMLLines = "<tr><td>$Line</td></tr>";
+        $HTMLLines .= "<tr><td>$Line</td></tr>";
     }
 
     return if !$HTMLLines;
@@ -114,6 +114,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-12-05 06:10:12 $
+$Revision: 1.6 $ $Date: 2008-01-14 15:00:06 $
 
 =cut
