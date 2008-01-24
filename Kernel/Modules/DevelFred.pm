@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/DevelFred.pm - a special developer module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.8 2007-12-10 12:08:22 tr Exp $
+# $Id: DevelFred.pm,v 1.9 2008-01-24 07:24:42 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Modules::DevelFred;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -216,14 +216,15 @@ sub Run {
         }
 
         # this function is neseccary to finish the sysconfig update
-        if ($UpdateFlag) {
+        my $Version = $Self->{ConfigObject}->Get('Version');
+        if ($UpdateFlag && $Version =~ m{ ^2\.[012]\. }msx) {
             $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
         }
 
         # deactivate fredmodule todos
         for my $Module (keys %{$ModuleForRef}) {
             if ($ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module}) {
-                # FIXME Errorhandling!
+                # Errorhandling should be improved!
                 $Self->{FredObject}->DeactivateModuleTodos(
                     ModuleName => $Module,
                 );
@@ -233,7 +234,7 @@ sub Run {
         # active fred module todos
         for my $Module (keys %{$ModuleForRef}) {
             if (!$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}) {
-                # FIXME Errorhandling!
+                # Errorhandling should be improved!
                 $Self->{FredObject}->ActivateModuleTodos(
                     ModuleName => $Module,
                 );
