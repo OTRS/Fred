@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.13 2007-10-22 14:15:52 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.14 2008-01-30 13:33:32 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::OutputFilterFred;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.13 $';
+$VERSION = '$Revision: 1.14 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -88,6 +88,12 @@ sub Run {
         return 1;
     }
 
+    # do nothing if it is fred it self
+    if ( ${ $Param{Data} } =~ m{Fred-Setting<\/title>}msx){
+        print STDERR "CHANGE FRED SETTING\n";
+        return 1;
+    }
+
     # get data of the activated modules
     my $ModuleForRef   = $Self->{ConfigObject}->Get('Fred::Module');
     my $ModulesDataRef = {};
@@ -134,12 +140,12 @@ This Software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2007-10-22 14:15:52 $
+$Revision: 1.14 $ $Date: 2008-01-30 13:33:32 $
 
 =cut
