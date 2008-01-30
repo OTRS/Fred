@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/STDERRLog.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.8 2007-10-17 14:31:53 tr Exp $
+# $Id: STDERRLog.pm,v 1.9 2008-01-30 13:34:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::STDERRLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -101,7 +101,7 @@ sub DataGet {
     # get the whole information
     LINE:
     for my $Line (reverse <$Filehandle>) {
-        last LINE if $Line =~ /FRED/;
+        last LINE if $Line =~ m{^FRED}msx;
 
         # Attention: the last two strings are because of DProf. I have to force the process.
         # So I get this warnings!
@@ -154,12 +154,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2007-10-17 14:31:53 $
+$Revision: 1.9 $ $Date: 2008-01-30 13:34:37 $
 
 =cut
