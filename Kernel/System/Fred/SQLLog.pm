@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/SQLLog.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.5 2007-10-18 05:14:28 tr Exp $
+# $Id: SQLLog.pm,v 1.6 2008-02-02 12:44:16 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::SQLLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -86,6 +86,8 @@ sub DataGet {
     }
 
     my @LogMessages;
+    my $DoStatements     = 0;
+    my $SelectStatements = 0;
 
     # get the whole information
     LINE:
@@ -97,13 +99,29 @@ sub DataGet {
             $SplitedLog[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
         }
         push @LogMessages, \@SplitedLog;
+
+        if ($SplitedLog[0] eq 'SQL-DO') {
+            $DoStatements++;
+        }
     }
 
     pop @LogMessages;
     close $Filehandle;
 
+    # find multi used statements
+    my %MultiUsed;
+    for my $StatementRef (@LogMessages) {
+        $MultiUsed{$StatementRef->[1]}++;
+    }
+    for my $StatementRef (@LogMessages) {
+        push @{$StatementRef} , ($MultiUsed{$StatementRef->[1]} - 1);
+    }
+
     $Self->InsertWord( What => "FRED\n" );
-    $Param{ModuleRef}->{Data} = \@LogMessages;
+    $Param{ModuleRef}->{Data}             = \@LogMessages;
+    $Param{ModuleRef}->{AllStatements}    = scalar @LogMessages;
+    $Param{ModuleRef}->{DoStatements}     = $DoStatements;
+    $Param{ModuleRef}->{SelectStatements} = $Param{ModuleRef}->{AllStatements} - $DoStatements;
 
     return 1;
 }
@@ -139,7 +157,7 @@ sub ActivateModuleTodos {
                         \(                              \s*
                         !                               \s*
                         \(                              \s*
-                        \$Self->{Curser}                \s*
+                        \$Self->{Curs(e|o)r}            \s* # because of an typo bugfix in 2.3
                         =                               \s*
                         \$Self->{dbh}->prepare\(\$SQL\) \s*
                         \)                              \s*
@@ -257,12 +275,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-10-18 05:14:28 $
+$Revision: 1.6 $ $Date: 2008-02-02 12:44:16 $
 
 =cut

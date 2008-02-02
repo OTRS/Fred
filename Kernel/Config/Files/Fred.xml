@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.16 2007-12-05 06:10:12 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.17 2008-02-02 12:44:15 tr Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -181,10 +181,11 @@
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
-            <Option SelectedID="Time">
+            <Option SelectedID="ExTime">
                 <Item Key="Name">Name</Item>
                 <Item Key="Calls">Calls</Item>
-                <Item Key="Time">ExclTime</Item>
+                <Item Key="ExTime">ExclTime</Item>
+                <Item Key="CuTime">CumulSTime</Item>
             </Option>
         </Setting>
     </ConfigItem>

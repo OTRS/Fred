@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/DProf.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.4 2007-11-30 16:48:41 tr Exp $
+# $Id: DProf.pm,v 1.5 2008-02-02 12:44:16 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::DProf;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -124,9 +124,9 @@ sub DataGet {
 
     # show the common performance results
     my $ShownLines = $Config_Ref->{ShownLines} < 40 ? $Config_Ref->{ShownLines} : 40;
-    my $Options = "-F -O $ShownLines";
-    $Options .=   $Config_Ref->{OrderBy} eq 'Name'  ? ' -a'
-                : $Config_Ref->{OrderBy} eq 'Calls' ? ' -l'
+    my $Options = "-F -O $ShownLines ";
+    $Options .=   $Config_Ref->{OrderBy} eq 'Name'   ? '-a'
+                : $Config_Ref->{OrderBy} eq 'Calls'  ? '-l'
                 :                                    '';
     if (open my $Filehandle, "dprofpp $Options $Path/DProf.out |") {
         while ( my $Line = <$Filehandle> ) {
@@ -141,6 +141,10 @@ sub DataGet {
     }
 
     shift @ProfilingResults;
+
+    if ($Config_Ref->{OrderBy} eq 'CuTime') {
+        @ProfilingResults = sort { $b->[2] <=> $a->[2] } @ProfilingResults;
+    }
 
     # remove disabled packages if necessary
     if ($Config_Ref->{DisabledPackages}) {
@@ -164,8 +168,17 @@ sub DataGet {
         }
     }
 
+    # compute total calls
+    my $TotalCall = 0;
+    for my $Time (@ProfilingResults) {
+        if ($Time->[3] =~ /\d/) {
+            $TotalCall += $Time->[3];
+        }
+    }
+
     $Param{ModuleRef}->{Data} = \@ProfilingResults;
     $Param{ModuleRef}->{TotalTime} = $TotalTime;
+    $Param{ModuleRef}->{TotalCall} = $TotalCall;
 
     return 1;
 }
@@ -273,12 +286,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-11-30 16:48:41 $
+$Revision: 1.5 $ $Date: 2008-02-02 12:44:16 $
 
 =cut

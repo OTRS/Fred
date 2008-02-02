@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.3 2007-09-26 10:28:09 mh Exp $
+# $Id: FredSQLLog.pm,v 1.4 2008-02-02 12:44:16 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::FredSQLLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.3 $';
+$VERSION = '$Revision: 1.4 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -84,10 +84,15 @@ sub CreateFredOutput {
         for my $TD (@{$Line}) {
             $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
         }
-        $HTMLLines .= "        <tr>\n"
+        my $Class = '';
+        if ($Line->[3]) {
+            $Class = ' class="contentkey"';
+        }
+        $HTMLLines .= "        <tr$Class>\n"
                     . "          <td>$Line->[0]</td>\n"
                     . "          <td>$Line->[1]</td>\n"
                     . "          <td>$Line->[2]</td>\n"
+                    . "          <td>$Line->[3]</td>\n"
                     . "        </tr>";
     }
 
@@ -95,7 +100,10 @@ sub CreateFredOutput {
         $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
             TemplateFile => 'DevelFredSQLLog',
             Data         => {
-                HTMLLines => $HTMLLines,
+                HTMLLines     => $HTMLLines,
+                AllStatements    => $Param{ModuleRef}->{AllStatements},
+                DoStatements     => $Param{ModuleRef}->{DoStatements},
+                SelectStatements => $Param{ModuleRef}->{SelectStatements},
             },
         );
     }
@@ -113,12 +121,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2007-09-26 10:28:09 $
+$Revision: 1.4 $ $Date: 2008-02-02 12:44:16 $
 
 =cut

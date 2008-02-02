@@ -1,28 +1,32 @@
 # --
 # DevelFredSQLLog.dtl - a frontend to show the sql log
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.2 2007-09-26 10:02:58 mh Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.3 2008-02-02 12:44:16 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 <table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
   <tr>
     <td bgcolor="ba0f0f">
       <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
         <tr>
-          <td colspan="3" bgcolor="ba0f0f">
+          <td colspan="4" bgcolor="ba0f0f">
             <b><font color="#ffffff">Fred-SQL-Log</font></b>
           </td>
         </tr>
-        <tr>
-          <th>Kind</th>
-          <th>Statement</th>
-          <th>Package</th>
+        <tr class="contentkey">
+          <td>Kind</td>
+          <td>Statement</td>
+          <td>Package</td>
+          <td>Equal Statements</td>
         </tr>
 $Data{"HTMLLines"}
+        <tr class="contentkey">
+          <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
+        </tr>
       </table>
     </td>
   </tr>

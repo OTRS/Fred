@@ -1,12 +1,12 @@
 # --
 # DevelFredDProf.dtl - a frontend to show the DProf result table
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredDProf.dtl,v 1.2 2007-09-26 06:49:51 mh Exp $
+# $Id: DevelFredDProf.dtl,v 1.3 2008-02-02 12:44:16 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 <table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
   <tr>
@@ -29,9 +29,11 @@
         </tr>
 $Data{"HTMLLines"}
         <tr>
-          <td align="right">Total Time:</td>
+          <td align="right">Total:</td>
           <td align="right">$Data{"TotalTime"}</td>
-          <td  colspan="5">Seconds</td>
+          <td>Seconds</td>
+          <td align="right">$Data{"TotalCall"}</td>
+          <td colspan="3"> Calls</td>
         </tr>
 <!-- dtl:block:TimeTable -->
 <!-- dtl:block:FunctionList -->
