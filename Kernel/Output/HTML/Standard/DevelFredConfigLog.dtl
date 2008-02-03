@@ -1,12 +1,12 @@
 # --
 # DevelFredConfigLog.dtl - a frontend to show the config debugging
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConfigLog.dtl,v 1.3 2007-10-10 07:28:07 tr Exp $
+# $Id: DevelFredConfigLog.dtl,v 1.4 2008-02-03 07:37:57 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 <table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
   <tr>
@@ -21,8 +21,8 @@
           <td>
 
             <table bgcolor="#ffffff" cellspacing="0" cellpadding="2">
-              <tr>
-                <td align="right">Count</td>
+              <tr class="contentkey">
+                <td align="right">Calls</td>
                 <td>Config</td>
                 <td>Status</td>
                 <td>Package</td>

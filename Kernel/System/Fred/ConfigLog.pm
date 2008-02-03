@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/ConfigLog.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.5 2007-10-17 14:31:53 tr Exp $
+# $Id: ConfigLog.pm,v 1.6 2008-02-03 07:37:57 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::ConfigLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -110,6 +110,16 @@ sub DataGet {
         my @SplitedLine = split /;/, $Line;
         push @SplitedLine, $IndividualConfig{$Line};
         push @LogMessages, \@SplitedLine;
+    }
+
+    # sort the data
+    my $Config_Ref = $Self->{ConfigObject}->Get('Fred::ConfigLog');
+    my $OrderBy    = defined($Config_Ref->{OrderBy}) ? $Config_Ref->{OrderBy} : 3;
+    if ($OrderBy == 3) {
+        @LogMessages   = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
+    }
+    else {
+        @LogMessages   = sort { $a->[$OrderBy] cmp $b->[$OrderBy] } @LogMessages;
     }
 
     $Param{ModuleRef}->{Data} = \@LogMessages ;
@@ -259,12 +269,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2007-10-17 14:31:53 $
+$Revision: 1.6 $ $Date: 2008-02-03 07:37:57 $
 
 =cut
