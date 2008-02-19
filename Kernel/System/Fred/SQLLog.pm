@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.6 2008-02-02 12:44:16 tr Exp $
+# $Id: SQLLog.pm,v 1.7 2008-02-19 10:39:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -150,7 +150,7 @@ sub ActivateModuleTodos {
     close $Filehandle;
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    $Self->{LogObject}->Log( Priority => 'error', Message => "write file!" );
+    $Self->{LogObject}->Log( Priority => 'notice', Message => "write file!" );
     for my $Line (@Lines) {
         if ( $Line =~ m[^                               \s*
                         if                              \s*
@@ -165,7 +165,7 @@ sub ActivateModuleTodos {
                         {
             ]x
         ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "insert fred log Prepare!" );
+            $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log Prepare!" );
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
             print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
@@ -174,7 +174,7 @@ sub ActivateModuleTodos {
             print $FilehandleII "# FRED - manipulated\n";
         }
         if ( $Line =~ /^    # send sql to database/ ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "insert fred log do!" );
+            $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log do!" );
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
             print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
@@ -281,6 +281,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-02-02 12:44:16 $
+$Revision: 1.7 $ $Date: 2008-02-19 10:39:35 $
 
 =cut
