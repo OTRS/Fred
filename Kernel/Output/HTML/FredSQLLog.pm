@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.4 2008-02-02 12:44:16 tr Exp $
+# $Id: FredSQLLog.pm,v 1.5 2008-03-05 13:05:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -85,14 +85,16 @@ sub CreateFredOutput {
             $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
         }
         my $Class = '';
-        if ($Line->[3]) {
+        if ($Line->[4]) {
             $Class = ' class="contentkey"';
         }
+
         $HTMLLines .= "        <tr$Class>\n"
                     . "          <td>$Line->[0]</td>\n"
                     . "          <td>$Line->[1]</td>\n"
                     . "          <td>$Line->[2]</td>\n"
                     . "          <td>$Line->[3]</td>\n"
+                    . "          <td>$Line->[4]</td>\n"
                     . "        </tr>";
     }
 
@@ -104,6 +106,7 @@ sub CreateFredOutput {
                 AllStatements    => $Param{ModuleRef}->{AllStatements},
                 DoStatements     => $Param{ModuleRef}->{DoStatements},
                 SelectStatements => $Param{ModuleRef}->{SelectStatements},
+                Time             => $Param{ModuleRef}->{Time},
             },
         );
     }
@@ -127,6 +130,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-02-02 12:44:16 $
+$Revision: 1.5 $ $Date: 2008-03-05 13:05:35 $
 
 =cut

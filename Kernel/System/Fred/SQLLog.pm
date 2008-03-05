@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.7 2008-02-19 10:39:35 tr Exp $
+# $Id: SQLLog.pm,v 1.8 2008-03-05 13:05:35 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -103,6 +103,11 @@ sub DataGet {
         if ($SplitedLog[0] eq 'SQL-DO') {
             $DoStatements++;
         }
+        # transfer in 1/100 sec
+        if ($SplitedLog[3]) {
+            $Param{ModuleRef}->{Time} += $SplitedLog[3];
+            $SplitedLog[3] *= 100;
+        }
     }
 
     pop @LogMessages;
@@ -151,6 +156,8 @@ sub ActivateModuleTodos {
 
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     $Self->{LogObject}->Log( Priority => 'notice', Message => "write file!" );
+    my $Prepare;
+    my $DoSQL;
     for my $Line (@Lines) {
         if ( $Line =~ m[^                               \s*
                         if                              \s*
@@ -166,20 +173,41 @@ sub ActivateModuleTodos {
             ]x
         ) {
             $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log Prepare!" );
+            $Prepare = 1;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
+            print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
+            print $FilehandleII "my \$t0 = [gettimeofday];\n";
             print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
             print $FilehandleII "my \$Caller = caller();\n";
-            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\");\n";
+            print $FilehandleII "# FRED - manipulated\n";
+
+        }
+        if ( $Line =~ m{^    # slow log feature} && $Prepare ) {
+            $Prepare = 0;
+            print $FilehandleII "# FRED - manipulated\n";
+            print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
+            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller;\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
+
         if ( $Line =~ /^    # send sql to database/ ) {
             $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log do!" );
+            $DoSQL = 1;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
+            print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
+            print $FilehandleII "my \$t0 = [gettimeofday];\n";
             print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
             print $FilehandleII "my \$Caller = caller();\n";
-            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\");\n";
+            print $FilehandleII "# FRED - manipulated\n";
+        }
+
+        if ( $Line =~ m{^    return 1;} && $DoSQL ) {
+            $DoSQL = 0;
+            print $FilehandleII "# FRED - manipulated\n";
+            print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
+            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller;\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
 
@@ -220,8 +248,11 @@ sub DeactivateModuleTodos {
         "use Kernel::System::Fred::SQLLog;\n"                                     => 1,
         "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n"    => 1,
         "my \$Caller = caller();\n"                                               => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\");\n" => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\");\n"    => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\;\$DiffTime\");\n" => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\;\$DiffTime\");\n"    => 1,
+        "use Time::HiRes qw(gettimeofday tv_interval);\n"   => 1,
+        "my \$t0 = [gettimeofday];\n"   => 1,
+        "my \$DiffTime = tv_interval(\$t0);\n" => 1,
     );
 
     for my $Line (@Lines) {
@@ -281,6 +312,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-02-19 10:39:35 $
+$Revision: 1.8 $ $Date: 2008-03-05 13:05:35 $
 
 =cut
