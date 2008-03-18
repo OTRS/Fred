@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.9 2008-01-24 07:24:42 tr Exp $
+# $Id: DevelFred.pm,v 1.10 2008-03-18 13:33:34 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.10 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -31,16 +31,16 @@ sub new {
     bless ($Self, $Type);
 
     # check needed Objects
+    OBJECT:
     for my $Object (qw(
         ParamObject DBObject     LogObject ConfigObject
-        MainObject  LayoutObject TimeObject
+        MainObject  LayoutObject TimeObject EncodeObject
     )) {
         if ($Param{$Object}) {
             $Self->{$Object} = $Param{$Object};
+            next OBJECT;
         }
-        else {
-            $Self->{LayoutObject}->FatalError(Message => "Got no $Object!");
-        }
+        $Self->{LayoutObject}->FatalError(Message => "Got no $Object!");
     }
 #    $Self->{XMLObject} = Kernel::System::XML->new(%{$Self});
     $Self->{ConfigToolObject} = Kernel::System::Config->new(%{$Self});
@@ -62,9 +62,7 @@ sub Run {
         if ($Version =~ m{ ^2\.1\. }msx) {
             return $Self->_ActivateFredFor21();
         }
-        else {
-            $Self->{LayoutObject}->FatalError(Message => "Sorry, this side is currently under development!");
-        }
+        $Self->{LayoutObject}->FatalError(Message => "Sorry, this side is currently under development!");
     }
 #        my $Output   = '';
 #
