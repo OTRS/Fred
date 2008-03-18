@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.10 2008-03-18 13:33:34 tr Exp $
+# $Id: DevelFred.pm,v 1.11 2008-03-18 13:51:24 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 #use Kernel::System::XML;
@@ -34,7 +34,7 @@ sub new {
     OBJECT:
     for my $Object (qw(
         ParamObject DBObject     LogObject ConfigObject
-        MainObject  LayoutObject TimeObject EncodeObject
+        MainObject  LayoutObject TimeObject
     )) {
         if ($Param{$Object}) {
             $Self->{$Object} = $Param{$Object};
