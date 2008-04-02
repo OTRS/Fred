@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/Console.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.4 2007-09-26 08:11:52 mh Exp $
+# $Id: Console.pm,v 1.5 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::Console;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.4 $';
+$VERSION = '$Revision: 1.5 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -32,7 +32,7 @@ gives you all functions which are needed for the console
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
@@ -142,12 +142,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2007-09-26 08:11:52 $
+$Revision: 1.5 $ $Date: 2008-04-02 04:54:06 $
 
 =cut

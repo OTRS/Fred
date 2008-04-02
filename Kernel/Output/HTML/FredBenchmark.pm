@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/FredBenchmark.pm - layout backend module
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredBenchmark.pm,v 1.1 2007-12-05 06:10:12 tr Exp $
+# $Id: FredBenchmark.pm,v 1.2 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::FredBenchmark;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -31,7 +31,7 @@ All layout functions of the benchmark object
 
 =item new()
 
-create a object
+create an object
 
     $BackendObject = Kernel::Output::HTML::FredBenchmark->new(
         %Param,
@@ -111,12 +111,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2007-12-05 06:10:12 $
+$Revision: 1.2 $ $Date: 2008-04-02 04:54:06 $
 
 =cut

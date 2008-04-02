@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.5 2008-03-05 13:05:35 tr Exp $
+# $Id: FredSQLLog.pm,v 1.6 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -32,7 +32,7 @@ All layout functions of SQL log module
 
 =item new()
 
-create a object
+create an object
 
     $BackendObject = Kernel::Output::HTML::FredSQLLog->new(
         %Param,
@@ -130,6 +130,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-03-05 13:05:35 $
+$Revision: 1.6 $ $Date: 2008-04-02 04:54:06 $
 
 =cut

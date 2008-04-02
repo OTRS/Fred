@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/TranslationDebug.pm
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.7 2007-10-30 09:44:32 mh Exp $
+# $Id: TranslationDebug.pm,v 1.8 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::System::Fred::TranslationDebug;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
+$VERSION = '$Revision: 1.8 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -32,7 +32,7 @@ handle the translation debug data
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
@@ -226,12 +226,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2007-10-30 09:44:32 $
+$Revision: 1.8 $ $Date: 2008-04-02 04:54:06 $
 
 =cut

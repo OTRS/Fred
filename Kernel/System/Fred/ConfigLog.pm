@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.6 2008-02-03 07:37:57 tr Exp $
+# $Id: ConfigLog.pm,v 1.7 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
+$VERSION = '$Revision: 1.7 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 =head1 NAME
@@ -32,7 +32,7 @@ handle the config log data
 
 =item new()
 
-create a object
+create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
@@ -275,6 +275,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-02-03 07:37:57 $
+$Revision: 1.7 $ $Date: 2008-04-02 04:54:06 $
 
 =cut

@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/FredSTDERRLog.pm - layout backend module
-# Copyright (C) 2001-2008 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSTDERRLog.pm,v 1.6 2008-01-14 15:00:06 mh Exp $
+# $Id: FredSTDERRLog.pm,v 1.7 2008-04-02 04:54:06 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::FredSTDERRLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -31,7 +31,7 @@ All layout functions of STDERR log objects
 
 =item new()
 
-create a object
+create an object
 
     $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
         %Param,
@@ -108,12 +108,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-01-14 15:00:06 $
+$Revision: 1.7 $ $Date: 2008-04-02 04:54:06 $
 
 =cut
