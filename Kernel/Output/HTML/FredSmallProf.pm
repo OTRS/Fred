@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSmallProf.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSmallProf.pm,v 1.7 2008-04-02 04:54:06 tr Exp $
+# $Id: FredSmallProf.pm,v 1.8 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.7 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -41,8 +40,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -67,8 +65,8 @@ create the output of the SmallProf profiling tool
 =cut
 
 sub CreateFredOutput {
-    my $Self      = shift;
-    my %Param     = @_;
+    my ( $Self, %Param ) = @_;
+
     my $HTMLLines = '';
 
     # check needed stuff
@@ -82,22 +80,22 @@ sub CreateFredOutput {
 
     # prepare the profiling data for a better readability
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
-        for my $TD (@{$Line}) {
-            $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
+        for my $TD ( @{$Line} ) {
+            $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
         }
         $HTMLLines .= "        <tr>\n"
-                    . "          <td align=\"right\">$Line->[2]</td>\n"
-                    . "          <td align=\"right\">$Line->[3]</td>\n"
-                    . "          <td align=\"right\">$Line->[4]</td>\n"
-                    . "          <td>$Line->[0]</td>\n"
-                    . "          <td align=\"right\">$Line->[1]:</td>\n"
-                    . "          <td>$Line->[5]</td>\n"
-                    . "        </tr>";
+            . "          <td align=\"right\">$Line->[2]</td>\n"
+            . "          <td align=\"right\">$Line->[3]</td>\n"
+            . "          <td align=\"right\">$Line->[4]</td>\n"
+            . "          <td>$Line->[0]</td>\n"
+            . "          <td align=\"right\">$Line->[1]:</td>\n"
+            . "          <td>$Line->[5]</td>\n"
+            . "        </tr>";
     }
 
     # get all packages which SmallProf checks
     my $Packages = '';
-    if ($Param{ModuleRef}->{Packages}) {
+    if ( $Param{ModuleRef}->{Packages} ) {
         $Packages = join ' - ', @{ $Param{ModuleRef}->{Packages} };
     }
 
@@ -132,6 +130,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.8 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

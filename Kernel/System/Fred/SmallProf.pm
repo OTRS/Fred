@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.10 2008-04-02 04:54:06 tr Exp $
+# $Id: SmallProf.pm,v 1.11 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,8 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self       = shift;
-    my %Param      = @_;
+    my ( $Self, %Param ) = @_;
+
     my $Path       = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/';
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::SmallProf');
     my @Lines;
@@ -89,7 +87,7 @@ sub DataGet {
     }
 
     # in this two cases it makes no sense to generate the profiling list
-    if (${$Param{HTMLDataRef}} !~ /\<body.*?\>/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ /\<body.*?\>/ ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'This page deliver the HTML by many separate output calls.'
@@ -98,11 +96,11 @@ sub DataGet {
         return 1;
     }
 
-    return 1 if ${$Param{HTMLDataRef}} =~ /Fred-Setting/;
+    return 1 if ${ $Param{HTMLDataRef} } =~ /Fred-Setting/;
 
     # find out which packages are checked by SmallProf
-    my @Packages = keys %DB::packages;
-    my $CVSCheckProblem = \%DB::packages; # sorry, this is because of the CVSChecker
+    my @Packages        = keys %DB::packages;
+    my $CVSCheckProblem = \%DB::packages;       # sorry, this is because of the CVSChecker
     if ( !$Packages[0] ) {
         $Packages[0] = 'all';
     }
@@ -127,8 +125,8 @@ sub DataGet {
         }
 
         # remove disabled files or path if necessary
-        if ($Config_Ref->{DisabledFiles}) {
-            my $DisabledFiles = join '|', @{$Config_Ref->{DisabledFiles}};
+        if ( $Config_Ref->{DisabledFiles} ) {
+            my $DisabledFiles = join '|', @{ $Config_Ref->{DisabledFiles} };
             @Lines = grep { $_->[0] !~ m{^($DisabledFiles)}x } @Lines;
         }
 
@@ -143,7 +141,7 @@ sub DataGet {
     # compute total calls
     my $TotalCall = 0;
     for my $Time (@Lines) {
-        if ($Time->[2] =~ /\d/) {
+        if ( $Time->[2] =~ /\d/ ) {
             $TotalCall += $Time->[2];
         }
     }
@@ -163,8 +161,9 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
+    my $Self = shift;
+
+    my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -198,7 +197,8 @@ sub ActivateModuleTodos {
     print $FilehandleIII "use Kernel::Config;\n";
     print $FilehandleIII "my \$ConfigObject = Kernel::Config->new();\n";
     print $FilehandleIII "if (\$ConfigObject->Get('Fred::SmallProf')->{Packages}) {\n";
-    print $FilehandleIII "    my \@Array = \@{ \$ConfigObject->Get('Fred::SmallProf')->{Packages} };\n";
+    print $FilehandleIII
+        "    my \@Array = \@{ \$ConfigObject->Get('Fred::SmallProf')->{Packages} };\n";
     print $FilehandleIII "    my \%Hash = map { \$_ => 1; } \@Array;\n";
     print $FilehandleIII "    \%DB::packages = \%Hash;\n";
     print $FilehandleIII "}\n";
@@ -220,8 +220,9 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
+    my $Self = shift;
+
+    my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -273,6 +274,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.11 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

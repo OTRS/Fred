@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredConfigLog.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConfigLog.pm,v 1.4 2008-04-02 04:54:06 tr Exp $
+# $Id: FredConfigLog.pm,v 1.5 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.4 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -41,8 +40,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -67,8 +65,8 @@ create the output of the translationdebugging log
 =cut
 
 sub CreateFredOutput {
-    my $Self      = shift;
-    my %Param     = @_;
+    my ( $Self, %Param ) = @_;
+
     my $HTMLLines = '';
 
     # check needed stuff
@@ -81,18 +79,18 @@ sub CreateFredOutput {
     }
 
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
-        for my $TD (@{$Line}) {
-            $TD = $Self->{LayoutObject}->Ascii2Html(Text => $TD);
+        for my $TD ( @{$Line} ) {
+            $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
         }
-        if ($Line->[1] eq 'True') {
+        if ( $Line->[1] eq 'True' ) {
             $Line->[1] = '';
         }
         $HTMLLines .= "        <tr>\n"
-                    . "          <td align=\"right\">$Line->[3]</td>\n"
-                    . "          <td>$Line->[0]</td>\n"
-                    . "          <td>$Line->[1]</td>\n"
-                    . "          <td>$Line->[2]</td>\n"
-                    . "        </tr>";
+            . "          <td align=\"right\">$Line->[3]</td>\n"
+            . "          <td>$Line->[0]</td>\n"
+            . "          <td>$Line->[1]</td>\n"
+            . "          <td>$Line->[2]</td>\n"
+            . "        </tr>";
     }
 
     if ($HTMLLines) {
@@ -123,6 +121,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.5 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.6 2008-04-02 04:54:06 tr Exp $
+# $Id: DProf.pm,v 1.7 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.6 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,8 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     my @Lines;
 
     # check needed stuff
@@ -87,7 +85,7 @@ sub DataGet {
     }
 
     # in this two cases it makes no sense to generate the profiling list
-    if (${$Param{HTMLDataRef}} !~ /\<body.*?\>/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ /\<body.*?\>/ ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'This page deliver the HTML by many separate output calls.'
@@ -95,7 +93,7 @@ sub DataGet {
         );
         return 1;
     }
-    if (${$Param{HTMLDataRef}} =~ /Fred-Setting/) {
+    if ( ${ $Param{HTMLDataRef} } =~ /Fred-Setting/ ) {
         return 1;
     }
 
@@ -107,12 +105,12 @@ sub DataGet {
     my @ProfilingResults;
 
     # returns the tree results of configured
-    if ($Config_Ref->{FunctionTree}) {
-        if (open my $Filehandle, "dprofpp -FT $Path/DProf.out |") {
+    if ( $Config_Ref->{FunctionTree} ) {
+        if ( open my $Filehandle, "dprofpp -FT $Path/DProf.out |" ) {
             my $Counter = 0;
             while ( my $Line = <$Filehandle> ) {
                 $Counter++;
-                push @ProfilingResults, [$Counter, $Line];
+                push @ProfilingResults, [ $Counter, $Line ];
             }
             close $Filehandle;
         }
@@ -125,15 +123,20 @@ sub DataGet {
     # show the common performance results
     my $ShownLines = $Config_Ref->{ShownLines} < 40 ? $Config_Ref->{ShownLines} : 40;
     my $Options = "-F -O $ShownLines ";
-    $Options .=   $Config_Ref->{OrderBy} eq 'Name'   ? '-a'
-                : $Config_Ref->{OrderBy} eq 'Calls'  ? '-l'
-                :                                    '';
-    if (open my $Filehandle, "dprofpp $Options $Path/DProf.out |") {
+    $Options .= $Config_Ref->{OrderBy} eq 'Name'
+        ? '-a'
+        : $Config_Ref->{OrderBy} eq 'Calls' ? '-l'
+        :                                     '';
+    if ( open my $Filehandle, "dprofpp $Options $Path/DProf.out |" ) {
         while ( my $Line = <$Filehandle> ) {
-            if ( $Line =~ /^\s*?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)$/ ) {
+            if (
+                $Line
+                =~ /^\s*?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)\s+?([^\s]+?)$/
+                )
+            {
                 push @ProfilingResults, [ $1, $2, $3, $4, $5, $6, $7 ];
             }
-            elsif ($Line =~ /^\s*?([^\s]+?)$/ ) {
+            elsif ( $Line =~ /^\s*?([^\s]+?)$/ ) {
                 $ProfilingResults[-1][6] .= $1;
             }
         }
@@ -142,28 +145,28 @@ sub DataGet {
 
     shift @ProfilingResults;
 
-    if ($Config_Ref->{OrderBy} eq 'CuTime') {
+    if ( $Config_Ref->{OrderBy} eq 'CuTime' ) {
         @ProfilingResults = sort { $b->[2] <=> $a->[2] } @ProfilingResults;
     }
 
     # remove disabled packages if necessary
-    if ($Config_Ref->{DisabledPackages}) {
-        my $DisabledPackages = join '|', @{$Config_Ref->{DisabledPackages}};
+    if ( $Config_Ref->{DisabledPackages} ) {
+        my $DisabledPackages = join '|', @{ $Config_Ref->{DisabledPackages} };
         @ProfilingResults = grep { $_->[6] !~ m{^($DisabledPackages)::}x } @ProfilingResults;
     }
 
     # compute total time
     my $TotalTime = 0;
     for my $Time (@ProfilingResults) {
-        if ($Time->[1] ne '-') {
+        if ( $Time->[1] ne '-' ) {
             $TotalTime += $Time->[1];
         }
     }
 
     if ($TotalTime) {
         for my $Time (@ProfilingResults) {
-            if ($Time->[1] ne '-') {
-                $Time->[0] = int($Time->[1] / $TotalTime * 10000) / 100;
+            if ( $Time->[1] ne '-' ) {
+                $Time->[0] = int( $Time->[1] / $TotalTime * 10000 ) / 100;
             }
         }
     }
@@ -171,12 +174,12 @@ sub DataGet {
     # compute total calls
     my $TotalCall = 0;
     for my $Time (@ProfilingResults) {
-        if ($Time->[3] =~ /\d/) {
+        if ( $Time->[3] =~ /\d/ ) {
             $TotalCall += $Time->[3];
         }
     }
 
-    $Param{ModuleRef}->{Data} = \@ProfilingResults;
+    $Param{ModuleRef}->{Data}      = \@ProfilingResults;
     $Param{ModuleRef}->{TotalTime} = $TotalTime;
     $Param{ModuleRef}->{TotalCall} = $TotalCall;
 
@@ -194,7 +197,8 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
+    my $Self = shift;
+
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
@@ -238,7 +242,8 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
+    my $Self = shift;
+
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
@@ -292,6 +297,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.7 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

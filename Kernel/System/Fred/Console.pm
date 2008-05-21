@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.5 2008-04-02 04:54:06 tr Exp $
+# $Id: Console.pm,v 1.6 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,7 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     for my $Ref (qw(ModuleRef HTMLDataRef FredModulesRef)) {
@@ -86,18 +83,18 @@ sub DataGet {
     }
 
     my @Modules = ();
-    for my $Module (keys %{$Param{FredModulesRef}}) {
-        if ($Module ne 'Console') {
+    for my $Module ( keys %{ $Param{FredModulesRef} } ) {
+        if ( $Module ne 'Console' ) {
             push @Modules, $Module;
         }
     }
     $Param{ModuleRef}->{Data} = \@Modules;
 
-    if (${$Param{HTMLDataRef}} !~ /Fred-Setting/ && ${$Param{HTMLDataRef}} =~ /\<body.*?\>/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ /Fred-Setting/ && ${ $Param{HTMLDataRef} } =~ /\<body.*?\>/ ) {
         $Param{ModuleRef}->{Status} = 1;
     }
 
-    if ( ${$Param{HTMLDataRef}} !~ /name="Action" value="Login"/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ /name="Action" value="Login"/ ) {
         $Param{ModuleRef}->{Setting} = 1;
     }
 
@@ -148,6 +145,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.6 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

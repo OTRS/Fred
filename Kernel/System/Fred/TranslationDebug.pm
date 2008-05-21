@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.8 2008-04-02 04:54:06 tr Exp $
+# $Id: TranslationDebug.pm,v 1.9 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,13 +69,12 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
     my $Filehandle;
-    if ( ! open $Filehandle, '<', $File ) {
+    if ( !open $Filehandle, '<', $File ) {
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/",
             "Can't read /var/fred/TranslationDebug.log"
@@ -88,7 +85,7 @@ sub DataGet {
 
     # get the whole information
     LINE:
-    for my $Line (reverse <$Filehandle>) {
+    for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ /FRED/;
 
         chomp $Line;
@@ -98,7 +95,7 @@ sub DataGet {
     }
     close $Filehandle;
 
-    $Self->InsertWord(What => "FRED\n");
+    $Self->InsertWord( What => "FRED\n" );
 
     $Param{ModuleRef}->{Data} = \@LogMessages;
 
@@ -116,8 +113,9 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
+    my $Self = shift;
+
+    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -133,7 +131,8 @@ sub ActivateModuleTodos {
         if ( $Line =~ /# warn if the value is not def/ ) {
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::TranslationDebug;\n";
-            print $FilehandleII "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n";
+            print $FilehandleII
+                "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n";
             print $FilehandleII "\$TranslationDebugObject->InsertWord(What => \$What);\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
@@ -154,8 +153,9 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
+    my $Self = shift;
+
+    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -169,10 +169,11 @@ sub DeactivateModuleTodos {
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
 
     my %RemoveLine = (
-        "# FRED - manipulated\n"                                                                   => 1,
-        "use Kernel::System::Fred::TranslationDebug;\n"                                            => 1,
-        "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n" => 1,
-        "\$TranslationDebugObject->InsertWord(What => \$What);\n"                                  => 1,
+        "# FRED - manipulated\n"                        => 1,
+        "use Kernel::System::Fred::TranslationDebug;\n" => 1,
+        "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n"
+            => 1,
+        "\$TranslationDebugObject->InsertWord(What => \$What);\n" => 1,
     );
 
     for my $Line (@Lines) {
@@ -195,8 +196,7 @@ Save a word in the translation debug log
 =cut
 
 sub InsertWord {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{What} ) {
@@ -232,6 +232,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.9 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

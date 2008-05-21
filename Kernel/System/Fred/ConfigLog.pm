@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.7 2008-04-02 04:54:06 tr Exp $
+# $Id: ConfigLog.pm,v 1.8 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.7 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -74,8 +72,8 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
+
     my @LogMessages;
 
     # open the TranslationDebug.log file to get the untranslated words
@@ -89,7 +87,7 @@ sub DataGet {
 
     # get the whole information
     LINE:
-    for my $Line (reverse <$Filehandle>) {
+    for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ /FRED/;
         push @LogMessages, $Line;
     }
@@ -106,7 +104,7 @@ sub DataGet {
     }
 
     @LogMessages = ();
-    for my $Line (keys %IndividualConfig) {
+    for my $Line ( keys %IndividualConfig ) {
         my @SplitedLine = split /;/, $Line;
         push @SplitedLine, $IndividualConfig{$Line};
         push @LogMessages, \@SplitedLine;
@@ -114,15 +112,15 @@ sub DataGet {
 
     # sort the data
     my $Config_Ref = $Self->{ConfigObject}->Get('Fred::ConfigLog');
-    my $OrderBy    = defined($Config_Ref->{OrderBy}) ? $Config_Ref->{OrderBy} : 3;
-    if ($OrderBy == 3) {
-        @LogMessages   = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
+    my $OrderBy = defined( $Config_Ref->{OrderBy} ) ? $Config_Ref->{OrderBy} : 3;
+    if ( $OrderBy == 3 ) {
+        @LogMessages = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
     }
     else {
-        @LogMessages   = sort { $a->[$OrderBy] cmp $b->[$OrderBy] } @LogMessages;
+        @LogMessages = sort { $a->[$OrderBy] cmp $b->[$OrderBy] } @LogMessages;
     }
 
-    $Param{ModuleRef}->{Data} = \@LogMessages ;
+    $Param{ModuleRef}->{Data} = \@LogMessages;
     return 1;
 }
 
@@ -137,7 +135,8 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
+    my $Self = shift;
+
     my @Lines = ();
 
     my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Config/Defaults.pm';
@@ -160,14 +159,18 @@ sub ActivateModuleTodos {
         if ( $SubGet eq 'Get' && $Line =~ /my \$Self = shift;/ ) {
             $SubGet .= 'Self';
         }
-        if ( ($SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/)                   # OTRS 2.2
-            || $SubGet eq 'Get' && $Line =~ /my \( \$Self, \$What \) = \@_;/) {        # OTRS 2.3
+        if (
+            ( $SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/ )    # OTRS 2.2
+            || $SubGet eq 'Get' && $Line =~ /my \( \$Self, \$What \) = \@_;/
+            )
+        {                                                                # OTRS 2.3
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::ConfigLog;\n";
             print $FilehandleII "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n";
             print $FilehandleII "my \$Caller = caller();\n";
             print $FilehandleII "if (\$Self->{\$What}) { # FRED - manipulated\n";
-            print $FilehandleII "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n";
+            print $FilehandleII
+                "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n";
             print $FilehandleII "}                     # FRED - manipulated\n";
             print $FilehandleII "else {                # FRED - manipulated\n";
             print $FilehandleII
@@ -192,7 +195,8 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
+    my $Self = shift;
+
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Config/Defaults.pm';
 
@@ -212,15 +216,17 @@ sub DeactivateModuleTodos {
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
 
     my %RemoveLine = (
-        "# FRED - manipulated\n"                                                                 => 1,
-        "use Kernel::System::Fred::ConfigLog;\n"                                                 => 1,
-        "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n"                       => 1,
-        "my \$Caller = caller();\n"                                                              => 1,
-        "if (\$Self->{\$What}) { # FRED - manipulated\n"                                         => 1,
-        "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n"  => 1,
-        "}                     # FRED - manipulated\n"                                           => 1,
-        "else {                # FRED - manipulated\n"                                           => 1,
-        "    \$ConfigLogObject->InsertWord(What => \"\$What;False;\$Caller;\", Home => \$Self->{Home});\n" => 1,
+        "# FRED - manipulated\n"                                           => 1,
+        "use Kernel::System::Fred::ConfigLog;\n"                           => 1,
+        "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n" => 1,
+        "my \$Caller = caller();\n"                                        => 1,
+        "if (\$Self->{\$What}) { # FRED - manipulated\n"                   => 1,
+        "    \$ConfigLogObject->InsertWord(What => \"\$What;True;\$Caller;\", Home => \$Self->{Home});\n"
+            => 1,
+        "}                     # FRED - manipulated\n" => 1,
+        "else {                # FRED - manipulated\n" => 1,
+        "    \$ConfigLogObject->InsertWord(What => \"\$What;False;\$Caller;\", Home => \$Self->{Home});\n"
+            => 1,
     );
 
     for my $Line (@Lines) {
@@ -243,8 +249,7 @@ Save a word in the translation debug log
 =cut
 
 sub InsertWord {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     if ( !$Param{Home} ) {
         $Param{Home} = $Self->{ConfigObject}->Get('Home');
@@ -275,6 +280,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.8 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

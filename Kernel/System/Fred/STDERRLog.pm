@@ -2,7 +2,7 @@
 # Kernel/System/Fred/STDERRLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.10 2008-04-02 04:54:06 tr Exp $
+# $Id: STDERRLog.pm,v 1.11 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.10 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,7 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     for my $Needed_Ref (qw( ModuleRef)) {
@@ -88,7 +85,7 @@ sub DataGet {
     # open the STDERR.log file to get the STDERR messages
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/STDERR.log';
     my $Filehandle;
-    if (! open $Filehandle, '<', $File ) {
+    if ( !open $Filehandle, '<', $File ) {
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/ or /Kernel/Config/Files/AAAFred.pm.",
             "Can't read /var/fred/STDERR.log"
@@ -100,12 +97,16 @@ sub DataGet {
 
     # get the whole information
     LINE:
-    for my $Line (reverse <$Filehandle>) {
+    for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ m{^FRED}msx;
 
         # Attention: the last two strings are because of DProf. I have to force the process.
         # So I get this warnings!
-        if ( $Line !~ /(Subroutine .+? redefined at|has .+? unstacked calls|Faking .+? exit timestamp)/ ) {
+        if (
+            $Line
+            !~ /(Subroutine .+? redefined at|has .+? unstacked calls|Faking .+? exit timestamp)/
+            )
+        {
             push @LogMessages, $Line;
         }
     }
@@ -160,6 +161,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.11 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

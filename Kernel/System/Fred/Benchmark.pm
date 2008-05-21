@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Benchmark.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Benchmark.pm,v 1.3 2008-04-02 04:54:06 tr Exp $
+# $Id: Benchmark.pm,v 1.4 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.3 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,7 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     for my $Needed_Ref (qw( ModuleRef )) {
@@ -85,8 +82,12 @@ sub DataGet {
         }
     }
 
-    my $TableRef = [["Can't find the benchmark table, please check your code an read the HOWTO for the benchmark module."]];
-    if ($Self->{ConfigObject}->Get('Benchmark')) {
+    my $TableRef = [
+        [
+            "Can't find the benchmark table, please check your code an read the HOWTO for the benchmark module."
+        ]
+    ];
+    if ( $Self->{ConfigObject}->Get('Benchmark') ) {
         $TableRef = $Self->{ConfigObject}->Get('Benchmark');
     }
     $Param{ModuleRef}->{Data} = $TableRef;
@@ -138,6 +139,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.4 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/LayoutFred.pm - provides generic HTML output for fred
-# Copyright (C) 2001-2007 OTRS GmbH, http://otrs.org/
+# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFred.pm,v 1.2 2007-09-25 21:52:09 mh Exp $
+# $Id: LayoutFred.pm,v 1.3 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
 
 package Kernel::Output::HTML::LayoutFred;
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.2 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =item CreateFredOutput()
 
@@ -29,8 +28,7 @@ create the output of the several fred modules
 =cut
 
 sub CreateFredOutput {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{FredModulesRef} || ref( $Param{FredModulesRef} ) ne 'HASH' ) {
@@ -66,8 +64,7 @@ load a special fred layout backends
 =cut
 
 sub _LoadLayoutBackend {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{ModuleName} ) {
@@ -103,12 +100,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl.txt.
+did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2007-09-25 21:52:09 $
+$Revision: 1.3 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

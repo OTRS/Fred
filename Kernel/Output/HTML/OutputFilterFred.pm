@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.15 2008-03-14 09:02:37 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.16 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,8 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.15 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -35,8 +34,7 @@ a output filter module specially for developer
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -63,8 +61,7 @@ sub new {
 }
 
 sub Run {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # is a check because OTRS2.2 don't deliver here a LayoutObject
     if ( !$Self->{LayoutObject} ) {
@@ -72,29 +69,33 @@ sub Run {
     }
 
     # perhaps no output is generated
-    if (!$Param{Data}) {
+    if ( !$Param{Data} ) {
         die 'Fred: At the moment, your code generates no output!';
     }
 
     # do nothing if output is a attachment
-    if (${ $Param{Data} } =~ /^Content-Disposition: attachment;/mi
+    if (
+        ${ $Param{Data} } =~ /^Content-Disposition: attachment;/mi
         || ${ $Param{Data} } =~ /^Content-Disposition: inline;/mi
-    ) {
+        )
+    {
         print STDERR "ATTACHMENT DOWNLOAD\n";
         return 1;
     }
 
     # do nothing if it is a redirect
-    if (   ${ $Param{Data} } =~ /^Status: 302 Moved/mi
+    if (
+        ${ $Param{Data} } =~ /^Status: 302 Moved/mi
         && ${ $Param{Data} } =~ /^location:/mi
-        && length( ${ $Param{Data} } ) < 800 )
+        && length( ${ $Param{Data} } ) < 800
+        )
     {
         print STDERR "REDIRECT\n";
         return 1;
     }
 
     # do nothing if it is fred it self
-    if ( ${ $Param{Data} } =~ m{Fred-Setting<\/title>}msx){
+    if ( ${ $Param{Data} } =~ m{Fred-Setting<\/title>}msx ) {
         print STDERR "CHANGE FRED SETTING\n";
         return 1;
     }
@@ -119,7 +120,7 @@ sub Run {
 
     # build the content string
     my $Output = '';
-    if ($ModulesDataRef->{Console}->{Output}) {
+    if ( $ModulesDataRef->{Console}->{Output} ) {
         $Output .= $ModulesDataRef->{Console}->{Output};
         delete $ModulesDataRef->{Console};
     }
@@ -151,6 +152,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2008-03-14 09:02:37 $
+$Revision: 1.16 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

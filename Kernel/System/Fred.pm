@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.8 2008-04-02 04:54:06 tr Exp $
+# $Id: Fred.pm,v 1.9 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = '$Revision: 1.8 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -53,8 +52,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -80,8 +78,7 @@ on the FredModules reference.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{FredModulesRef} || ref( $Param{FredModulesRef} ) ne 'HASH' ) {
@@ -128,8 +125,7 @@ Do all jobs which are necessary to activate a fred module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{ModuleName} ) {
@@ -166,8 +162,7 @@ Do all jobs which are necessary to deactivate a fred module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{ModuleName} ) {
@@ -204,8 +199,7 @@ load a xml item module
 =cut
 
 sub _LoadBackend {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{ModuleName} ) {
@@ -222,6 +216,7 @@ sub _LoadBackend {
         my $BackendObject = $GenericModule->new( %{$Self}, %Param, );
 
         if ($BackendObject) {
+
             # return object
             return $BackendObject;
         }
@@ -240,7 +235,8 @@ FRED in OTRS2.2 Layout.pm
 =cut
 
 sub InsertLayoutObject22 {
-    my $Self  = shift;
+    my $Self = shift;
+
     my @Lines = ();
     my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Layout.pm';
 
@@ -288,9 +284,10 @@ FRED in OTRS2.1 InterfaceAgent.pm
 =cut
 
 sub InsertLayoutObject21 {
-    my $Self  = shift;
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/Web/InterfaceAgent.pm';
+    my $Self = shift;
+
+    my @Lines       = ();
+    my $File        = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/Web/InterfaceAgent.pm';
     my $FileChanged = 0;
 
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -299,7 +296,7 @@ sub InsertLayoutObject21 {
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         if ( $Line =~ /^\s*print \$GenericObject->Run\(\);/ ) {
-            my $Manipulated =<<'            END_MANIPULATED';
+            my $Manipulated = <<'            END_MANIPULATED';
             # FRED - manipulated
             my $OutputRef = \$GenericObject->Run();
 
@@ -364,6 +361,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.9 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

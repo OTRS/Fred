@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.9 2008-04-02 04:54:06 tr Exp $
+# $Id: SQLLog.pm,v 1.10 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,8 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -45,8 +44,7 @@ create an object
 =cut
 
 sub new {
-    my $Type  = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -71,8 +69,7 @@ And add the data to the module ref.
 =cut
 
 sub DataGet {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
@@ -91,20 +88,21 @@ sub DataGet {
 
     # get the whole information
     LINE:
-    for my $Line (reverse <$Filehandle>) {
+    for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ /FRED/;
 
         my @SplitedLog = split /;/, $Line;
-        if ($SplitedLog[0] eq 'SQL-DO' && $SplitedLog[1] =~ /^SELECT/) {
+        if ( $SplitedLog[0] eq 'SQL-DO' && $SplitedLog[1] =~ /^SELECT/ ) {
             $SplitedLog[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
         }
         push @LogMessages, \@SplitedLog;
 
-        if ($SplitedLog[0] eq 'SQL-DO') {
+        if ( $SplitedLog[0] eq 'SQL-DO' ) {
             $DoStatements++;
         }
+
         # transfer in 1/100 sec
-        if ($SplitedLog[3]) {
+        if ( $SplitedLog[3] ) {
             $Param{ModuleRef}->{Time} += $SplitedLog[3];
             $SplitedLog[3] *= 100;
         }
@@ -116,10 +114,10 @@ sub DataGet {
     # find multi used statements
     my %MultiUsed;
     for my $StatementRef (@LogMessages) {
-        $MultiUsed{$StatementRef->[1]}++;
+        $MultiUsed{ $StatementRef->[1] }++;
     }
     for my $StatementRef (@LogMessages) {
-        push @{$StatementRef} , ($MultiUsed{$StatementRef->[1]} - 1);
+        push @{$StatementRef}, ( $MultiUsed{ $StatementRef->[1] } - 1 );
     }
 
     $Self->InsertWord( What => "FRED\n" );
@@ -142,7 +140,7 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self  = shift;
+    my $Self = shift;
 
     my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/DB.pm';
 
@@ -159,7 +157,8 @@ sub ActivateModuleTodos {
     my $Prepare;
     my $DoSQL;
     for my $Line (@Lines) {
-        if ( $Line =~ m[^                               \s*
+        if (
+            $Line =~ m[^                               \s*
                         if                              \s*
                         \(                              \s*
                         !                               \s*
@@ -171,14 +170,16 @@ sub ActivateModuleTodos {
                         \)                              \s*
                         {
             ]x
-        ) {
+            )
+        {
             $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log Prepare!" );
             $Prepare = 1;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
             print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
             print $FilehandleII "my \$t0 = [gettimeofday];\n";
-            print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
+            print $FilehandleII
+                "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
             print $FilehandleII "my \$Caller = caller();\n";
             print $FilehandleII "# FRED - manipulated\n";
 
@@ -187,7 +188,8 @@ sub ActivateModuleTodos {
             $Prepare = 0;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
-            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller;\$DiffTime\");\n";
+            print $FilehandleII
+                "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller;\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
 
@@ -198,7 +200,8 @@ sub ActivateModuleTodos {
             print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
             print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
             print $FilehandleII "my \$t0 = [gettimeofday];\n";
-            print $FilehandleII "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
+            print $FilehandleII
+                "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
             print $FilehandleII "my \$Caller = caller();\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
@@ -207,7 +210,8 @@ sub ActivateModuleTodos {
             $DoSQL = 0;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
-            print $FilehandleII "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller;\$DiffTime\");\n";
+            print $FilehandleII
+                "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller;\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
 
@@ -229,8 +233,9 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self  = shift;
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/DB.pm';
+    my $Self = shift;
+
+    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/DB.pm';
 
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
@@ -244,15 +249,15 @@ sub DeactivateModuleTodos {
     open my $FilehandleII, '>', $File || die "Can't write $File !\n";
 
     my %RemoveLine = (
-        "# FRED - manipulated\n"                                                  => 1,
-        "use Kernel::System::Fred::SQLLog;\n"                                     => 1,
-        "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n"    => 1,
-        "my \$Caller = caller();\n"                                               => 1,
+        "# FRED - manipulated\n"                                                              => 1,
+        "use Kernel::System::Fred::SQLLog;\n"                                                 => 1,
+        "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n"                => 1,
+        "my \$Caller = caller();\n"                                                           => 1,
         "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\;\$DiffTime\");\n" => 1,
         "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\;\$DiffTime\");\n"    => 1,
-        "use Time::HiRes qw(gettimeofday tv_interval);\n"   => 1,
-        "my \$t0 = [gettimeofday];\n"   => 1,
-        "my \$DiffTime = tv_interval(\$t0);\n" => 1,
+        "use Time::HiRes qw(gettimeofday tv_interval);\n"                                     => 1,
+        "my \$t0 = [gettimeofday];\n"                                                         => 1,
+        "my \$DiffTime = tv_interval(\$t0);\n"                                                => 1,
     );
 
     for my $Line (@Lines) {
@@ -275,8 +280,7 @@ Save a word in the translation debug log
 =cut
 
 sub InsertWord {
-    my $Self  = shift;
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
     if ( !$Param{What} ) {
@@ -312,6 +316,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.10 $ $Date: 2008-05-21 10:11:57 $
 
 =cut

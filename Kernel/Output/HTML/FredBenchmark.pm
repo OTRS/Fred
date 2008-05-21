@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredBenchmark.pm - layout backend module
 # Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
 # --
-# $Id: FredBenchmark.pm,v 1.2 2008-04-02 04:54:06 tr Exp $
+# $Id: FredBenchmark.pm,v 1.3 2008-05-21 10:11:57 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -40,7 +40,7 @@ create an object
 =cut
 
 sub new {
-    my ($Type, %Param)  = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {};
@@ -65,10 +65,10 @@ create the output of the STDERR log
 =cut
 
 sub CreateFredOutput {
-    my ($Self, %Param) = @_;
+    my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ModuleRef}) {
+    if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
@@ -80,9 +80,9 @@ sub CreateFredOutput {
     return if ref $Param{ModuleRef}->{Data} ne 'ARRAY';
 
     my $HTMLLines = '';
-    for my $Line ( @{ $Param{ModuleRef}->{Data} }) {
+    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
         $HTMLLines .= '<tr>';
-        for my $Cell (@{$Line}) {
+        for my $Cell ( @{$Line} ) {
             $HTMLLines .= "<td>$Cell</td>";
         }
         $HTMLLines .= '</tr>';
@@ -117,6 +117,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2008-04-02 04:54:06 $
+$Revision: 1.3 $ $Date: 2008-05-21 10:11:57 $
 
 =cut
