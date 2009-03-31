@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/TranslationDebug.pm
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.10 2008-08-25 13:32:13 tr Exp $
+# $Id: TranslationDebug.pm,v 1.11 2009-03-31 12:47:50 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Fred::TranslationDebug;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -199,7 +199,7 @@ sub InsertWord {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !defined($Param{What}) ) {
+    if ( !defined( $Param{What} ) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need What!',
@@ -225,13 +225,13 @@ sub InsertWord {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2008-08-25 13:32:13 $
+$Revision: 1.11 $ $Date: 2009-03-31 12:47:50 $
 
 =cut
