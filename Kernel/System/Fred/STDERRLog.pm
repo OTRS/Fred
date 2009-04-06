@@ -2,7 +2,7 @@
 # Kernel/System/Fred/STDERRLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.12 2009-04-06 10:22:03 mh Exp $
+# $Id: STDERRLog.pm,v 1.13 2009-04-06 10:26:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -123,7 +123,7 @@ sub DataGet {
 
     # trim the log message array
     LINE:
-    for my $Line (reverse @LogMessages) {
+    for my $Line ( reverse @LogMessages ) {
         last LINE if $Line !~ m{ \A \s* \z }xms;
         shift @LogMessages;
     }
@@ -177,6 +177,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-04-06 10:22:03 $
+$Revision: 1.13 $ $Date: 2009-04-06 10:26:30 $
 
 =cut

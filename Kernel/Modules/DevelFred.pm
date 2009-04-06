@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/DevelFred.pm - a special developer module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.12 2008-05-21 10:11:56 mh Exp $
+# $Id: DevelFred.pm,v 1.13 2009-04-06 10:25:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::DevelFred;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 #use Kernel::System::XML;
 use Kernel::System::Config;

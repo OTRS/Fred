@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/DProf.pm
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.7 2008-05-21 10:11:57 mh Exp $
+# $Id: DProf.pm,v 1.8 2009-04-06 10:26:30 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Fred::DProf;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -290,13 +290,13 @@ sub DeactivateModuleTodos {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2008-05-21 10:11:57 $
+$Revision: 1.8 $ $Date: 2009-04-06 10:26:30 $
 
 =cut

@@ -1,12 +1,12 @@
 # --
 # DevelFredSmallProf.dtl - a frontend to show the SmallProf result table
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSmallProf.dtl,v 1.4 2008-02-02 12:44:16 tr Exp $
+# $Id: DevelFredSmallProf.dtl,v 1.5 2009-04-06 10:25:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
   <tr>

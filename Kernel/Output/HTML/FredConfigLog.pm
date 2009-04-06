@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/FredConfigLog.pm - layout backend module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConfigLog.pm,v 1.5 2008-05-21 10:11:57 mh Exp $
+# $Id: FredConfigLog.pm,v 1.6 2009-04-06 10:25:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Output::HTML::FredConfigLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -114,13 +114,13 @@ sub CreateFredOutput {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2008-05-21 10:11:57 $
+$Revision: 1.6 $ $Date: 2009-04-06 10:25:13 $
 
 =cut
