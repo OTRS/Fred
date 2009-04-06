@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Fred/STDERRLog.pm
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: STDERRLog.pm,v 1.11 2008-05-21 10:11:57 mh Exp $
+# $Id: STDERRLog.pm,v 1.12 2009-04-06 10:22:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Fred::STDERRLog;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -54,6 +54,7 @@ sub new {
     for my $Object (qw(ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
     return $Self;
 }
 
@@ -72,7 +73,7 @@ sub DataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed_Ref (qw( ModuleRef)) {
+    for my $Needed_Ref (qw(ModuleRef)) {
         if ( !$Param{$Needed_Ref} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -88,17 +89,16 @@ sub DataGet {
     if ( !open $Filehandle, '<', $File ) {
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/ or /Kernel/Config/Files/AAAFred.pm.",
-            "Can't read /var/fred/STDERR.log"
+            "Can't read /var/fred/STDERR.log",
         ];
         return;
     }
 
-    my @LogMessages;
-
     # get the whole information
+    my @LogMessages;
     LINE:
     for my $Line ( reverse <$Filehandle> ) {
-        last LINE if $Line =~ m{^FRED}msx;
+        last LINE if $Line =~ m{ \A \s* FRED \s* \z}xms;
 
         # Attention: the last two strings are because of DProf. I have to force the process.
         # So I get this warnings!
@@ -111,7 +111,23 @@ sub DataGet {
         }
     }
     close $Filehandle;
-    print STDERR "FRED\n";
+
+    print STDERR "\nFRED\n";
+
+    # trim the log message array
+    LINE:
+    for my $Line (@LogMessages) {
+        last LINE if $Line !~ m{ \A \s* \z }xms;
+        shift @LogMessages;
+    }
+
+    # trim the log message array
+    LINE:
+    for my $Line (reverse @LogMessages) {
+        last LINE if $Line !~ m{ \A \s* \z }xms;
+        shift @LogMessages;
+    }
+
     $Param{ModuleRef}->{Data} = \@LogMessages;
 
     return 1;
@@ -154,13 +170,13 @@ sub DeactivateModuleTodos {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2008-05-21 10:11:57 $
+$Revision: 1.12 $ $Date: 2009-04-06 10:22:03 $
 
 =cut
