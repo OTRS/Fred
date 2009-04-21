@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.7 2009-04-06 10:26:30 mh Exp $
+# $Id: Console.pm,v 1.8 2009-04-21 10:13:10 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,11 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
-Kernel::System::Fred::SmallProf
+Kernel::System::Fred::Console
 
 =head1 SYNOPSIS
 
@@ -35,10 +35,15 @@ create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
+    use Kernel::System::Fred::Console;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+    );
+    my $SmallProfObject = Kernel::System::Fred::Console->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
 
 =cut
@@ -145,6 +150,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-04-06 10:26:30 $
+$Revision: 1.8 $ $Date: 2009-04-21 10:13:10 $
 
 =cut

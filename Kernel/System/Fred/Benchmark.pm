@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Benchmark.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Benchmark.pm,v 1.5 2009-04-06 10:26:30 mh Exp $
+# $Id: Benchmark.pm,v 1.6 2009-04-21 10:13:10 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -35,10 +35,15 @@ create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
+    use Kernel::System::Fred::Benchmark;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+    );
+    my $SmallProfObject = Kernel::System::Fred::Benchmark->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
 
 =cut
@@ -139,6 +144,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-04-06 10:26:30 $
+$Revision: 1.6 $ $Date: 2009-04-21 10:13:10 $
 
 =cut

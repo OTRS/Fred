@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.11 2009-03-31 12:47:50 mh Exp $
+# $Id: TranslationDebug.pm,v 1.12 2009-04-21 10:13:10 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -35,10 +35,15 @@ create an object
 
     use Kernel::Config;
     use Kernel::System::Log;
+    use Kernel::System::Fred::TranslationDebug;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+    );
+    my $SmallProfObject = Kernel::System::Fred::TranslationDebug->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
 
 =cut
@@ -232,6 +237,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-03-31 12:47:50 $
+$Revision: 1.12 $ $Date: 2009-04-21 10:13:10 $
 
 =cut
