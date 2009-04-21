@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredConsole.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConsole.pm,v 1.6 2009-04-06 10:25:13 mh Exp $
+# $Id: FredConsole.pm,v 1.7 2009-04-21 11:44:01 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -83,6 +83,7 @@ sub CreateFredOutput {
         = 'Activated modules: <b>' . ( join ' - ', @{ $Param{ModuleRef}->{Data} } ) . '</b>';
 
     if ( $Param{ModuleRef}->{Status} ) {
+
         if ( $Param{ModuleRef}->{Setting} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'Setting',
@@ -92,6 +93,7 @@ sub CreateFredOutput {
             TemplateFile => 'DevelFredConsole',
             Data         => {
                 Text => $Console,
+                ModPerl => _ModPerl(),
             },
         );
     }
@@ -99,6 +101,14 @@ sub CreateFredOutput {
     return 1;
 }
 
+sub _ModPerl {
+    # find out, if modperl is used
+    my $ModPerl = 'is not activated';
+    if ( exists $ENV{MOD_PERL} && defined $mod_perl::VERSION ) {
+        $ModPerl = $mod_perl::VERSION;
+    }
+    return $ModPerl;
+}
 1;
 
 =back
@@ -115,6 +125,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.7 $ $Date: 2009-04-21 11:44:01 $
 
 =cut

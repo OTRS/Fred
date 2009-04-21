@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFred.pm - provides generic HTML output for fred
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFred.pm,v 1.5 2009-04-21 09:35:46 tr Exp $
+# $Id: LayoutFred.pm,v 1.6 2009-04-21 11:44:01 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =item CreateFredOutput()
 
@@ -31,7 +31,7 @@ sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{FredModulesRef} || ref( $Param{FredModulesRef} ) ne 'HASH' ) {
+    if ( !$Param{FredModulesRef} || ref $Param{FredModulesRef} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need FredModulesRef!',
@@ -102,6 +102,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-04-21 09:35:46 $
+$Revision: 1.6 $ $Date: 2009-04-21 11:44:01 $
 
 =cut
