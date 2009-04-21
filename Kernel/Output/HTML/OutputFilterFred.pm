@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.17 2009-04-06 10:25:13 mh Exp $
+# $Id: OutputFilterFred.pm,v 1.18 2009-04-21 10:21:57 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -75,7 +75,7 @@ sub Run {
 
     # do nothing if output is a attachment
     if (
-        ${ $Param{Data} } =~ /^Content-Disposition: attachment;/mi
+        ${ $Param{Data} }    =~ /^Content-Disposition: attachment;/mi
         || ${ $Param{Data} } =~ /^Content-Disposition: inline;/mi
         )
     {
@@ -85,7 +85,7 @@ sub Run {
 
     # do nothing if it is a redirect
     if (
-        ${ $Param{Data} } =~ /^Status: 302 Moved/mi
+        ${ $Param{Data} }    =~ /^Status: 302 Moved/mi
         && ${ $Param{Data} } =~ /^location:/mi
         && length( ${ $Param{Data} } ) < 800
         )
@@ -152,6 +152,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.18 $ $Date: 2009-04-21 10:21:57 $
 
 =cut
