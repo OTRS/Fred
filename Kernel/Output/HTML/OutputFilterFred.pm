@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.19 2009-04-21 10:28:13 tr Exp $
+# $Id: OutputFilterFred.pm,v 1.20 2009-04-21 10:54:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -47,26 +47,12 @@ sub new {
 
     $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
 
-    if ( $Param{LayoutObject} ) {
-        $Self->{LayoutObject} = $Param{LayoutObject};
-    }
-    else {
-
-        # insert LayoutObject entry in FilterContent function of the Layout.pm
-        # this happens only in OTRS 2.2
-        $Self->{FredObject}->InsertLayoutObject22();
-    }
-
+    $Self->{LayoutObject} = $Param{LayoutObject};
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
-
-    # is a check because OTRS2.2 don't deliver here a LayoutObject
-    if ( !$Self->{LayoutObject} ) {
-        return 1;
-    }
 
     # perhaps no output is generated
     if ( !$Param{Data} ) {
@@ -152,6 +138,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2009-04-21 10:28:13 $
+$Revision: 1.20 $ $Date: 2009-04-21 10:54:37 $
 
 =cut

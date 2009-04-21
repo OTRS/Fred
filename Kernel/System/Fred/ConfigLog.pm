@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.11 2009-04-21 10:21:57 tr Exp $
+# $Id: ConfigLog.pm,v 1.12 2009-04-21 10:54:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -170,10 +170,10 @@ sub ActivateModuleTodos {
             $SubGet .= 'Self';
         }
         if (
-            ( $SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/ )    # OTRS 2.2
+            ( $SubGet eq 'GetSelf' && $Line =~ /my \$What = shift;/ )
             || $SubGet eq 'Get' && $Line =~ /my \( \$Self, \$What \) = \@_;/
             )
-        {                                                                # OTRS 2.3
+        {
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "use Kernel::System::Fred::ConfigLog;\n";
             print $FilehandleII "my \$ConfigLogObject = Kernel::System::Fred::ConfigLog->new();\n";
@@ -290,6 +290,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.12 $ $Date: 2009-04-21 10:54:37 $
 
 =cut

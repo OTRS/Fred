@@ -2,7 +2,7 @@
 # Kernel/System/Fred.pm - all fred core functions
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Fred.pm,v 1.12 2009-04-21 10:28:13 tr Exp $
+# $Id: Fred.pm,v 1.13 2009-04-21 10:54:37 tr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -236,126 +236,6 @@ sub _LoadBackend {
     return;
 }
 
-=item InsertLayoutObject22()
-
-FRAMEWORK-2.2 specific because there is no LayoutObject integration for
-FRED in OTRS2.2 Layout.pm
-
-    $FredObject->InsertLayoutObject22();
-
-=cut
-
-sub InsertLayoutObject22 {
-    my $Self = shift;
-
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/Kernel/Output/HTML/Layout.pm';
-
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # read file
-    my $InSub;
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-        if ( $Line =~ /sub Print {/ ) {
-            $InSub = 1;
-        }
-        if ( $InSub && $Line =~ /Debug => \$Self->{Debug},/ ) {
-            push @Lines, "# FRED - manipulated\n";
-            push @Lines, "                    LayoutObject => \$Self,\n";
-            push @Lines, "# FRED - manipulated\n";
-            $InSub = 0;
-        }
-    }
-    close $Filehandle;
-
-    # write file
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
-    close $FilehandleII;
-
-    # log the manipulation
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => "FRED manipulated the $File!",
-    );
-    return 1;
-}
-
-=item InsertLayoutObject21()
-
-FRAMEWORK-2.1 specific because there is no LayoutObject integration for
-FRED in OTRS2.1 InterfaceAgent.pm
-
-    $FredObject->InsertLayoutObject21();
-
-=cut
-
-sub InsertLayoutObject21 {
-    my $Self = shift;
-
-    my @Lines       = ();
-    my $File        = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/Web/InterfaceAgent.pm';
-    my $FileChanged = 0;
-
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # read file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        if ( $Line =~ /^\s*print \$GenericObject->Run\(\);/ ) {
-            my $Manipulated = <<'            END_MANIPULATED';
-            # FRED - manipulated
-            my $OutputRef = \$GenericObject->Run();
-
-            if ( $Self->{MainObject}->Require( 'Kernel::Output::HTML::OutputFilterFred' ) ) {
-                $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new(
-                    %{$Self},
-                    %Param,
-                );
-
-                my $Object = Kernel::Output::HTML::OutputFilterFred->new(
-                    ConfigObject => $Self->{ConfigObject},
-                    MainObject   => $Self->{MainObject},
-                    LogObject    => $Self->{LogObject},
-                    Debug        => $Self->{Debug},
-                    LayoutObject => $Self->{LayoutObject},
-                );
-
-                # run module
-                $Object->Run( %{ $Self }, Data => $OutputRef );
-
-            }
-            print ${$OutputRef};
-            #print $GenericObject->Run();
-            # FRED - manipulated
-            END_MANIPULATED
-            push @Lines, $Manipulated;
-            $FileChanged = 1;
-            next;
-        }
-        push @Lines, $Line;
-    }
-    close $Filehandle;
-
-    # write file
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
-    close $FilehandleII;
-
-    # log the manipulation
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => "FRED manipulated the $File!",
-    );
-    return $FileChanged;
-}
-
 1;
 
 =back
@@ -372,6 +252,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-04-21 10:28:13 $
+$Revision: 1.13 $ $Date: 2009-04-21 10:54:37 $
 
 =cut
