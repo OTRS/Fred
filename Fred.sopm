@@ -2,8 +2,9 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.22 2009-04-21 10:54:37 tr Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.23 2009-09-14 09:34:00 mh Exp $</CVS>
     <Framework>2.4.x</Framework>
+    <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.02">HTML::Lint</ModuleRequired>
     <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
     <ModuleRequired Version="19990108">Devel::DProf</ModuleRequired>
