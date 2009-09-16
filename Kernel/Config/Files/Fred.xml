@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.18 2008-02-03 07:37:57 tr Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.19 2009-09-16 11:15:57 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -119,16 +119,9 @@
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <!-- <Group>admin</Group> -->
                 <Description>Admin</Description>
                 <Title>Fred-Developertools</Title>
                 <NavBarName>Admin</NavBarName>
-                <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>Fred</Name>
-                    <Block>Block4</Block>
-                    <Prio>999</Prio>
-                </NavBarModule>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
