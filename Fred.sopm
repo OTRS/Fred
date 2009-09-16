@@ -2,12 +2,12 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.23 2009-09-14 09:34:00 mh Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.24 2009-09-16 11:18:03 mh Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
-    <ModuleRequired Version="2.02">HTML::Lint</ModuleRequired>
-    <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
-    <ModuleRequired Version="19990108">Devel::DProf</ModuleRequired>
+    <ModuleRequired>HTML::Lint</ModuleRequired>
+    <ModuleRequired>Devel::SmallProf</ModuleRequired>
+    <ModuleRequired>Devel::DProf</ModuleRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
