@@ -1,0 +1,33 @@
+# --
+# DevelFredCommonCSS.dtl - common CSS for Fred modules
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: DevelFredCommonCSS.dtl,v 1.1 2009-10-21 18:40:37 mg Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<style type="text/css">
+.DevelFredBox {
+border: 2px solid black;
+background-color: white;
+}
+
+.DevelFredBox h1 {
+font-size: 12px;
+background-color: #ba0f0f;
+color: white;
+margin: 0;
+padding: 2px;
+}
+
+.DevelFredBox pre {
+margin: 0;
+padding: 0;
+}
+
+.DevelFredBox small, .FredBox small * {
+font-size: 11px;
+}
+</style>

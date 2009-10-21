@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.26 2009-09-16 11:49:26 mh Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.27 2009-10-21 18:40:37 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
@@ -12,7 +12,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A tool to  support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
-    <IntroInstallPre Title="" Lang="en" >
+    <IntroInstallPre Title="" Lang="en">
     &lt;br&gt;
     Welcome! &lt;br&gt;
     &lt;br&gt;
@@ -22,6 +22,10 @@
     &lt;li&gt; Devel::DProf&lt;/li&gt;
     &lt;li&gt; HTML::Lint&lt;/li&gt;
     &lt;/ul&gt;
+    If you want to use the HTMLValidate module of Fred, you also need to install the following program &lt;br&gt;
+    &lt;ul&gt;
+    &lt;li&gt; validator (available from http://www.htmlhelp.com/tools/validator/offline/, Linux distributions may have it as package wdg-html-validator) &lt;/li&gt;
+    &lt;/ul&gt;
     &lt;br&gt;
     &lt;br&gt;
     What can Fred do?&lt;br&gt;
@@ -30,6 +34,8 @@
     &lt;ul&gt;
     &lt;li&gt; HTMLCheck: &lt;br&gt;
                 the HTML output is checked by means of HTML::Lint &lt;/li&gt;
+    &lt;li&gt; HTMLValidate: &lt;br&gt;
+                real HTML validation based on an external tool &lt;/li&gt;
     &lt;li&gt; STDERRLog: &lt;br&gt;
                 every entry contained in STDERR is displayed &lt;/li&gt;
     &lt;li&gt; TranslationDebug: &lt;br&gt;
@@ -66,6 +72,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredBenchmark.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FredHTMLValidate.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSmallProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredDProf.pm"/>
@@ -75,8 +82,10 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredBenchmark.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLValidate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSetting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSmallProf.dtl"/>
@@ -88,6 +97,7 @@
         <File Permission="644" Location="Kernel/System/Fred/Benchmark.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/HTMLValidate.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/SmallProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/DProf.pm"/>

@@ -1,0 +1,48 @@
+# --
+# DevelFredHTMLValidate.dtl - a frontend to show the HTML-Check results
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: DevelFredHTMLValidate.dtl,v 1.1 2009-10-21 18:40:37 mg Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+$Include{"DevelFredCommonCSS"}
+
+<div class="DevelFredBox">
+    <h1>Fred-HTMLCheck Result</h1>
+    <table cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td></td>
+            <td>Line</td>
+            <td>Character</td>
+            <td>Message</td>
+        </tr>
+<!-- dtl:block:ValidationRow -->
+        <tr>
+            <td>$QData{"Type"}</td>
+            <td>$QData{"LineNumber"}</td>
+            <td>$QData{"CharNumber"}</td>
+            <td>$QData{"Message"}</td>
+        </tr>
+<!-- dtl:block:ValidationRow -->
+        <tr>
+            <td colspan="4">
+                <input type="button" value="Show source" onclick="document.getElementById('HTMLValidatorOrig').style.display = 'block';" />
+            </td>
+        </tr>
+    </table>
+    <table id="HTMLValidatorOrig" style="display: none" bgcolor="#ffffff" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td bgcolor="ba0f0f" colspan="2">Fred-HTMLCheck Original Content</td>
+        </tr>
+<!-- dtl:block:OrigRow -->
+        <tr>
+            <td>$QData{"LineNumber"}</td>
+            <td style="$Data{"Style"}"><pre>$QData{"LineContent"}</pre></td>
+        </tr>
+<!-- dtl:block:OrigRow -->
+    </table>
+</div>
