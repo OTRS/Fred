@@ -2,7 +2,7 @@
 # DevelFredHTMLValidate.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLValidate.dtl,v 1.1 2009-10-21 18:40:37 mg Exp $
+# $Id: DevelFredHTMLValidate.dtl,v 1.2 2009-10-21 19:02:18 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@ $Include{"DevelFredCommonCSS"}
 
 <div class="DevelFredBox">
     <h1>Fred-HTMLCheck Result</h1>
-    <table cellspacing="0" cellpadding="0" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
         <tr>
             <td></td>
             <td>Line</td>
@@ -22,9 +22,9 @@ $Include{"DevelFredCommonCSS"}
         </tr>
 <!-- dtl:block:ValidationRow -->
         <tr>
-            <td>$QData{"Type"}</td>
-            <td>$QData{"LineNumber"}</td>
-            <td>$QData{"CharNumber"}</td>
+            <td width="1%">$QData{"Type"}</td>
+            <td width="1%">$QData{"LineNumber"}</td>
+            <td width="1%">$QData{"CharNumber"}</td>
             <td>$QData{"Message"}</td>
         </tr>
 <!-- dtl:block:ValidationRow -->
@@ -34,15 +34,14 @@ $Include{"DevelFredCommonCSS"}
             </td>
         </tr>
     </table>
-    <table id="HTMLValidatorOrig" style="display: none" bgcolor="#ffffff" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td bgcolor="ba0f0f" colspan="2">Fred-HTMLCheck Original Content</td>
-        </tr>
+    <div id="HTMLValidatorOrig" class="small" style="width: 100%; max-height: 300px; overflow: auto; display: none;">
+        <table cellspacing="0" cellpadding="0" width="100%">
 <!-- dtl:block:OrigRow -->
-        <tr>
-            <td>$QData{"LineNumber"}</td>
-            <td style="$Data{"Style"}"><pre>$QData{"LineContent"}</pre></td>
-        </tr>
+            <tr>
+                <td width="1%">$QData{"LineNumber"}</td>
+                <td style="$Data{"Style"}"><pre>$QData{"LineContent"}</pre></td>
+            </tr>
 <!-- dtl:block:OrigRow -->
-    </table>
+        </table>
+    </div>
 </div>

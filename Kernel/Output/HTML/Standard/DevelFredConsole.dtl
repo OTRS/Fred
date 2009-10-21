@@ -2,40 +2,23 @@
 # DevelFredConsole.dtl - a html console for a better fred handling
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConsole.dtl,v 1.5 2009-10-21 18:40:37 mg Exp $
+# $Id: DevelFredConsole.dtl,v 1.6 2009-10-21 19:02:18 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-                <tr bgcolor="#ba0f0f">
-                    <td>
-                        <b><font color="#ffffff">Fred-Console</font></b>
-                    </td>
-                    <td align="right">
-                        <b><font color="#ffffff">mod_perl $QData{"ModPerl"}</font></b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        $Data{"Text"}
-                    </td>
-                    <td align="right">
+<div class="DevelFredBox">
+    <h1 style="position: relative;">
+    Fred-Console
+    <span style="position: absolute; top 0px; right: 5px;">mod_perl $QData{"ModPerl"}</span>
+    </h1>
+    <div style="position: relative;">
+        $Data{"Text"}
+        <span style="position: absolute; top 0px; right: 5px;">
 <!-- dtl:block:Setting -->
-                        <a href="$Env{"Baselink"}Action=DevelFred&Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">setting</a>
+        <a href="$Env{"Baselink"}Action=DevelFred&Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">setting</a>
 <!-- dtl:block:Setting -->
-                        &nbsp;
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-# just a small space
-<table cellspacing="1" cellpadding="0" width="100%">
-    <tr><td></td></tr>
-</table>
+        </span>
+    </div>
+</div>
