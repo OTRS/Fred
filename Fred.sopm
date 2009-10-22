@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.27 2009-10-21 18:40:37 mg Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.28 2009-10-22 06:27:04 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
@@ -12,58 +12,58 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A tool to  support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
-    <IntroInstallPre Title="" Lang="en">
-    &lt;br&gt;
-    Welcome! &lt;br&gt;
-    &lt;br&gt;
-    First of all you should install the necessary perl modules &lt;br&gt;
-    &lt;ul&gt;
-    &lt;li&gt; Devel::SmallProf &lt;/li&gt;
-    &lt;li&gt; Devel::DProf&lt;/li&gt;
-    &lt;li&gt; HTML::Lint&lt;/li&gt;
-    &lt;/ul&gt;
-    If you want to use the HTMLValidate module of Fred, you also need to install the following program &lt;br&gt;
-    &lt;ul&gt;
-    &lt;li&gt; validator (available from http://www.htmlhelp.com/tools/validator/offline/, Linux distributions may have it as package wdg-html-validator) &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;br&gt;
-    &lt;br&gt;
-    What can Fred do?&lt;br&gt;
-    &lt;br&gt;
-    To date, Fred has the following features: &lt;br&gt;
-    &lt;ul&gt;
-    &lt;li&gt; HTMLCheck: &lt;br&gt;
-                the HTML output is checked by means of HTML::Lint &lt;/li&gt;
-    &lt;li&gt; HTMLValidate: &lt;br&gt;
-                real HTML validation based on an external tool &lt;/li&gt;
-    &lt;li&gt; STDERRLog: &lt;br&gt;
-                every entry contained in STDERR is displayed &lt;/li&gt;
-    &lt;li&gt; TranslationDebug: &lt;br&gt;
-                displays all translation attempts of the current request which failed. &lt;/li&gt;
-    &lt;li&gt; SQLLog: &lt;br&gt;
-                lists all SQL statements of the current request &lt;/li&gt;
-    &lt;li&gt; ConfigLog: &lt;br&gt;
-                lists all !ConfigGet requests, indicating their frequency &lt;/li&gt;
-    &lt;li&gt; DProf: &lt;br&gt;
-                a profiling tool which evaluates the time required for each function to be executed &lt;/li&gt;
-    &lt;li&gt; SmallProf: &lt;br&gt;
-                a profiling tool performing a line-by-line code evaluation &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;br&gt;
-    *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting". &lt;br&gt;
-    &lt;br&gt;
-    &lt;br&gt;
-    What is Fred's current status?&lt;br&gt;
-    &lt;br&gt;
-    &lt;ul&gt;
-    &lt;li&gt; modular design: &lt;br&gt;
-                anybody can add a new module at any time &lt;/li&gt;
-    &lt;li&gt; the modules' output is not yet sophisticated &lt;br&gt;
-                ideas for improving the output or sensible configurations will be very welcome &lt;/li&gt;
-    &lt;li&gt; please extend Fred, if you have good ideas &lt;br&gt;
-    &lt;li&gt; if you have no time to implement your ideas yourselves, please enter them in dev mailinglist &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;br&gt;
+    <IntroInstallPre Title="" Lang="en"><![CDATA[
+    <br/>
+    Welcome! <br/>
+    <br/>
+    First of all you should install the necessary perl modules <br/>
+    <ul>
+    <li> Devel::SmallProf </li>
+    <li> Devel::DProf</li>
+    <li> HTML::Lint</li>
+    </ul>
+    If you want to use the HTMLValidate module of Fred, you also need to install the following program <br/>
+    <ul>
+    <li> validator (available from http://www.htmlhelp.com/tools/validator/offline/, Linux distributions may have it as package wdg-html-validator) </li>
+    </ul>
+    <br/>
+    <br/>
+    What can Fred do?<br/>
+    <br/>
+    To date, Fred has the following features: <br/>
+    <ul>
+    <li> HTMLCheck: <br/>
+                the HTML output is checked by means of HTML::Lint </li>
+    <li> HTMLValidate: <br/>
+                real HTML validation based on an external tool </li>
+    <li> STDERRLog: <br/>
+                every entry contained in STDERR is displayed </li>
+    <li> TranslationDebug: <br/>
+                displays all translation attempts of the current request which failed. </li>
+    <li> SQLLog: <br/>
+                lists all SQL statements of the current request </li>
+    <li> ConfigLog: <br/>
+                lists all !ConfigGet requests, indicating their frequency </li>
+    <li> DProf: <br/>
+                a profiling tool which evaluates the time required for each function to be executed </li>
+    <li> SmallProf: <br/>
+                a profiling tool performing a line-by-line code evaluation </li>
+    </ul>
+    <br/>
+    *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>
+    <br/>
+    <br/>
+    What is Fred's current status?<br/>
+    <br/>
+    <ul>
+    <li> modular design: <br/>
+                anybody can add a new module at any time </li>
+    <li> the modules' output is not yet sophisticated <br/>
+                ideas for improving the output or sensible configurations will be very welcome </li>
+    <li> please extend Fred, if you have good ideas <br/>
+    <li> if you have no time to implement your ideas yourselves, please enter them in dev mailinglist </li>
+    </ul>
+    <br/>]]>
     </IntroInstallPre>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
