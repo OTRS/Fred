@@ -2,7 +2,7 @@
 # Kernel/System/Fred/HTMLValidate.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: HTMLValidate.pm,v 1.1 2009-10-21 18:40:37 mg Exp $
+# $Id: HTMLValidate.pm,v 1.2 2009-10-30 08:27:10 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use File::Temp;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -119,6 +119,7 @@ sub DataGet {
 
     my %ErrorLines;
     my %WarningLines;
+    my %LineTitles;
 
     LINE:
     for my $Line (@ResultLines) {
@@ -128,6 +129,7 @@ sub DataGet {
 
         $ErrorLines{$LineNumber}   = 1 if ( $Type == 'E' );
         $WarningLines{$LineNumber} = 1 if ( $Type == 'W' );
+        $LineTitles{$LineNumber} .= "$Message. ";
 
         # map Type to readable value
         $Type = $Types{$Type};
@@ -156,8 +158,9 @@ sub DataGet {
             @{ $Param{ModuleRef}->{OriginalData} },
             {
                 LineContent => $OrigLine,
-                LineNumber  => $Counter++,
+                LineNumber  => $Counter,
                 Style       => $Style,
+                Title       => $LineTitles{ $Counter++ },
             }
         );
     }
@@ -208,6 +211,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-21 18:40:37 $
+$Revision: 1.2 $ $Date: 2009-10-30 08:27:10 $
 
 =cut

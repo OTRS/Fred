@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredHTMLValidate.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredHTMLValidate.pm,v 1.1 2009-10-21 18:40:37 mg Exp $
+# $Id: FredHTMLValidate.pm,v 1.2 2009-10-30 08:27:10 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -80,9 +80,12 @@ sub CreateFredOutput {
 
     if ( $Param{ModuleRef}->{OriginalData} ) {
         for my $Entry ( @{ $Param{ModuleRef}->{OriginalData} } ) {
+
             $Self->{LayoutObject}->Block(
                 Name => 'OrigRow',
-                Data => $Entry,
+                Data => {
+                    %{$Entry},
+                },
             );
         }
     }
@@ -119,6 +122,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-21 18:40:37 $
+$Revision: 1.2 $ $Date: 2009-10-30 08:27:10 $
 
 =cut
