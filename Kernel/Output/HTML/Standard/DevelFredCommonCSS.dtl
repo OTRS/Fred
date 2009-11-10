@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.4 2009-10-21 19:02:18 mg Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.5 2009-11-10 08:03:48 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,8 +10,9 @@
 # --
 <style type="text/css">
 .DevelFredBox {
-    border: 2px solid black;
+    border: 1px solid black;
     background-color: white;
+    margin-bottom: 5px;
 }
 
 .DevelFredBox * {
@@ -34,6 +35,7 @@
 .DevelFredBox pre {
     margin: 0;
     padding: 0;
+    font-size: 11px;
 }
 
 .DevelFredBox small,

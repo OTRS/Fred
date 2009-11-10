@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSTDERRLog.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSTDERRLog.pm,v 1.9 2009-03-31 12:45:11 mh Exp $
+# $Id: FredSTDERRLog.pm,v 1.10 2009-11-10 08:03:48 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -82,18 +82,10 @@ sub CreateFredOutput {
     # create html string
     my $HTMLLines;
     for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
-
-        # convert ascii to html
-        $HTMLLines .= $Self->{LayoutObject}->Ascii2Html(
-            Text           => $Line,
-            HTMLResultMode => 1,
-            Type           => 'Normal',
-        );
+        $HTMLLines .= $Line;
     }
 
     return if !$HTMLLines;
-
-    $HTMLLines = "<tr><td>$HTMLLines</td></tr>";
 
     # output the html
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
@@ -122,6 +114,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-03-31 12:45:11 $
+$Revision: 1.10 $ $Date: 2009-11-10 08:03:48 $
 
 =cut
