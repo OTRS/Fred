@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.5 2009-11-10 08:03:48 mg Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.6 2009-11-17 14:38:59 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@
     font-size: 12px;
 }
 
-.DevelFredBox > h1 {
+.DevelFredBox h1 {
     font-size: 12px;
     background-color: #ba0f0f;
     color: white;
@@ -27,8 +27,8 @@
     padding: 2px;
 }
 
-.DevelFredBox > div,
-.DevelFredBox > table {
+.DevelFredBox div,
+.DevelFredBox table {
     padding: 2px;
 }
 
