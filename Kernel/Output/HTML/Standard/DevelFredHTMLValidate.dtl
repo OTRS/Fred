@@ -2,7 +2,7 @@
 # DevelFredHTMLValidate.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLValidate.dtl,v 1.6 2009-12-08 12:58:49 mb Exp $
+# $Id: DevelFredHTMLValidate.dtl,v 1.7 2009-12-08 13:02:58 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,14 +21,14 @@
 <!-- dtl:block:ValidationRow -->
         <tr>
             <td>$QData{"Type"}</td>
-            <td align="right" style="padding-left: 7px;"><a href="#Line$LQData{"LineNumber"}">$QData{"LineNumber"}</a></td>
+            <td align="right" style="padding-left: 7px;"><a href="#Line$LQData{"LineNumber"}" onclick="document.getElementById('HTMLValidatorShowSource').style.display = 'none'; document.getElementById('HTMLValidatorOrig').style.display = 'block';">$QData{"LineNumber"}</a></td>
             <td align="right" style="padding-left: 7px;">$QData{"CharNumber"}</td>
             <td style="padding-left: 7px;">$QData{"Message"}</td>
         </tr>
 <!-- dtl:block:ValidationRow -->
         <tr>
             <td colspan="4">
-                <input type="button" value="Show source" onclick="this.style.display = 'none'; document.getElementById('HTMLValidatorOrig').style.display = 'block';" />
+                <input type="button" id="HTMLValidatorShowSource" value="Show source" onclick="this.style.display = 'none'; document.getElementById('HTMLValidatorOrig').style.display = 'block';" />
             </td>
         </tr>
     </table>
