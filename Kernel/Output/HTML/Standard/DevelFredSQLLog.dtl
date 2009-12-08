@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.6 2009-10-21 19:02:18 mg Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.7 2009-12-08 13:43:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,24 +12,29 @@
     <tr>
         <td bgcolor="#ba0f0f">
             <table bgcolor="#ffffff" cellspacing="0" cellpadding="2">
-                <tr>
-                    <td colspan="5" bgcolor="#ba0f0f">
-                        <b><font color="#ffffff">Fred-SQL-Log</font></b>
-                    </td>
-                </tr>
-                <tr class="contentkey">
-                    <td>Kind</td>
-                    <td>Statement</td>
-                    <td>Package</td>
-                    <td>Time 1/100 sec</td>
-                    <td>Equal Statements</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td colspan="5" bgcolor="#ba0f0f">
+                            <input type="checkbox" checked="checked" onclick="document.getElementById('FredSQLLogTBody').style.display = this.checked ? 'block' : 'none';">
+                            <b><font color="#ffffff">Fred-SQL-Log</font></b>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="FredSQLLogTBody">
+                    <tr class="contentkey">
+                        <td>Kind</td>
+                        <td>Statement</td>
+                        <td>Package</td>
+                        <td>Time 1/100 sec</td>
+                        <td>Equal Statements</td>
+                    </tr>
 $Data{"HTMLLines"}
-                <tr class="contentkey">
-                    <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
-                    <td>$Data{"Time"}</td>
-                    <td>sec</td>
-                </tr>
+                    <tr class="contentkey">
+                        <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
+                        <td>$Data{"Time"}</td>
+                        <td>sec</td>
+                    </tr>
+                </tbody>
             </table>
         </td>
     </tr>
