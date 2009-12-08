@@ -2,44 +2,27 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.7 2009-12-08 13:43:46 bes Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.8 2009-12-08 14:05:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2">
-                <thead>
-                    <tr>
-                        <td colspan="5" bgcolor="#ba0f0f">
-                            <input type="checkbox" checked="checked" onclick="document.getElementById('FredSQLLogTBody').style.display = this.checked ? 'block' : 'none';">
-                            <b><font color="#ffffff">Fred-SQL-Log</font></b>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody id="FredSQLLogTBody">
-                    <tr class="contentkey">
-                        <td>Kind</td>
-                        <td>Statement</td>
-                        <td>Package</td>
-                        <td>Time 1/100 sec</td>
-                        <td>Equal Statements</td>
-                    </tr>
+<div class="DevelFredBox">
+    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredSQLLogTable').style.display = this.checked ? 'block' : 'none';">Fred-SQL-Log</h1>
+    <table id="FredSQLLogTable" cellspacing="0" cellpadding="1" width="100%">
+        <tr class="contentkey">
+            <td>Kind</td>
+            <td>Statement</td>
+            <td>Package</td>
+            <td>Time 1/100 sec</td>
+            <td>Equal Statements</td>
+        </tr>
 $Data{"HTMLLines"}
-                    <tr class="contentkey">
-                        <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
-                        <td>$Data{"Time"}</td>
-                        <td>sec</td>
-                    </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-</table>
-# just a small space
-<table cellspacing="1" cellpadding="0" width="100%">
-    <tr><td></td></tr>
-</table>
+        <tr class="contentkey">
+            <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
+            <td>$Data{"Time"}</td>
+            <td>sec</td>
+        </tr>
+    </table>
+</div>
