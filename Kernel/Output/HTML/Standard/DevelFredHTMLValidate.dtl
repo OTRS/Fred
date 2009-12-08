@@ -2,7 +2,7 @@
 # DevelFredHTMLValidate.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLValidate.dtl,v 1.5 2009-11-02 14:33:19 mg Exp $
+# $Id: DevelFredHTMLValidate.dtl,v 1.6 2009-12-08 12:58:49 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@
 <!-- dtl:block:ValidationRow -->
         <tr>
             <td>$QData{"Type"}</td>
-            <td align="right" style="padding-left: 7px;">$QData{"LineNumber"}</td>
+            <td align="right" style="padding-left: 7px;"><a href="#Line$LQData{"LineNumber"}">$QData{"LineNumber"}</a></td>
             <td align="right" style="padding-left: 7px;">$QData{"CharNumber"}</td>
             <td style="padding-left: 7px;">$QData{"Message"}</td>
         </tr>
@@ -36,7 +36,7 @@
         <table cellspacing="0" cellpadding="0" width="100%">
 <!-- dtl:block:OrigRow -->
             <tr>
-                <td width="1%">$QData{"LineNumber"}</td>
+                <td width="1%"><a name="Line$LQData{"LineNumber"}">$QData{"LineNumber"}</a></td>
                 <td style="$QData{"Style"}"><pre title="$QData{"Title"}">$QData{"LineContent"}</pre></td>
             </tr>
 <!-- dtl:block:OrigRow -->
