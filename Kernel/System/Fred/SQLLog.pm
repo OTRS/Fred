@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.13 2009-04-21 10:21:57 tr Exp $
+# $Id: SQLLog.pm,v 1.14 2009-12-09 08:27:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -23,7 +23,9 @@ Kernel::System::Fred::SQLLog
 
 =head1 SYNOPSIS
 
-handle the sql log
+Show a log of the SQL statements executed since the last view of the log.
+
+=head1 PUBLIC INTERFACE
 
 =over 4
 
@@ -46,7 +48,7 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
     );
-    my $SmallProfObject = Kernel::System::Fred::SQLLog->new(
+    my $SQLLogObject = Kernel::System::Fred::SQLLog->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
@@ -64,6 +66,7 @@ sub new {
     for my $Object (qw(ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
     return $Self;
 }
 
@@ -81,7 +84,7 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    # open the TranslationDebug.log file to get the untranslated words
+    # open the file SQL.log
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
     my $Filehandle;
     if ( !open $Filehandle, '<', $File ) {
@@ -96,11 +99,15 @@ sub DataGet {
     my $DoStatements     = 0;
     my $SelectStatements = 0;
 
-    # get the whole information
+    # slurp in the whole logfile, in order to access the lines at the end
     LINE:
     for my $Line ( reverse <$Filehandle> ) {
+
+        # do not show the log from the previous request
         last LINE if $Line =~ /FRED/;
 
+        # a typical line from SQL.log looks like:
+        # SQL-SELECT;SELECT 1 + 1 FROM dual;Kernel::System::User;0.004397
         my @SplitedLog = split /;/, $Line;
         if ( $SplitedLog[0] eq 'SQL-DO' && $SplitedLog[1] =~ /^SELECT/ ) {
             $SplitedLog[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
@@ -121,7 +128,7 @@ sub DataGet {
     pop @LogMessages;
     close $Filehandle;
 
-    # find multi used statements
+    # find SQL-statements used multiple times
     my %MultiUsed;
     for my $StatementRef (@LogMessages) {
         $MultiUsed{ $StatementRef->[1] }++;
@@ -130,7 +137,10 @@ sub DataGet {
         push @{$StatementRef}, ( $MultiUsed{ $StatementRef->[1] } - 1 );
     }
 
+    # Add marker for the next view
     $Self->InsertWord( What => "FRED\n" );
+
+    # set the data for the output template
     $Param{ModuleRef}->{Data}             = \@LogMessages;
     $Param{ModuleRef}->{AllStatements}    = scalar @LogMessages;
     $Param{ModuleRef}->{DoStatements}     = $DoStatements;
@@ -157,7 +167,7 @@ sub ActivateModuleTodos {
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
-    # to use TranslationDebug I have to manipulate the Language.pm file
+    # to use SQLLog I have to manipulate the DB.pm file
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
@@ -250,7 +260,7 @@ sub DeactivateModuleTodos {
     # check if it is an symlink, because it can be development system which use symlinks
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
-    # to use TranslationDebugger I have to manipulate the Language.pm file
+    # to use SQLLog I had to manipulate the DB.pm file
     # here I undo my manipulation
     open my $Filehandle, '<', $File || die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
@@ -276,15 +286,16 @@ sub DeactivateModuleTodos {
         }
     }
     close $FilehandleII;
+
     return 1;
 }
 
 =item InsertWord()
 
-Save a word in the translation debug log
+Append a semicolon seperated record line to the the SQL log.
 
     $BackendObject->InsertWord(
-        What => 'a word',
+        What => 'SQL-SELECT;SELECT 1 + 1 FROM dual;Kernel::System::User;0.004397',
     );
 
 =cut
@@ -301,10 +312,10 @@ sub InsertWord {
         return;
     }
 
-    # save the word in log file
+    # apppend the line to log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
     open my $Filehandle, '>>', $File || die "Can't write $File !\n";
-    print $Filehandle $Param{What} . "\n";
+    print $Filehandle $Param{What}, "\n";
     close $Filehandle;
 
     return 1;
@@ -326,6 +337,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.14 $ $Date: 2009-12-09 08:27:41 $
 
 =cut
