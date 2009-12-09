@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.13 2009-12-09 12:07:27 bes Exp $
+# $Id: DProf.pm,v 1.14 2009-12-09 14:35:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -80,8 +80,6 @@ And add the data to the module ref.
 
 sub DataGet {
     my ( $Self, %Param ) = @_;
-
-    my @Lines;
 
     # check needed stuff
     for my $NeededRef (qw(HTMLDataRef ModuleRef)) {
@@ -223,11 +221,10 @@ sub ActivateModuleTodos {
     close $Filehandle;
 
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    print $FilehandleII "#!/usr/bin/perl -w -d:DProf\n";
-    print $FilehandleII "# FRED - manipulated\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
+    print $FilehandleII
+        "#!/usr/bin/perl -w -d:DProf\n",
+        "# FRED - manipulated\n",
+        @Lines;
     close $FilehandleII;
 
     # create a info for the user
@@ -260,11 +257,8 @@ sub DeactivateModuleTodos {
     }
 
     # read the index.pl file
-    my @Lines;
     open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     # remove the manipulated lines
@@ -277,9 +271,7 @@ sub DeactivateModuleTodos {
 
     # save the index.pl file
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
+    print $FilehandleII @Lines;
     close $FilehandleII;
     $Self->{LogObject}->Log(
         Priority => 'error',
@@ -305,6 +297,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-12-09 12:07:27 $
+$Revision: 1.14 $ $Date: 2009-12-09 14:35:14 $
 
 =cut

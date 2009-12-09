@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.17 2009-12-09 11:50:20 bes Exp $
+# $Id: SmallProf.pm,v 1.18 2009-12-09 14:35:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -137,6 +137,11 @@ sub DataGet {
             }
         }
 
+        close $Filehandle;
+    }
+
+    if (@ProfilingResults) {
+
         # define the order of the profiling data
         @ProfilingResults
             = sort { $b->[ $Config_Ref->{OrderBy} ] <=> $a->[ $Config_Ref->{OrderBy} ] }
@@ -152,11 +157,7 @@ sub DataGet {
         }
 
         # show only so many lines as wanted
-        if (@ProfilingResults) {
-            splice @ProfilingResults, $Config_Ref->{ShownLines};
-            $Param{ModuleRef}->{Data} = \@ProfilingResults;
-        }
-        close $Filehandle;
+        splice @ProfilingResults, $Config_Ref->{ShownLines};
     }
 
     # compute total calls
@@ -166,6 +167,8 @@ sub DataGet {
             $TotalCall += $Time->[2];
         }
     }
+
+    $Param{ModuleRef}->{Data}      = \@ProfilingResults;
     $Param{ModuleRef}->{TotalCall} = $TotalCall;
 
     return 1;
@@ -197,11 +200,10 @@ sub ActivateModuleTodos {
     close $Filehandle;
 
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    print $FilehandleII "#!/usr/bin/perl -w -d:SmallProf\n";
-    print $FilehandleII "# FRED - manipulated\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
+    print $FilehandleII
+        "#!/usr/bin/perl -w -d:SmallProf\n",
+        "# FRED - manipulated\n",
+        @Lines;
     close $FilehandleII;
 
     # create a info for the user
@@ -213,20 +215,20 @@ sub ActivateModuleTodos {
     # create the configuration file for the SmallProf module
     my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/.smallprof';
     open my $FilehandleIII, '>', $SmallProfFile or die "Can't write $SmallProfFile !\n";
-    print $FilehandleIII "# FRED - manipulated don't edit this file!\n";
-    print $FilehandleIII "# use ../../ as lib location\n";
-    print $FilehandleIII "use FindBin qw(\$Bin);\n";
-    print $FilehandleIII "use lib \"\$Bin/../..\";\n";
-    print $FilehandleIII "use Kernel::Config;\n";
-    print $FilehandleIII "my \$ConfigObject = Kernel::Config->new();\n";
-    print $FilehandleIII "if (\$ConfigObject->Get('Fred::SmallProf')->{Packages}) {\n";
     print $FilehandleIII
-        "    my \@Array = \@{ \$ConfigObject->Get('Fred::SmallProf')->{Packages} };\n";
-    print $FilehandleIII "    my \%Hash = map { \$_ => 1; } \@Array;\n";
-    print $FilehandleIII "    \%DB::packages = \%Hash;\n";
-    print $FilehandleIII "}\n";
-    print $FilehandleIII "\$DB::drop_zeros = 1;\n";
-    print $FilehandleIII "\$DB::grep_format = 1;\n";
+        "# FRED - manipulated don't edit this file!\n",
+        "# use ../../ as lib location\n",
+        "use FindBin qw(\$Bin);\n",
+        "use lib \"\$Bin/../..\";\n",
+        "use Kernel::Config;\n",
+        "my \$ConfigObject = Kernel::Config->new();\n",
+        "if (\$ConfigObject->Get('Fred::SmallProf')->{Packages}) {\n",
+        "    my \@Array = \@{ \$ConfigObject->Get('Fred::SmallProf')->{Packages} };\n",
+        "    my \%Hash = map { \$_ => 1; } \@Array;\n",
+        "    \%DB::packages = \%Hash;\n",
+        "}\n",
+        "\$DB::drop_zeros = 1;\n",
+        "\$DB::grep_format = 1;\n";
     close $FilehandleIII;
 
     return 1;
@@ -267,9 +269,7 @@ sub DeactivateModuleTodos {
 
     # save the index.pl file
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-    }
+    print $FilehandleII @Lines;
     close $FilehandleII;
     $Self->{LogObject}->Log(
         Priority => 'error',
@@ -299,6 +299,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-12-09 11:50:20 $
+$Revision: 1.18 $ $Date: 2009-12-09 14:35:14 $
 
 =cut
