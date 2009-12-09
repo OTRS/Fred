@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Console.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: Console.pm,v 1.9 2009-04-21 10:21:57 tr Exp $
+# $Id: Console.pm,v 1.10 2009-12-09 10:04:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -23,7 +23,7 @@ Kernel::System::Fred::Console
 
 =head1 SYNOPSIS
 
-gives you all functions which are needed for the console
+gives you all functions which are needed for the FRED-console
 
 =over 4
 
@@ -46,7 +46,7 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
     );
-    my $SmallProfObject = Kernel::System::Fred::Console->new(
+    my $ConsoleObject = Kernel::System::Fred::Console->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
@@ -64,13 +64,14 @@ sub new {
     for my $Object (qw(ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
     return $Self;
 }
 
 =item DataGet()
 
 Get the data for this fred module. Returns true or false.
-And add the data to the module ref.
+And adds the data to the module ref.
 
     $BackendObject->DataGet(
         ModuleRef => $ModuleRef,
@@ -92,7 +93,7 @@ sub DataGet {
         }
     }
 
-    my @Modules = ();
+    my @Modules;
     for my $Module ( keys %{ $Param{FredModulesRef} } ) {
         if ( $Module ne 'Console' ) {
             push @Modules, $Module;
@@ -100,11 +101,12 @@ sub DataGet {
     }
     $Param{ModuleRef}->{Data} = \@Modules;
 
-    if ( ${ $Param{HTMLDataRef} } !~ /Fred-Setting/ && ${ $Param{HTMLDataRef} } =~ /\<body.*?\>/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ m/Fred-Setting/ && ${ $Param{HTMLDataRef} } =~ /\<body.*?\>/ )
+    {
         $Param{ModuleRef}->{Status} = 1;
     }
 
-    if ( ${ $Param{HTMLDataRef} } !~ /name="Action" value="Login"/ ) {
+    if ( ${ $Param{HTMLDataRef} } !~ m/name="Action" value="Login"/ ) {
         $Param{ModuleRef}->{Setting} = 1;
     }
 
@@ -155,6 +157,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.10 $ $Date: 2009-12-09 10:04:20 $
 
 =cut
