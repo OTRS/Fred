@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.14 2009-04-21 10:21:57 tr Exp $
+# $Id: SmallProf.pm,v 1.15 2009-12-09 08:36:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -179,11 +179,11 @@ sub ActivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use SmallProf I have to manipulate the index.pl file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     print $FilehandleII "#!/usr/bin/perl -w -d:SmallProf\n";
     print $FilehandleII "# FRED - manipulated\n";
     for my $Line (@Lines) {
@@ -199,7 +199,7 @@ sub ActivateModuleTodos {
 
     # create the configuration file for the SmallProf module
     my $SmallProfFile = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/.smallprof';
-    open my $FilehandleIII, '>', $SmallProfFile || die "Can't write $SmallProfFile !\n";
+    open my $FilehandleIII, '>', $SmallProfFile or die "Can't write $SmallProfFile !\n";
     print $FilehandleIII "# FRED - manipulated don't edit this file!\n";
     print $FilehandleIII "# use ../../ as lib location\n";
     print $FilehandleIII "use FindBin qw(\$Bin);\n";
@@ -238,7 +238,7 @@ sub DeactivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # read the index.pl file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
@@ -251,7 +251,7 @@ sub DeactivateModuleTodos {
     }
 
     # save the index.pl file
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
@@ -284,6 +284,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.15 $ $Date: 2009-12-09 08:36:25 $
 
 =cut

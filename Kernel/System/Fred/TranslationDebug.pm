@@ -2,7 +2,7 @@
 # Kernel/System/Fred/TranslationDebug.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: TranslationDebug.pm,v 1.13 2009-04-21 10:21:57 tr Exp $
+# $Id: TranslationDebug.pm,v 1.14 2009-12-09 08:36:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -131,11 +131,11 @@ sub ActivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebug I have to manipulate the Language.pm file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
         if ( $Line =~ /# warn if the value is not def/ ) {
@@ -172,11 +172,11 @@ sub DeactivateModuleTodos {
 
     # to use TranslationDebugger I have to manipulate the Language.pm file
     # here I undo my manipulation
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
 
     my %RemoveLine = (
         "# FRED - manipulated\n"                        => 1,
@@ -219,7 +219,7 @@ sub InsertWord {
 
     # save the word in log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
-    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
+    open my $Filehandle, '>>', $File or die "Can't write $File !\n";
     print $Filehandle $Param{What} . "\n";
     close $Filehandle;
 
@@ -242,6 +242,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.14 $ $Date: 2009-12-09 08:36:25 $
 
 =cut

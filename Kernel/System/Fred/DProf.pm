@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.10 2009-04-21 10:21:57 tr Exp $
+# $Id: DProf.pm,v 1.11 2009-12-09 08:36:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -218,13 +218,13 @@ sub ActivateModuleTodos {
     }
 
     # to use DProf I have to manipulate the index.pl file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     print $FilehandleII "#!/usr/bin/perl -w -d:DProf\n";
     print $FilehandleII "# FRED - manipulated\n";
     for my $Line (@Lines) {
@@ -263,7 +263,7 @@ sub DeactivateModuleTodos {
     }
 
     # read the index.pl file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
@@ -278,7 +278,7 @@ sub DeactivateModuleTodos {
     }
 
     # save the index.pl file
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
     }
@@ -307,6 +307,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.11 $ $Date: 2009-12-09 08:36:25 $
 
 =cut

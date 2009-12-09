@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.14 2009-12-09 08:27:41 bes Exp $
+# $Id: SQLLog.pm,v 1.15 2009-12-09 08:36:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -168,11 +168,11 @@ sub ActivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use SQLLog I have to manipulate the DB.pm file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
     $Self->{LogObject}->Log( Priority => 'notice', Message => "write file!" );
     my $Prepare;
     my $DoSQL;
@@ -262,11 +262,11 @@ sub DeactivateModuleTodos {
 
     # to use SQLLog I had to manipulate the DB.pm file
     # here I undo my manipulation
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
+    open my $Filehandle, '<', $File or die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
 
     my %RemoveLine = (
         "# FRED - manipulated\n"                                                              => 1,
@@ -314,7 +314,7 @@ sub InsertWord {
 
     # apppend the line to log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
-    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
+    open my $Filehandle, '>>', $File or die "Can't write $File !\n";
     print $Filehandle $Param{What}, "\n";
     close $Filehandle;
 
@@ -337,6 +337,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2009-12-09 08:27:41 $
+$Revision: 1.15 $ $Date: 2009-12-09 08:36:25 $
 
 =cut
