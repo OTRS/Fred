@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.15 2009-12-09 08:36:25 bes Exp $
+# $Id: SQLLog.pm,v 1.16 2009-12-09 08:42:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -108,20 +108,20 @@ sub DataGet {
 
         # a typical line from SQL.log looks like:
         # SQL-SELECT;SELECT 1 + 1 FROM dual;Kernel::System::User;0.004397
-        my @SplitedLog = split /;/, $Line;
-        if ( $SplitedLog[0] eq 'SQL-DO' && $SplitedLog[1] =~ /^SELECT/ ) {
-            $SplitedLog[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
+        my @SplitLogLine = split /;/, $Line;
+        if ( $SplitLogLine[0] eq 'SQL-DO' && $SplitLogLine[1] =~ /^SELECT/ ) {
+            $SplitLogLine[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
         }
-        push @LogMessages, \@SplitedLog;
+        push @LogMessages, \@SplitLogLine;
 
-        if ( $SplitedLog[0] eq 'SQL-DO' ) {
+        if ( $SplitLogLine[0] eq 'SQL-DO' ) {
             $DoStatements++;
         }
 
         # transfer in 1/100 sec
-        if ( $SplitedLog[3] ) {
-            $Param{ModuleRef}->{Time} += $SplitedLog[3];
-            $SplitedLog[3] *= 100;
+        if ( $SplitLogLine[3] ) {
+            $Param{ModuleRef}->{Time} += $SplitLogLine[3];
+            $SplitLogLine[3] *= 100;
         }
     }
 
@@ -337,6 +337,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2009-12-09 08:36:25 $
+$Revision: 1.16 $ $Date: 2009-12-09 08:42:08 $
 
 =cut
