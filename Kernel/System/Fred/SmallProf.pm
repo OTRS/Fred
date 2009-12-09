@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SmallProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SmallProf.pm,v 1.16 2009-12-09 10:13:40 bes Exp $
+# $Id: SmallProf.pm,v 1.17 2009-12-09 11:50:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -81,10 +81,6 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    my $Path       = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/';
-    my $Config_Ref = $Self->{ConfigObject}->Get('Fred::SmallProf');
-    my @Lines;
-
     # check needed stuff
     for my $NeededRef (qw(HTMLDataRef ModuleRef)) {
         if ( !$Param{$NeededRef} ) {
@@ -106,51 +102,66 @@ sub DataGet {
         return 1;
     }
 
-    return 1 if ${ $Param{HTMLDataRef} } =~ /Fred-Setting/;
+    if ( ${ $Param{HTMLDataRef} } =~ m/Fred-Setting/ ) {
+        return 1;
+    }
 
     # find out which packages are checked by SmallProf
-    my @Packages        = keys %DB::packages;
-    my $CVSCheckProblem = \%DB::packages;       # sorry, this is because of the CVSChecker
+    my @Packages;
+    {
+
+    # avoid the warning:
+    # Name "DB::packages" used only once: possible typo at Kernel/System/Fred/SmallProf.pm line 116.
+        no warnings 'once';
+
+        @Packages = keys %DB::packages;
+    }
     if ( !$Packages[0] ) {
         $Packages[0] = 'all';
     }
     $Param{ModuleRef}->{Packages} = \@Packages;
 
     # catch the needed profiling data
+    my $Path = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin';
     system "cp $Path/smallprof.out $Path/FredSmallProf.out";
 
-    if ( open my $Filehandle, '<', $Path . 'FredSmallProf.out' ) {
+    my $Config_Ref = $Self->{ConfigObject}->Get('Fred::DProf');
+    my @ProfilingResults;
+
+    if ( open my $Filehandle, '<', "$Path/FredSmallProf.out" ) {
 
         # convert the file in useable data
         while ( my $Line = <$Filehandle> ) {
             if ( $Line =~ /(.+?):(\d+?):(\d+?):(\d+?):(\d+?):\s*(.*?)$/ ) {
-                push @Lines, [ $1, $2, $3, $4, $5, $6 ];
+                push @ProfilingResults, [ $1, $2, $3, $4, $5, $6 ];
             }
         }
 
         # define the order of the profiling data
-        @Lines = sort { $b->[ $Config_Ref->{OrderBy} ] <=> $a->[ $Config_Ref->{OrderBy} ] } @Lines;
+        @ProfilingResults
+            = sort { $b->[ $Config_Ref->{OrderBy} ] <=> $a->[ $Config_Ref->{OrderBy} ] }
+            @ProfilingResults;
         if ( $Config_Ref->{OrderBy} == 1 ) {
-            @Lines = reverse @Lines;
+            @ProfilingResults = reverse @ProfilingResults;
         }
 
         # remove disabled files or path if necessary
         if ( $Config_Ref->{DisabledFiles} ) {
             my $DisabledFiles = join '|', @{ $Config_Ref->{DisabledFiles} };
-            @Lines = grep { $_->[0] !~ m{^($DisabledFiles)}x } @Lines;
+            @ProfilingResults = grep { $_->[0] !~ m{^($DisabledFiles)}x } @ProfilingResults;
         }
 
         # show only so many lines as wanted
-        if (@Lines) {
-            splice @Lines, $Config_Ref->{ShownLines};
-            $Param{ModuleRef}->{Data} = \@Lines;
+        if (@ProfilingResults) {
+            splice @ProfilingResults, $Config_Ref->{ShownLines};
+            $Param{ModuleRef}->{Data} = \@ProfilingResults;
         }
         close $Filehandle;
     }
 
     # compute total calls
     my $TotalCall = 0;
-    for my $Time (@Lines) {
+    for my $Time (@ProfilingResults) {
         if ( $Time->[2] =~ /\d/ ) {
             $TotalCall += $Time->[2];
         }
@@ -176,7 +187,9 @@ sub ActivateModuleTodos {
     my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
+    if ( -l $File ) {
+        die "Can't manipulate $File because it is a symlink!";
+    }
 
     # to use SmallProf I have to manipulate the index.pl file
     open my $Filehandle, '<', $File or die "Can't open $File !\n";
@@ -235,7 +248,9 @@ sub DeactivateModuleTodos {
     my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
+    if ( -l $File ) {
+        die "Can't manipulate $File because it is a symlink!";
+    }
 
     # read the index.pl file
     open my $Filehandle, '<', $File or die "Can't open $File !\n";
@@ -284,6 +299,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-12-09 10:13:40 $
+$Revision: 1.17 $ $Date: 2009-12-09 11:50:20 $
 
 =cut
