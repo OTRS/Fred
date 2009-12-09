@@ -2,7 +2,7 @@
 # Kernel/System/Fred/DProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DProf.pm,v 1.12 2009-12-09 10:13:40 bes Exp $
+# $Id: DProf.pm,v 1.13 2009-12-09 12:07:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -103,7 +103,8 @@ sub DataGet {
         );
         return 1;
     }
-    if ( ${ $Param{HTMLDataRef} } =~ /Fred-Setting/ ) {
+
+    if ( ${ $Param{HTMLDataRef} } =~ m/Fred-Setting/ ) {
         return 1;
     }
 
@@ -209,19 +210,16 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self = shift;
 
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
+    my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
+    if ( -l $File ) {
         die "Can't manipulate $File because it is a symlink!";
     }
 
     # to use DProf I have to manipulate the index.pl file
     open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    while ( my $Line = <$Filehandle> ) {
-        push @Lines, $Line;
-    }
+    my @Lines = <$Filehandle>;
     close $Filehandle;
 
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
@@ -254,15 +252,15 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self = shift;
 
-    my @Lines = ();
-    my $File  = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
+    my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
-    if ( -l "$File" ) {
+    if ( -l $File ) {
         die "Can't manipulate $File because it is a symlink!";
     }
 
     # read the index.pl file
+    my @Lines;
     open my $Filehandle, '<', $File or die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
@@ -307,6 +305,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2009-12-09 10:13:40 $
+$Revision: 1.13 $ $Date: 2009-12-09 12:07:27 $
 
 =cut

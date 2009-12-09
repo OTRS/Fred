@@ -2,52 +2,40 @@
 # DevelFredDProf.dtl - a frontend to show the DProf result table
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredDProf.dtl,v 1.5 2009-10-21 19:02:18 mg Exp $
+# $Id: DevelFredDProf.dtl,v 1.6 2009-12-09 12:07:27 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-                <tr>
-                    <td colspan="7" bgcolor="#ba0f0f">
-                        <b><font color="#ffffff">Fred-DProf</font></b>
-                    </td>
-                </tr>
+<div class="DevelFredBox">
+    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredDProfTable').style.display = this.checked ? 'block' : 'none';">Fred-DProf</h1>
+    <table id="FredDProfTable" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
 <!-- dtl:block:TimeTable -->
-                <tr>
-                    <td align="right">%Time</td>
-                    <td align="right">ExclSec</td>
-                    <td align="right">CumulS</td>
-                    <td align="right">#Calls</td>
-                    <td align="right">sec/call</td>
-                    <td align="right">Csec/c:</td>
-                    <td>Name</td>
-                </tr>
+        <tr>
+            <td align="right">%Time</td>
+            <td align="right">ExclSec</td>
+            <td align="right">CumulS</td>
+            <td align="right">#Calls</td>
+            <td align="right">sec/call</td>
+            <td align="right">Csec/c:</td>
+            <td>Name</td>
+        </tr>
 $Data{"HTMLLines"}
-                <tr>
-                    <td align="right">Total:</td>
-                    <td align="right">$Data{"TotalTime"}</td>
-                    <td>Seconds</td>
-                    <td align="right">$Data{"TotalCall"}</td>
-                    <td colspan="3"> Calls</td>
-                </tr>
+        <tr>
+            <td align="right">Total:</td>
+            <td align="right">$Data{"TotalTime"}</td>
+            <td>Seconds</td>
+            <td align="right">$Data{"TotalCall"}</td>
+            <td colspan="3"> Calls</td>
+        </tr>
 <!-- dtl:block:TimeTable -->
 <!-- dtl:block:FunctionList -->
-                <tr>
-                    <td align="right">Number</td>
-                    <td>Name</td>
-                </tr>
+        <tr>
+            <td align="right">Number</td>
+            <td>Name</td>
+        </tr>
 $Data{"HTMLLines"}
 <!-- dtl:block:FunctionList -->
-            </table>
-        </td>
-    </tr>
-</table>
-# just a small space
-<table cellspacing="1" cellpadding="0" width="100%">
-    <tr><td></td></tr>
-</table>
+    </table>
+</div>
