@@ -2,7 +2,7 @@
 # Kernel/System/Fred/HTMLValidate.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: HTMLValidate.pm,v 1.4 2009-11-25 13:27:30 mg Exp $
+# $Id: HTMLValidate.pm,v 1.5 2009-12-09 10:13:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use File::Temp;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -52,7 +52,7 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
-    my $SmallProfObject = Kernel::System::Fred::HTMLCheck->new(
+    my $FredObject = Kernel::System::Fred::HTMLCheck->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
@@ -213,6 +213,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-11-25 13:27:30 $
+$Revision: 1.5 $ $Date: 2009-12-09 10:13:40 $
 
 =cut

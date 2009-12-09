@@ -2,7 +2,7 @@
 # Kernel/System/Fred/HTMLCheck.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: HTMLCheck.pm,v 1.9 2009-04-21 10:21:57 tr Exp $
+# $Id: HTMLCheck.pm,v 1.10 2009-12-09 10:13:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -52,7 +52,7 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
-    my $SmallProfObject = Kernel::System::Fred::HTMLCheck->new(
+    my $FredObject = Kernel::System::Fred::HTMLCheck->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
@@ -171,6 +171,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2009-04-21 10:21:57 $
+$Revision: 1.10 $ $Date: 2009-12-09 10:13:40 $
 
 =cut

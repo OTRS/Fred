@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.16 2009-12-09 08:42:08 bes Exp $
+# $Id: SQLLog.pm,v 1.17 2009-12-09 10:13:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -48,7 +48,7 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
     );
-    my $SQLLogObject = Kernel::System::Fred::SQLLog->new(
+    my $FredObject = Kernel::System::Fred::SQLLog->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
@@ -337,6 +337,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-12-09 08:42:08 $
+$Revision: 1.17 $ $Date: 2009-12-09 10:13:40 $
 
 =cut

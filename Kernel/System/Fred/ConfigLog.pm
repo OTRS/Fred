@@ -2,7 +2,7 @@
 # Kernel/System/Fred/ConfigLog.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: ConfigLog.pm,v 1.13 2009-12-09 08:36:25 bes Exp $
+# $Id: ConfigLog.pm,v 1.14 2009-12-09 10:13:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -46,7 +46,7 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
     );
-    my $SmallProfObject = Kernel::System::Fred::ConfigLog->new(
+    my $FredObject = Kernel::System::Fred::ConfigLog->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
     );
@@ -290,6 +290,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-12-09 08:36:25 $
+$Revision: 1.14 $ $Date: 2009-12-09 10:13:40 $
 
 =cut
