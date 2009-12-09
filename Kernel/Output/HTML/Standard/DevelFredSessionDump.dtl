@@ -1,0 +1,16 @@
+# --
+# DevelFredSessionDump.dtl - a frontend to show the STDERR log
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: DevelFredSessionDump.dtl,v 1.1 2009-12-09 10:10:09 bes Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<div class="DevelFredBox">
+    <h1><input type="checkbox" onclick="document.getElementById('FredSessionDumpDiv').style.display = this.checked ? 'block' : 'none';">Fred-SessionDump</h1>
+    <div id="FredSessionDumpDiv" style="display: none">
+        <pre>$QData{"Dump"}</pre>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.20 2009-10-21 18:40:37 mg Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.21 2009-12-09 10:10:08 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -115,6 +115,17 @@
     <ConfigItem Name="Fred::Module###STDERRLog" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to see the STDERRLog.</Description>
         <Description Lang="de">Hier aktivieren wenn man zur Laufzeit das STDERRLog sehen will.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Active">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::Module###SessionDump" Required="0" Valid="1">
+        <Description Lang="en">Turn on if you want to see the data in the serverside session object.</Description>
+        <Description Lang="de">Hier aktivieren um die Sessiondaten auf dem Server zu sehen.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
