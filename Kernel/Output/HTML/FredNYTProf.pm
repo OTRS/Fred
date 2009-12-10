@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredNYTProf.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredNYTProf.pm,v 1.1 2009-12-09 17:19:02 bes Exp $
+# $Id: FredNYTProf.pm,v 1.2 2009-12-10 09:40:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -79,9 +79,7 @@ sub CreateFredOutput {
     # show the profiling data
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredNYTProf',
-        Data         => {
-            FileURL => $Param{ModuleRef}->{FileURL},
-        },
+        Data         => $Param{ModuleRef},
     );
 
     return 1;
@@ -103,6 +101,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-09 17:19:02 $
+$Revision: 1.2 $ $Date: 2009-12-10 09:40:12 $
 
 =cut

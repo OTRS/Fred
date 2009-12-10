@@ -2,15 +2,17 @@
 # DevelFredNYTProf.dtl - a frontend to show the NYTProf result table
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredNYTProf.dtl,v 1.1 2009-12-09 17:19:02 bes Exp $
+# $Id: DevelFredNYTProf.dtl,v 1.2 2009-12-10 09:40:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredNYTProfDiv').style.display = this.checked ? 'block' : 'none';">Fred-NYTProf <span style="color: red">under development (bes 2009-12-09)</span></h1>
+    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredNYTProfDiv').style.display = this.checked ? 'block' : 'none';">Fred-NYTProf</h1>
     <div id="FredNYTProfDiv" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-        The profile data is available locally on the webserver: $QData{"FileURL"}.
+        <pre>$QData{"GenHTMLCmd"}</pre>
+        <pre>$QData{"GenHTMLOutput"}</pre>
+        The <a href="$Config{"Frontend::WebPath"}nytprof/index.html">generated profile data</a> is now available.
     </div>
 </div>

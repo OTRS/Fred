@@ -2,7 +2,7 @@
 # Kernel/System/Fred/NYTProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: NYTProf.pm,v 1.1 2009-12-09 17:19:02 bes Exp $
+# $Id: NYTProf.pm,v 1.2 2009-12-10 09:40:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 #use Devel::NYTProf::Data;
 use Devel::NYTProf::Reader;
@@ -111,28 +111,26 @@ sub DataGet {
         return 1;
     }
 
+    # the config is not used yet
+    #my $Config = $Self->{ConfigObject}->Get('Fred::NYTProf');
+
     # The profiling output from a running process can generally not be analyzed.
     # However we can tell NYTProf that we are done with profile and that the
     # output file should be closed properly.
     DB::finish_profile();
 
-    # TODO
     # The generated file nytprof.out can be parsed with Devel::NYTProf::Data,
     # but the resulting data structure is fairly daunting.
     #my @ProfilingResults;
     #my $Profile = Devel::NYTProf::Data->new( { filename => "$Path/nytprof.out", quiet => 1 } );
     #my $Reader  = Devel::NYTProf::Reader->new('nytprof.out');   # will print to STDOUT
 
-    # TODO: not used yet
-    #my $Config_Ref = $Self->{ConfigObject}->Get('Fred::NYTProf');
-
-    # so simply call nytprofhtml and provide a file link
-    system('nytprofhtml 2>&1 > /dev/null');
-
-    # Location of the generated index.html
-    my $Path    = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin';
-    my $FileURL = "file://$Path/nytprof/index.html";
-    $Param{ModuleRef}->{FileURL} = $FileURL;
+    # So simply call nytprofhtml and provide a link to the generated HTML.
+    # The data from the previous request is deleted.
+    my $HTMLOutputDir = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/nytprof';
+    my $GenHTMLCmd    = "nytprofhtml -out $HTMLOutputDir 2>&1";
+    $Param{ModuleRef}->{GenHTMLCmd}    = $GenHTMLCmd;
+    $Param{ModuleRef}->{GenHTMLOutput} = `$GenHTMLCmd`;
 
     return 1;
 }
@@ -240,6 +238,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-09 17:19:02 $
+$Revision: 1.2 $ $Date: 2009-12-10 09:40:13 $
 
 =cut
