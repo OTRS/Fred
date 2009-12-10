@@ -2,40 +2,22 @@
 # DevelFredConfigLog.dtl - a frontend to show the config debugging
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConfigLog.dtl,v 1.6 2009-10-21 19:02:18 mg Exp $
+# $Id: DevelFredConfigLog.dtl,v 1.7 2009-12-10 15:29:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-                <tr>
-                    <td bgcolor="#ba0f0f">
-                        <b><font color="#ffffff">Fred-Config-Log</font></b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
 
-                        <table bgcolor="#ffffff" cellspacing="0" cellpadding="2">
-                            <tr class="contentkey">
-                                <td align="right">Calls</td>
-                                <td>Config</td>
-                                <td>Status</td>
-                                <td>Package</td>
-                            </tr>
+<div class="DevelFredBox">
+    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredConfigLogTable').style.display = this.checked ? 'block' : 'none';">Fred-Config-Log</h1>
+    <table id="FredConfigLogTable" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+        <tr class="contentkey">
+            <th align="right">Calls</th>
+            <th>Config</th>
+            <th>Status</th>
+            <th>Package</th>
+        </tr>
 $Data{"HTMLLines"}
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-# just a small space
-<table cellspacing="1" cellpadding="0" width="100%">
-    <tr><td></td></tr>
-</table>
+    </table>
+</div>
