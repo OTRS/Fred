@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSessionDump.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSessionDump.pm,v 1.2 2009-12-10 17:21:35 bes Exp $
+# $Id: FredSessionDump.pm,v 1.3 2009-12-11 08:46:15 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Data::Dumper;
 
@@ -80,8 +80,13 @@ sub CreateFredOutput {
 
     # Data is generated here, as it is not available in Kernel::System::Fred::SessionData
     my $SessionID = $Self->{LayoutObject}->{EnvRef}->{SessionID};
-    my %SessionData
-        = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+    my %SessionData;
+    if ($SessionID) {
+        %SessionData
+            = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+    }
+
+    # create a string representation of the data of interest
     my $Dumper = Data::Dumper->new(
         [ $SessionID, \%SessionData ],
         [qw(SessionID SessionData)],
@@ -120,6 +125,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-10 17:21:35 $
+$Revision: 1.3 $ $Date: 2009-12-11 08:46:15 $
 
 =cut
