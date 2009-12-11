@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.14 2009-04-21 10:54:37 tr Exp $
+# $Id: DevelFred.pm,v 1.15 2009-12-11 17:00:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,8 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
-#use Kernel::System::XML;
 use Kernel::System::Config;
 use Kernel::System::Fred;
 
@@ -44,7 +43,6 @@ sub new {
         $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
     }
 
-    #    $Self->{XMLObject} = Kernel::System::XML->new(%{$Self});
     $Self->{ConfigToolObject} = Kernel::System::Config->new( %{$Self} );
     $Self->{FredObject}       = Kernel::System::Fred->new( %{$Self} );
     $Self->{Subaction}        = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
@@ -62,7 +60,7 @@ sub Run {
         my $Version = $Self->{ConfigObject}->Get('Version');
 
         $Self->{LayoutObject}->FatalError(
-            Message => 'Sorry, this side is currently under development!',
+            Message => 'Sorry, this page is currently under development!',
         );
     }
 
@@ -153,14 +151,16 @@ sub Run {
     # fast handle for fred settings
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Setting' ) {
-        my $ModuleForRef = $Self->{ConfigObject}->Get('Fred::Module');
-        delete $ModuleForRef->{Console};
-        for my $Module ( sort keys %{$ModuleForRef} ) {
-            my $Checked = '';
-            if ( $ModuleForRef->{$Module}->{Active} ) {
-                $Checked = 'checked="checked"';
-            }
 
+        # get hashref with all Fred-plugins
+        my $ModuleForRef = $Self->{ConfigObject}->Get('Fred::Module');
+
+        # The Console can't be deactivated
+        delete $ModuleForRef->{Console};
+
+        # loop over Modules which can be activated and deactivated
+        for my $Module ( sort keys %{$ModuleForRef} ) {
+            my $Checked = $ModuleForRef->{$Module}->{Active} ? 'checked="checked"' : '';
             $Self->{LayoutObject}->Block(
                 Name => 'FredModule',
                 Data => {
@@ -169,8 +169,8 @@ sub Run {
                     }
             );
 
+            # Provide a link to the SysConfig only for plugins that have config options
             if ( $Self->{ConfigObject}->Get("Fred::$Module") ) {
-
                 $Self->{LayoutObject}->Block(
                     Name => 'Config',
                     Data => {
@@ -181,11 +181,12 @@ sub Run {
         }
 
         # build output
-        my $Output = $Self->{LayoutObject}->Header( Title => "Fred-Setting" );
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Fred-Setting' );
         $Output .= $Self->{LayoutObject}->Output(
             Data         => {%Param},
             TemplateFile => 'DevelFredSetting',
         );
+
         return $Output;
     }
 
@@ -249,8 +250,9 @@ sub Run {
             }
         }
 
-        return $Self->{LayoutObject}->Redirect( OP => "Action=DevelFred&Subaction=Setting" );
+        return $Self->{LayoutObject}->Redirect( OP => 'Action=DevelFred&Subaction=Setting' );
     }
+
     return 1;
 }
 
