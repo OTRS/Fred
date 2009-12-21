@@ -1,31 +1,31 @@
 # --
-# Kernel/Output/HTML/FredSessionDump.pm - layout backend module
+# Kernel/Output/HTML/FredEnvDump.pm - layout backend module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSessionDump.pm,v 1.4 2009-12-21 12:32:35 bes Exp $
+# $Id: FredEnvDump.pm,v 1.1 2009-12-21 12:32:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredSessionDump;
+package Kernel::Output::HTML::FredEnvDump;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 use Data::Dumper;
 
 =head1 NAME
 
-Kernel::Output::HTML::FredSessionDump - layout backend module
+Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $Env in dtl
 
 =head1 SYNOPSIS
 
-All layout functions of the session dump object
+All layout functions of the layout env dump object
 
 =over 4
 
@@ -35,7 +35,7 @@ All layout functions of the session dump object
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredSessionDump->new(
+    $BackendObject = Kernel::Output::HTML::FredEnvDump->new(
         %Param,
     );
 
@@ -78,18 +78,13 @@ sub CreateFredOutput {
         return;
     }
 
-    # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
-    my $SessionID = $Self->{LayoutObject}->{EnvRef}->{SessionID};
-    my %SessionData;
-    if ($SessionID) {
-        %SessionData
-            = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
-    }
+    # Kernel::System::Fred::EnvDump::DataGet() is not used,
+    # as the data of interest is not easily available there.
 
     # create a string representation of the data of interest
     my $Dumper = Data::Dumper->new(
-        [ $SessionID, \%SessionData ],
-        [qw(SessionID SessionData)],
+        [ $Self->{LayoutObject}->{EnvRef} ],
+        [qw(EnvRef)],
     );
 
     # impose string representation in double quoted style
@@ -102,7 +97,7 @@ sub CreateFredOutput {
 
     # output the html
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-        TemplateFile => 'DevelFredSessionDump',
+        TemplateFile => 'DevelFredEnvDump',
         Data => { Dump => $Dump },
     );
 
@@ -125,6 +120,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-12-21 12:32:35 $
+$Revision: 1.1 $ $Date: 2009-12-21 12:32:35 $
 
 =cut
