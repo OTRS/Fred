@@ -2,14 +2,12 @@
 # DevelFredConsole.dtl - a html console for a better fred handling
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConsole.dtl,v 1.8 2009-11-02 15:36:13 mb Exp $
+# $Id: DevelFredConsole.dtl,v 1.9 2009-12-24 09:36:45 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
-$Include{"DevelFredCommonCSS"}
 
 <div class="DevelFredBox">
     <h1 style="position: relative;">
@@ -20,7 +18,7 @@ $Include{"DevelFredCommonCSS"}
         $Data{"Text"}
         <span style="position: absolute; top 0px; right: 5px;">
 <!-- dtl:block:Setting -->
-        <a href="$Env{"Baselink"}Action=DevelFred&amp;Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onClick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">settings</a>
+        <a href="$Env{"Baselink"}Action=DevelFred;Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onclick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">settings</a>
 <!-- dtl:block:Setting -->
         </span>
     </div>

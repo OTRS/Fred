@@ -2,7 +2,7 @@
 # Kernel/Modules/DevelFred.pm - a special developer module
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.15 2009-12-11 17:00:08 bes Exp $
+# $Id: DevelFred.pm,v 1.16 2009-12-24 09:36:45 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 use Kernel::System::Config;
 use Kernel::System::Fred;
@@ -250,7 +250,7 @@ sub Run {
             }
         }
 
-        return $Self->{LayoutObject}->Redirect( OP => 'Action=DevelFred&Subaction=Setting' );
+        return $Self->{LayoutObject}->Redirect( OP => 'Action=DevelFred;Subaction=Setting' );
     }
 
     return 1;
