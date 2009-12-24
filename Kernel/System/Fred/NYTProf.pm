@@ -2,7 +2,7 @@
 # Kernel/System/Fred/NYTProf.pm
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: NYTProf.pm,v 1.2 2009-12-10 09:40:13 bes Exp $
+# $Id: NYTProf.pm,v 1.3 2009-12-24 09:22:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 #use Devel::NYTProf::Data;
 use Devel::NYTProf::Reader;
@@ -85,8 +85,6 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    my @Lines;
-
     # check needed stuff
     for my $NeededRef (qw(HTMLDataRef ModuleRef)) {
         if ( !$Param{$NeededRef} ) {
@@ -111,7 +109,7 @@ sub DataGet {
         return 1;
     }
 
-    # the config is not used yet
+    # no need for a config, yet
     #my $Config = $Self->{ConfigObject}->Get('Fred::NYTProf');
 
     # The profiling output from a running process can generally not be analyzed.
@@ -119,13 +117,7 @@ sub DataGet {
     # output file should be closed properly.
     DB::finish_profile();
 
-    # The generated file nytprof.out can be parsed with Devel::NYTProf::Data,
-    # but the resulting data structure is fairly daunting.
-    #my @ProfilingResults;
-    #my $Profile = Devel::NYTProf::Data->new( { filename => "$Path/nytprof.out", quiet => 1 } );
-    #my $Reader  = Devel::NYTProf::Reader->new('nytprof.out');   # will print to STDOUT
-
-    # So simply call nytprofhtml and provide a link to the generated HTML.
+    # Generate HTML with nytprofhtml and provide a link to the generated HTML.
     # The data from the previous request is deleted.
     my $HTMLOutputDir = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/nytprof';
     my $GenHTMLCmd    = "nytprofhtml -out $HTMLOutputDir 2>&1";
@@ -238,6 +230,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2009-12-10 09:40:13 $
+$Revision: 1.3 $ $Date: 2009-12-24 09:22:37 $
 
 =cut
