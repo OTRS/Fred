@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.31 2009-12-21 12:32:34 bes Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.32 2009-12-24 10:04:06 bes Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
@@ -18,10 +18,11 @@
         <br/>
         First of all you should install the necessary perl modules <br/>
         <ul>
-        <li> Devel::NYTProf </li>
-        <li> Devel::SmallProf </li>
-        <li> Devel::DProf</li>
-        <li> HTML::Lint</li>
+            <li> Devel::Cover </li>
+            <li> Devel::NYTProf </li>
+            <li> Devel::SmallProf </li>
+            <li> Devel::DProf</li>
+            <li> HTML::Lint</li>
         </ul>
         If you want to use the HTMLValidate module of Fred, you also need to install the following program <br/>
         <ul>
@@ -55,6 +56,8 @@
                     a profiling tool performing a line-by-line code evaluation </li>
         <li> EnvDump: <br/>
                     show info about the environment of the layout object </li>
+        <li> Cover: <br/>
+                    show the executed code </li>
         </ul>
         <br/>
         *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>
@@ -79,6 +82,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredBenchmark.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FredCover.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredDProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLValidate.pm"/>
@@ -94,6 +98,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCover.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredDProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLValidate.dtl"/>
@@ -109,6 +114,7 @@
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/DProf.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/Cover.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLValidate.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/NYTProf.pm"/>
