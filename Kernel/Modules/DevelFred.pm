@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/DevelFred.pm - a special developer module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.16 2009-12-24 09:36:45 mg Exp $
+# $Id: DevelFred.pm,v 1.17 2010-01-14 09:35:32 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,8 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
-use Kernel::System::Config;
 use Kernel::System::Fred;
 
 sub new {
@@ -43,9 +42,19 @@ sub new {
         $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
     }
 
-    $Self->{ConfigToolObject} = Kernel::System::Config->new( %{$Self} );
-    $Self->{FredObject}       = Kernel::System::Fred->new( %{$Self} );
-    $Self->{Subaction}        = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
+# With framework version 2.5 or higher Kernel::System::Config is renamed to Kernel::System::SysConfig
+    my $FrameworkVersion = $Param{ConfigObject}->Get('Version');
+    if ( $FrameworkVersion =~ /^2\.(0|1|2|3|4)\./ ) {
+        $Param{MainObject}->Require('Kernel::System::Config');
+        $Self->{ConfigToolObject} = Kernel::System::Config->new( %{$Self} );
+    }
+    else {
+        $Param{MainObject}->Require('Kernel::System::SysConfig');
+        $Self->{ConfigToolObject} = Kernel::System::SysConfig->new( %{$Self} );
+    }
+
+    $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
+    $Self->{Subaction} = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
     return $Self;
 }
 
