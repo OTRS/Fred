@@ -2,7 +2,7 @@
 # DevelFredJSLint.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredJSLint.dtl,v 1.1 2010-01-29 09:35:15 mn Exp $
+# $Id: DevelFredJSLint.dtl,v 1.2 2010-01-29 10:01:35 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,6 +37,11 @@
 
         }
     </style>
+<!-- dtl:block:JSLintNotAllowed -->
+    <p>JSLint check is only possible in OTRS version 2.5 or higher (with jQuery support)...</p>
+<!-- dtl:block:JSLintNotAllowed -->
+
+<!-- dtl:block:JSLintAllowed -->
     <script src="$Config{"Frontend::JavaScriptPath"}thirdparty/jslint/jslint.js" type="text/javascript"></script>
     <script src="$Config{"Frontend::JavaScriptPath"}FredJSLint.js" rel="fred" type="text/javascript"></script>
     <script rel="fred" type="text/javascript">
@@ -45,4 +50,6 @@
     <div style="padding:5px;">
         <div id="FredJSLintScripts"></div>
     </div>
+<!-- dtl:block:JSLintAllowed -->
+
 </div>
