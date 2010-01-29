@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.24 2009-12-24 10:04:06 bes Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.25 2010-01-29 09:35:15 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -93,6 +93,17 @@
     <ConfigItem Name="Fred::Module###HTMLValidate" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTMLValidator.</Description>
         <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Validator ausgeführt werden soll.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::Module###JSLint" Required="0" Valid="1">
+        <Description Lang="en">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
+        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgeführt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
