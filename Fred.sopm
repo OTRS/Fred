@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.32 2009-12-24 10:04:06 bes Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.33 2010-02-23 15:28:56 bes Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
@@ -84,6 +84,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredCover.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredDProf.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FredEnvDump.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLValidate.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredNYTProf.pm"/>
@@ -100,6 +101,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCover.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredDProf.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredEnvDump.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLValidate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredNYTProf.dtl"/>
@@ -113,8 +115,9 @@
         <File Permission="644" Location="Kernel/System/Fred/Benchmark.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/DProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Cover.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/DProf.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/EnvDump.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLValidate.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/NYTProf.pm"/>
