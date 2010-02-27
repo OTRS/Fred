@@ -2,7 +2,7 @@
 # Kernel/System/Fred/Cover.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Cover.pm,v 1.2 2010-02-27 12:12:35 bes Exp $
+# $Id: Cover.pm,v 1.3 2010-02-27 17:44:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -106,13 +106,13 @@ sub DataGet {
         return 1;
     }
 
-    # no need for a config, yet
-    #my $Config = $Self->{ConfigObject}->Get('Fred::Cover');
+    # get config for this plugin
+    my $Config = $Self->{ConfigObject}->Get('Fred::Cover');
 
     # Generate HTML with 'cover' and provide a link to the generated HTML.
     # The data from the previous request is deleted.
     my $HTMLOutputDir = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/cover';
-    my $GenHTMLCmd    = "cover -outputdir $HTMLOutputDir 2>&1";
+    my $GenHTMLCmd    = "$Config->{GenHTMLCmd} -outputdir $HTMLOutputDir 2>&1";
     $Param{ModuleRef}->{GenHTMLCmd}    = $GenHTMLCmd;
     $Param{ModuleRef}->{GenHTMLOutput} = `$GenHTMLCmd`;
 
@@ -230,6 +230,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-02-27 12:12:35 $
+$Revision: 1.3 $ $Date: 2010-02-27 17:44:13 $
 
 =cut

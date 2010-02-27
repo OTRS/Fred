@@ -2,7 +2,7 @@
 # Kernel/System/Fred/NYTProf.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: NYTProf.pm,v 1.4 2010-02-27 12:12:35 bes Exp $
+# $Id: NYTProf.pm,v 1.5 2010-02-27 17:44:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 use Devel::NYTProf::Reader;
 
@@ -108,8 +108,8 @@ sub DataGet {
         return 1;
     }
 
-    # no need for a config, yet
-    #my $Config = $Self->{ConfigObject}->Get('Fred::NYTProf');
+    # get config for this plugin
+    my $Config = $Self->{ConfigObject}->Get('Fred::NYTProf');
 
     # The profiling output from a running process can generally not be analyzed.
     # However we can tell NYTProf that we are done with profile and that the
@@ -119,7 +119,7 @@ sub DataGet {
     # Generate HTML with 'nytprofhtml' and provide a link to the generated HTML.
     # The data from the previous request is deleted.
     my $HTMLOutputDir = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/nytprof';
-    my $GenHTMLCmd    = "nytprofhtml -out $HTMLOutputDir 2>&1";
+    my $GenHTMLCmd    = "$Config->{GenHTMLCmd} -out $HTMLOutputDir 2>&1";
     $Param{ModuleRef}->{GenHTMLCmd}    = $GenHTMLCmd;
     $Param{ModuleRef}->{GenHTMLOutput} = `$GenHTMLCmd`;
 
@@ -237,6 +237,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-02-27 12:12:35 $
+$Revision: 1.5 $ $Date: 2010-02-27 17:44:13 $
 
 =cut
