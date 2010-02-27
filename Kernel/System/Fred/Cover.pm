@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Fred/Cover.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Cover.pm,v 1.1 2009-12-24 10:04:06 bes Exp $
+# $Id: Cover.pm,v 1.2 2010-02-27 12:12:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -98,7 +98,7 @@ sub DataGet {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'This page deliver the HTML by many separate output calls.'
-                . ' Please use the usual way to interpret Cover',
+                . ' Please use the usual way to interpret Devel::Cover',
         );
         return 1;
     }
@@ -106,10 +106,10 @@ sub DataGet {
         return 1;
     }
 
-    # the config is not used yet
+    # no need for a config, yet
     #my $Config = $Self->{ConfigObject}->Get('Fred::Cover');
 
-    # So simply call nytprofhtml and provide a link to the generated HTML.
+    # Generate HTML with 'cover' and provide a link to the generated HTML.
     # The data from the previous request is deleted.
     my $HTMLOutputDir = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/cover';
     my $GenHTMLCmd    = "cover -outputdir $HTMLOutputDir 2>&1";
@@ -132,6 +132,7 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self = shift;
 
+    # the file index.pl needs to be modified for turning on Devel::Cover
     my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
@@ -139,22 +140,29 @@ sub ActivateModuleTodos {
         die "Can't manipulate $File because it is a symlink!";
     }
 
-    # to use Devel::Cover I have to manipulate the index.pl file
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
+    # read the whole file
+    open my $ReadFH, '<', $File or die "Can't open $File: $!";
+    my ( $OldShebang, @Lines ) = <$ReadFH>;
+    close $ReadFH;
+    chomp $OldShebang;
 
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    print $FilehandleII
-        "#!/usr/bin/perl -w -d:Cover=-silent,on\n",
-        "# FRED - manipulated\n",
+    # add -d:Cover to the shebang and overwrite the file
+    open my $WriteFH, '>', $File or die "Can't write $File: $!";
+    if ( $OldShebang !~ m/-d:Cover/ ) {
+        my $Now = localtime();
+        print $WriteFH
+            "$OldShebang -d:Cover=-silent,on\n",
+            "# FRED - manipulated $Now\n",
+    }
+    print $WriteFH
+        "$OldShebang\n",
         @Lines;
-    close $FilehandleII;
+    close $WriteFH;
 
     # create a info for the user
     $Self->{LogObject}->Log(
         Priority => 'error',
-        Message  => "FRED manipulated the $File!",
+        Message  => "FRED added -d:Cover to the first line of '$File'",
     );
 
     return 1;
@@ -173,6 +181,7 @@ Do all jobs which are necessary to deactivate this special module.
 sub DeactivateModuleTodos {
     my $Self = shift;
 
+    # modification of index.pl is reverted
     my $File = $Self->{ConfigObject}->Get('Home') . '/bin/cgi-bin/index.pl';
 
     # check if it is an symlink, because it can be development system which use symlinks
@@ -181,22 +190,22 @@ sub DeactivateModuleTodos {
     }
 
     # read the index.pl file
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
+    open my $ReadFH, '<', $File or die "Can't open $File: $!";
+    my @Lines = <$ReadFH>;
+    close $ReadFH;
 
     # remove the manipulated lines
-    if ( $Lines[0] =~ m{#!/usr/bin/perl -w -d:Cover=-silent,on} ) {
+    if ( $Lines[0] =~ m{-d:Cover} ) {
         shift @Lines;
     }
-    if ( $Lines[0] =~ m{# FRED - manipulated} ) {
+    if ( $Lines[0] =~ m{^# FRED - manipulated} ) {
         shift @Lines;
     }
 
     # save the index.pl file
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    print $FilehandleII @Lines;
-    close $FilehandleII;
+    open my $WriteFH, '>', $File or die "Can't write $File: $!";
+    print $WriteFH @Lines;
+    close $WriteFH;
     $Self->{LogObject}->Log(
         Priority => 'error',
         Message  => "FRED manipulated the file $File!",
@@ -221,6 +230,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-12-24 10:04:06 $
+$Revision: 1.2 $ $Date: 2010-02-27 12:12:35 $
 
 =cut
