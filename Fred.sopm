@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.36 2010-03-02 08:12:57 bes Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.37 2010-04-15 22:17:44 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
@@ -100,6 +100,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredContainer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCover.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredDProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredEnvDump.dtl"/>

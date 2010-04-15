@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.23 2009-12-24 09:36:45 mg Exp $
+# $Id: OutputFilterFred.pm,v 1.24 2010-04-15 22:17:44 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -121,6 +121,14 @@ sub Run {
         $Output .= $ModulesDataRef->{$Module}->{Output} || '';
     }
 
+    # Put output in the Fred Container
+    $Output = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredContainer',
+        Data         => {
+            Data => $Output
+        },
+    );
+
     # include the fred output in the original output
     if ( ${ $Param{Data} } !~ s/(\<body(|.+?)\>)/$1\n$Output\n\n\n\n/mx ) {
         ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx;
@@ -151,6 +159,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2009-12-24 09:36:45 $
+$Revision: 1.24 $ $Date: 2010-04-15 22:17:44 $
 
 =cut

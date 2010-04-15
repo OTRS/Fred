@@ -1,8 +1,8 @@
 # --
 # DevelFredConfigLog.dtl - a frontend to show the config debugging
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConfigLog.dtl,v 1.7 2009-12-10 15:29:47 bes Exp $
+# $Id: DevelFredConfigLog.dtl,v 1.8 2010-04-15 22:17:44 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,14 +10,19 @@
 # --
 
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredConfigLogTable').style.display = this.checked ? 'block' : 'none';">Fred-Config-Log</h1>
-    <table id="FredConfigLogTable" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-        <tr class="contentkey">
-            <th align="right">Calls</th>
-            <th>Config</th>
-            <th>Status</th>
-            <th>Package</th>
-        </tr>
+    <h1>
+        <input type="checkbox" checked="checked" onclick="document.getElementById('DevelFredConfigLogContent').style.display = this.checked ? 'block' : 'none';">
+        Fred-Config-Log
+    </h1>
+    <div class="DevelFredBoxContent" id="DevelFredConfigLogContent">
+        <table>
+            <tr class="contentkey">
+                <th align="right">Calls</th>
+                <th>Config</th>
+                <th>Status</th>
+                <th>Package</th>
+            </tr>
 $Data{"HTMLLines"}
-    </table>
+        </table>
+    </div>
 </div>

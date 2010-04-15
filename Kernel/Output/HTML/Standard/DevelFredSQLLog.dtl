@@ -1,8 +1,8 @@
 # --
 # DevelFredSQLLog.dtl - a frontend to show the sql log
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.9 2009-12-11 17:00:08 bes Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.10 2010-04-15 22:17:44 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,20 +10,26 @@
 # --
 
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredSQLLogTable').style.display = this.checked ? 'block' : 'none';">Fred-SQL-Log</h1>
-    <table id="FredSQLLogTable" cellspacing="0" cellpadding="1" width="100%">
-        <tr class="contentkey">
-            <td>Kind</td>
-            <td>Statement</td>
-            <td>Package</td>
-            <td>Time 1/100 sec</td>
-            <td>Equal Statements</td>
-        </tr>
+    <h1>
+        <input type="checkbox" checked="checked" onclick="document.getElementById('FredSQLLogTable').style.display = this.checked ? 'block' : 'none';">
+        Fred-SQL-Log
+    </h1>
+    <div class="DevelFredBoxContent">
+
+        <table id="FredSQLLogTable" cellspacing="0" cellpadding="1" width="100%">
+            <tr class="contentkey">
+                <td>Kind</td>
+                <td>Statement</td>
+                <td>Package</td>
+                <td>Time 1/100 sec</td>
+                <td>Equal Statements</td>
+            </tr>
 $Data{"HTMLLines"}
-        <tr class="contentkey">
-            <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
-            <td>$Data{"Time"}</td>
-            <td>sec</td>
-        </tr>
-    </table>
+            <tr class="contentkey">
+                <td colspan="3">$Data{"AllStatements"} AllStatments = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</td>
+                <td>$Data{"Time"}</td>
+                <td>sec</td>
+            </tr>
+        </table>
+    </div>
 </div>
