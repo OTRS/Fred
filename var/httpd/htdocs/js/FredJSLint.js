@@ -74,7 +74,6 @@ OTRS.Fred.JSLint = (function () {
         Waiting: 0,
         Started: 0,
         Sources: {},
-        OldOnLoadFunc: {},
 
         /**
          * @function
@@ -83,18 +82,15 @@ OTRS.Fred.JSLint = (function () {
          *      This is the init function for JSLint.
          */
         Init: function () {
-            OTRS.Fred.JSLint.OldOnLoadFunc = window.onload;
-            window.onload = function() {
-                // this module needs jQuery!
-                if (typeof jQuery == 'undefined' || !jQuery) {
-                    alert('Fred JSLint module needs jQuery loaded');
-                    document.getElementById('FredJSLintScripts').style.height = '15px';
-                }
-                else {
+            // this module needs jQuery!
+            if (typeof jQuery == 'undefined' || !jQuery) {
+                alert('Fred JSLint module needs jQuery loaded');
+                document.getElementById('FredJSLintScripts').style.height = '15px';
+            }
+            else {
+                $(document).ready(function () {
                     OTRS.Fred.JSLint.GetScripts();
-                }
-                if (typeof OTRS.Fred.JSLint.OldOnLoadFunc != "undefined")
-                    OTRS.Fred.JSLint.OldOnLoadFunc();
+                });
             }
         },
 

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.24 2010-04-15 22:17:44 mg Exp $
+# $Id: OutputFilterFred.pm,v 1.25 2010-04-16 17:45:10 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -121,6 +121,12 @@ sub Run {
         $Output .= $ModulesDataRef->{$Module}->{Output} || '';
     }
 
+    my $JSOutput = '';
+    $Output =~ s{(<script.+/script>)}{
+        $JSOutput .= $1;
+        "";
+    }smxeg;
+
     # Put output in the Fred Container
     $Output = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredContainer',
@@ -133,6 +139,9 @@ sub Run {
     if ( ${ $Param{Data} } !~ s/(\<body(|.+?)\>)/$1\n$Output\n\n\n\n/mx ) {
         ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx;
     }
+
+    # Inject JS at the end of the body
+    ${ $Param{Data} } =~ s{</body>}{$JSOutput\n\t</body>}smx;
 
     # Inject CSS into <head></head> for valid HTML
     my $CSSOutput = $Self->{LayoutObject}->Output(
@@ -159,6 +168,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-04-15 22:17:44 $
+$Revision: 1.25 $ $Date: 2010-04-16 17:45:10 $
 
 =cut
