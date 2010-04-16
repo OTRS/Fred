@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.8 2010-04-16 18:12:55 mn Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.9 2010-04-16 21:47:12 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,7 +63,7 @@ body #FredJSLintScripts {
 }
 
 .FredJSLintSuccessfull {
-    color: red;
+    color: green;
     font-weight: bold;
 }
 
