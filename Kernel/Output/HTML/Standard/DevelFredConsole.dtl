@@ -2,7 +2,7 @@
 # DevelFredConsole.dtl - a html console for a better fred handling
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConsole.dtl,v 1.10 2010-04-15 22:17:44 mg Exp $
+# $Id: DevelFredConsole.dtl,v 1.11 2010-04-16 18:12:55 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 
 <div class="DevelFredBox">
     <h1 style="position: relative;">
-        <input type="checkbox" checked="checked" onclick="document.getElementById('DevelFredContainer').style.display = 'none';">
+        <input type="checkbox" checked="checked" onclick="document.getElementById('DevelFredContainer').style.display = 'none';" />
         Fred-Console
         <span style="position: absolute; top 0px; right: 5px;">mod_perl $QData{"ModPerl"}</span>
     </h1>

@@ -2,7 +2,7 @@
 # DevelFredJSLint.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredJSLint.dtl,v 1.2 2010-01-29 10:01:35 mn Exp $
+# $Id: DevelFredJSLint.dtl,v 1.3 2010-04-16 18:12:55 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,32 +11,6 @@
 
 <div class="DevelFredBox">
     <h1>Fred-JSLint Results</h1>
-    <style type="text/css">
-        #FredJSLintScripts {
-            height: 300px;
-            overflow: auto;
-        }
-
-        .FredJSLintSuccessfull {
-            color: red;
-            font-weight: bold;
-        }
-
-        .FredJSLintError {
-            margin-bottom: 6px;
-        }
-
-        #FredJSLintScripts p {
-            margin:0;
-            padding:0;
-        }
-
-        #FredJSLintScripts pre {
-            margin:0;
-            padding:0;
-
-        }
-    </style>
 <!-- dtl:block:JSLintNotAllowed -->
     <p>JSLint check is only possible in OTRS version 2.5 or higher (with jQuery support)...</p>
 <!-- dtl:block:JSLintNotAllowed -->
