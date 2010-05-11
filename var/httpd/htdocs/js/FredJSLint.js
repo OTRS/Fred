@@ -67,7 +67,7 @@ OTRS.Fred.JSLint = (function () {
             regexp: true,
             strict: true,
             immed: true,
-            predef: ['OTRS', '$', 'jQuery', 'window', 'document'],
+            predef: ['OTRS', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document'],
         },
 
         AllScripts: [],
