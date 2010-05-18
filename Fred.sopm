@@ -2,10 +2,9 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.37 2010-04-15 22:17:44 mg Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.38 2010-05-18 11:44:12 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
-    <ModuleRequired Version="2.06">HTML::Lint</ModuleRequired>
     <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
@@ -22,7 +21,6 @@
             <li> Devel::NYTProf </li>
             <li> Devel::SmallProf </li>
             <li> Devel::DProf</li>
-            <li> HTML::Lint</li>
         </ul>
         If you want to use the HTMLValidate module of Fred, you also need to install the following program <br/>
         <ul>
@@ -35,7 +33,7 @@
         To date, Fred has the following features: <br/>
         <ul>
         <li> HTMLCheck: <br/>
-                    the HTML output is checked by means of HTML::Lint </li>
+                    performs different HTML quality checks in JavaScript </li>
         <li> HTMLValidate: <br/>
                     real HTML validation based on an external tool </li>
         <li> STDERRLog: <br/>

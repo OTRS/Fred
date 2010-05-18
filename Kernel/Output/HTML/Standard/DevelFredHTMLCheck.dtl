@@ -1,28 +1,28 @@
 # --
 # DevelFredHTMLCheck.dtl - a frontend to show the HTML-Check results
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLCheck.dtl,v 1.4 2009-10-21 19:02:18 mg Exp $
+# $Id: DevelFredHTMLCheck.dtl,v 1.5 2010-05-18 11:44:12 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-                <tr>
-                    <td bgcolor="#ba0f0f">
-                        <b><font color="#ffffff">Fred-HTMLCheck</font></b>
-                    </td>
-                </tr>
-$Data{"HTMLLines"}
-            </table>
-        </td>
-    </tr>
-</table>
-# just a small space
-<table cellspacing="1" cellpadding="0" width="100%">
-    <tr><td></td></tr>
-</table>
+
+<div class="DevelFredBox">
+    <h1>Fred HTMLCheck Results</h1>
+<!-- dtl:block:HTMLCheckNotAllowed -->
+    <p>HTMLCHeck check is only possible in OTRS version 3.0 or higher (with jQuery support)...</p>
+<!-- dtl:block:HTMLCheckNotAllowed -->
+
+<!-- dtl:block:HTMLCheckAllowed -->
+    <script src="$Config{"Frontend::JavaScriptPath"}FredHTMLCHeck.js" rel="fred" type="text/javascript"></script>
+    <script rel="fred" type="text/javascript">
+        OTRS.Fred.HTMLCheck.CheckForStart();
+    </script>
+    <div style="padding:5px;">
+        <div id="FredHTMLCheckResults"></div>
+    </div>
+<!-- dtl:block:HTMLCheckAllowed -->
+
+</div>
