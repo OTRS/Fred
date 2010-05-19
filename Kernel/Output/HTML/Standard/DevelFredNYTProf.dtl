@@ -1,15 +1,15 @@
 # --
 # DevelFredNYTProf.dtl - a frontend to show the NYTProf result table
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredNYTProf.dtl,v 1.3 2009-12-11 17:00:08 bes Exp $
+# $Id: DevelFredNYTProf.dtl,v 1.4 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredNYTProfDiv').style.display = this.checked ? 'block' : 'none';">Fred-NYTProf</h1>
+    <h1><input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredNYTProfDiv').style.display = this.checked ? 'block' : 'none';"/>Fred-NYTProf</h1>
     <div id="FredNYTProfDiv">
         <pre>$QData{"GenHTMLCmd"}</pre>
         <pre>$QData{"GenHTMLOutput"}</pre>

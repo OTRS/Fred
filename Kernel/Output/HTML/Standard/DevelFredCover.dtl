@@ -2,7 +2,7 @@
 # DevelFredCover.dtl - a frontend to show the Devel::Cover output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCover.dtl,v 1.2 2010-04-15 22:17:44 mg Exp $
+# $Id: DevelFredCover.dtl,v 1.3 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 
 <div class="DevelFredBox">
     <h1>
-        <input type="checkbox" checked="checked" onclick="document.getElementById('FredCoverDiv').style.display = this.checked ? 'block' : 'none';">
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredCoverDiv').style.display = this.checked ? 'block' : 'none';"/>
         Fred-Cover
     </h1>
     <div class="DevelFredBoxContent" id="FredCoverDiv">

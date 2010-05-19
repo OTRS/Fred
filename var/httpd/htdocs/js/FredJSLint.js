@@ -30,17 +30,16 @@ OTRS.Fred.JSLint = (function () {
                 for (i = 0; i < JSLINT.errors.length; i++) {
                     ErrorObject = JSLINT.errors[i];
                     if (ErrorObject) {
-                        Output = '<div class="FredJSLintError"><p>';
-                        Output += '<strong>Source: ' + this.Src + ', Line ' + ErrorObject.line;
-                        Output += ', character ' + ErrorObject.character + ':</strong></p>';
-                        Output += '<pre>' + ErrorObject.evidence + '</pre><p>' + ErrorObject.reason;
-                        Output += '</p></div>';
+                        Output = '<div class="FredJSLintError">';
+                        Output += '<p><span class="Error">Error: </span><strong>' + ErrorObject.reason +'</strong> Source:     ' + this.Src + ':' + ErrorObject.line +':' + ErrorObject.character + '</p>';
+                        Output += '<code>' + ErrorObject.evidence + '</code>';
+                        Output += '</div>';
                         $('#FredJSLintScripts').append(Output);
                     }
                 }
             }
             else {
-                $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ': No errors found!</p>');
+                $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ' ok</p>');
             }
         });
 

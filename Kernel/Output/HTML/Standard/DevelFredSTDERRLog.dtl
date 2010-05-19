@@ -2,7 +2,7 @@
 # DevelFredSTDERRLog.dtl - a frontend to show the STDERR log
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSTDERRLog.dtl,v 1.10 2010-04-16 18:12:55 mn Exp $
+# $Id: DevelFredSTDERRLog.dtl,v 1.11 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,7 @@
 # --
 
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredSTDERRLogPre').style.display = this.checked ? 'block' : 'none';" />Fred-STDERRLog</h1>
+    <h1><input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredSTDERRLogPre').style.display = this.checked ? 'block' : 'none';" />Fred-STDERRLog</h1>
     <div class="DevelFredBoxContent">
         <pre id="FredSTDERRLogPre" style="padding: 3px;">$QData{"HTMLLines"}</pre>
     </div>

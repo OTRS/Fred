@@ -1,14 +1,14 @@
 # --
 # DevelFredEnvDump.dtl - a frontend to show the layout environment
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredEnvDump.dtl,v 1.1 2009-12-21 12:32:35 bes Exp $
+# $Id: DevelFredEnvDump.dtl,v 1.2 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="DevelFredBox">
-    <h1><input type="checkbox" onclick="document.getElementById('FredEnvDumpPre').style.display = this.checked ? 'block' : 'none';">Fred-EnvDump</h1>
+    <h1><input type="checkbox" title="Toggle this widget" onclick="document.getElementById('FredEnvDumpPre').style.display = this.checked ? 'block' : 'none';"/>Fred-EnvDump</h1>
     <pre id="FredEnvDumpPre" style="display: none">$QData{"Dump"}</pre>
 </div>

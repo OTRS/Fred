@@ -2,7 +2,7 @@
 # DevelFredDProf.dtl - a frontend to show the DProf result table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredDProf.dtl,v 1.7 2010-04-15 22:17:44 mg Exp $
+# $Id: DevelFredDProf.dtl,v 1.8 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,7 @@
 # --
 <div class="DevelFredBox">
     <h1>
-        <input type="checkbox" checked="checked" onclick="document.getElementById('DevelFredDProfContent').style.display = this.checked ? 'block' : 'none';">
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredDProfContent').style.display = this.checked ? 'block' : 'none';"/>
         Fred-DProf
     </h1>
     <div class="DevelFredBoxContent" id="DevelFredDProfContent">

@@ -2,7 +2,7 @@
 # DevelFredHTMLCheck.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLCheck.dtl,v 1.5 2010-05-18 11:44:12 mg Exp $
+# $Id: DevelFredHTMLCheck.dtl,v 1.6 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,19 +10,20 @@
 # --
 
 <div class="DevelFredBox">
-    <h1>Fred HTMLCheck Results</h1>
+    <h1>
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredHTMLCheckResults').style.display = this.checked ? 'block' : 'none';"/>
+        Fred HTMLCheck Results
+    </h1>
 <!-- dtl:block:HTMLCheckNotAllowed -->
     <p>HTMLCHeck check is only possible in OTRS version 3.0 or higher (with jQuery support)...</p>
 <!-- dtl:block:HTMLCheckNotAllowed -->
 
 <!-- dtl:block:HTMLCheckAllowed -->
-    <script src="$Config{"Frontend::JavaScriptPath"}FredHTMLCHeck.js" rel="fred" type="text/javascript"></script>
+    <script src="$Config{"Frontend::JavaScriptPath"}FredHTMLCheck.js" rel="fred" type="text/javascript"></script>
     <script rel="fred" type="text/javascript">
         OTRS.Fred.HTMLCheck.CheckForStart();
     </script>
-    <div style="padding:5px;">
-        <div id="FredHTMLCheckResults"></div>
-    </div>
+    <div style="padding:5px;" id="FredHTMLCheckResults"></div>
 <!-- dtl:block:HTMLCheckAllowed -->
 
 </div>

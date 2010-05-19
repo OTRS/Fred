@@ -2,7 +2,7 @@
 # DevelFredJSLint.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredJSLint.dtl,v 1.3 2010-04-16 18:12:55 mn Exp $
+# $Id: DevelFredJSLint.dtl,v 1.4 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,10 @@
 # --
 
 <div class="DevelFredBox">
-    <h1>Fred-JSLint Results</h1>
+    <h1>
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredJSLintScripts').style.display = this.checked ? 'block' : 'none';"/>
+        Fred-JSLint Results
+    </h1>
 <!-- dtl:block:JSLintNotAllowed -->
     <p>JSLint check is only possible in OTRS version 2.5 or higher (with jQuery support)...</p>
 <!-- dtl:block:JSLintNotAllowed -->
@@ -21,9 +24,6 @@
     <script rel="fred" type="text/javascript">
         OTRS.Fred.JSLint.Init();
     </script>
-    <div style="padding:5px;">
-        <div id="FredJSLintScripts"></div>
-    </div>
+    <div style="padding:5px;" id="FredJSLintScripts"></div>
 <!-- dtl:block:JSLintAllowed -->
-
 </div>

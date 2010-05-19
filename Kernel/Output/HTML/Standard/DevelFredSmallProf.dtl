@@ -1,15 +1,15 @@
 # --
 # DevelFredSmallProf.dtl - a frontend to show the SmallProf result table
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSmallProf.dtl,v 1.7 2009-12-09 11:50:20 bes Exp $
+# $Id: DevelFredSmallProf.dtl,v 1.8 2010-05-19 07:01:36 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="DevelFredBox">
-    <h1><input type="checkbox" checked="checked" onclick="document.getElementById('FredSmallProfTable').style.display = this.checked ? 'block' : 'none';">Fred-SmallProf</h1>
+    <h1><input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredSmallProfTable').style.display = this.checked ? 'block' : 'none';"/>Fred-SmallProf</h1>
     <table id="FredSmallProfTable" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
         <tr>
             <td colspan="6">
