@@ -2,7 +2,7 @@
 # DevelFredHTMLCheck.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLCheck.dtl,v 1.6 2010-05-19 07:01:36 mg Exp $
+# $Id: DevelFredHTMLCheck.dtl,v 1.7 2010-05-20 11:38:40 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@
     <script rel="fred" type="text/javascript">
         OTRS.Fred.HTMLCheck.CheckForStart();
     </script>
-    <div style="padding:5px;" id="FredHTMLCheckResults"></div>
+    <div style="padding:5px;" id="FredHTMLCheckResults" class="DevelFredBoxContent"></div>
 <!-- dtl:block:HTMLCheckAllowed -->
 
 </div>
