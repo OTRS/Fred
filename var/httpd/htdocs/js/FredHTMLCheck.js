@@ -23,10 +23,13 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
         var $Container = $('<div></div>');
         $Container.append( $Element.clone() );
 
-        var Code = HTMLEncode($Container.html());
+        var Code = $Container.html();
+        if (Code.length > 100) {
+            Code = Code.substring(0, 100) + '...';
+        }
 
         var Message = $('<p class="Small"></p>');
-        Message.append('<span class="Error">Error:</span> <strong>' + ErrorDescription + '</strong><div>' + Hint + '</div><div><code>' + Code + '</code></div>');
+        Message.append('<span class="Error">Error:</span> <strong>' + ErrorDescription + '</strong><div>' + Hint + '</div><div><code>' + HTMLEncode(Code) + '</code></div>');
         $('#FredHTMLCheckResults').append(Message);
     }
 
@@ -104,6 +107,83 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
         });
     }
     CheckFunctions.push(CheckAccessibility);
+
+    /**
+     * @function
+     * @description
+     *      Performs various checks for bad HTML practice
+     * @return
+     *      nothing, but calls OutputError if an error was found
+     */
+
+    function CheckBadPractice() {
+        // check for inputs which should be buttons
+        $('input:button, input:submit, input:reset').each(function(){
+            var $this = $(this);
+            OutputError(
+                $this,
+                'BadPracticeInputButton',
+                'Old input with type button, submit or reset detected',
+                'Please replace this element with a <code>&lt;button&gt;</code> with the same type. Input fields must not be used for this purpose any more.'
+            );
+        });
+
+        // check for inputs with size attributes
+        $('input:not(:file)').each(function(){
+            var $this = $(this);
+            if ($this.attr('size') && $this.attr('size') > 0) {
+                OutputError(
+                    $this,
+                    'BadPracticeInputSize',
+                    'Input element with size attribute',
+                    'Please remove the size attribute (this is only allowed for file upload fields). Maybe a class like W25pc, W33pc or W50pc would achieve a similar effect.'
+                );
+            }
+        });
+
+        // check for obsolete elements
+        var ObsoleteElement2Replacement = {
+            b: '<code>&lt;strong&gt;</code>',
+            i: '<code>&lt;em&gt;</code>',
+            font: '<code>&lt;span&gt;</code> with a CSS class',
+            nobr: 'a proper substitute (depends on context)'
+        };
+
+        for (var ObsoleteElement in ObsoleteElement2Replacement) {
+            // check for inputs with size attributes
+            $(ObsoleteElement).each(function(){
+                var $this = $(this);
+                OutputError(
+                    $this,
+                    'BadPracticeObsoleteElement',
+                    'Obsolete element <code>&lt;' + ObsoleteElement + '&gt;</code> used',
+                    'Please replace it with: ' + ObsoleteElement2Replacement[ObsoleteElement] + '.'
+                );
+            });
+        }
+
+        // check for obsolete classes
+        var ObsoleteClasses = {
+            mainbody: 1,
+            contentkey: 1,
+            contentvalue: 1
+        };
+
+        for (var ObsoleteClass in ObsoleteClasses) {
+            // check for inputs with size attributes
+            $('.' + ObsoleteClass).each(function(){
+                var $this = $(this);
+                OutputError(
+                    $this,
+                    'BadPracticeObsoleteClass',
+                    'Obsolete class <code>"' + ObsoleteClass + '"</code> used',
+                    'Please remove it and replace it with a proper substitute.'
+                );
+            });
+        }
+
+    }
+    CheckFunctions.push(CheckBadPractice);
 
     /**
      * @function
