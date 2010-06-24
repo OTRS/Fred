@@ -1,14 +1,14 @@
 "use strict";
 
-var OTRS = OTRS || {};
-OTRS.Fred = OTRS.Fred || {};
+var Core = Core || {};
+Core.Fred = Core.Fred || {};
 
 /**
  * @namespace
  * @description
  *      This namespace contains all logic for the Fred module JSLint
  */
-OTRS.Fred.JSLint = (function () {
+Core.Fred.JSLint = (function (TargetNS) {
     /**
      * @function
      * @private
@@ -19,13 +19,13 @@ OTRS.Fred.JSLint = (function () {
         var Result;
 
         // This func should not be started more than one time...
-        OTRS.Fred.JSLint.Started++;
+        TargetNS.Started++;
 
-        // Start JSLint vor every script we found and output the result
-        $.each(OTRS.Fred.JSLint.AllScripts, function() {
+        // Start JSLint for every script we found and output the result
+        $.each(TargetNS.AllScripts, function() {
             var ErrorObject, Output, i;
 
-            Result = JSLINT(this.Script, OTRS.Fred.JSLint.Options);
+            Result = JSLINT(this.Script, TargetNS.Options);
             if (!Result) {
                 for (i = 0; i < JSLINT.errors.length; i++) {
                     ErrorObject = JSLINT.errors[i];
@@ -43,17 +43,16 @@ OTRS.Fred.JSLint = (function () {
             }
         });
 
-        if (OTRS.Fred.JSLint.AllScripts.length === 0) {
+        if (TargetNS.AllScripts.length === 0) {
             $('#FredJSLintScripts').append('<p>No scripts found!</p>').css('height', '15px');
         }
     }
 
-    return {
-        /**
-         * @field
-         * @description All options for JSLint.
-         */
-        Options: {
+    /**
+     * @field
+     * @description All options for JSLint.
+     */
+    TargetNS.Options = {
             browser: true,
             white: true,
             devel: true,
@@ -66,91 +65,91 @@ OTRS.Fred.JSLint = (function () {
             regexp: true,
             strict: true,
             immed: true,
-            predef: ['OTRS', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document'],
-        },
+            predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document'],
+    };
 
-        AllScripts: [],
-        Waiting: 0,
-        Started: 0,
-        Sources: {},
+    TargetNS.AllScripts = [];
+    TargetNS.Waiting = 0;
+    TargetNS.Started = 0;
+    TargetNS.Sources = {};
 
-        /**
-         * @function
-         * @return nothing.
-         * @description
-         *      This is the init function for JSLint.
-         */
-        Init: function () {
-            // this module needs jQuery!
-            if (typeof jQuery == 'undefined' || !jQuery) {
-                alert('Fred JSLint module needs jQuery loaded');
-                document.getElementById('FredJSLintScripts').style.height = '15px';
-            }
-            else {
-                $(document).ready(function () {
-                    OTRS.Fred.JSLint.GetScripts();
-                });
-            }
-        },
-
-        /**
-         * @function
-         * @return nothing
-         * @description Get all scripts to check.
-         */
-        GetScripts: function () {
-            $(document).ready(function() {
-                var Scripts, Source;
-
-                $('script').each(function() {
-                    // Exclude the Fred JavaScript ;-)
-                    if (!($(this).is('[rel=fred]'))) {
-                        Scripts = $(this).text();
-                        if ($(this).is('[src]'))
-                            Source = $(this).attr('src');
-                        else
-                            Source = 'inline';
-
-                        if (Source == 'inline')
-                        {
-                            OTRS.Fred.JSLint.AllScripts.push({Src: Source, Script: Scripts});
-                        }
-                        else
-                        {
-                            // If external source is not a thirdparty script, load it!
-                            if (!Source.match(/thirdparty/) && !Source.match(/chrome:\/\//) && !OTRS.Fred.JSLint.Sources[Source]) {
-                                OTRS.Fred.JSLint.Waiting++;
-                                OTRS.Fred.JSLint.Sources[Source] = 1;
-                                $.get(Source, {}, function(data) {
-                                    OTRS.Fred.JSLint.AllScripts.push({Src: this.url, Script: data});
-                                    OTRS.Fred.JSLint.Waiting--;
-                                    setTimeout("OTRS.Fred.JSLint.CheckForStart()", 250);
-                                });
-                            }
-                        }
-                     }
-                });
-
-                // start jslint, if all ajax requests are ready
-                setTimeout("OTRS.Fred.JSLint.CheckForStart()", 250);
+    /**
+     * @function
+     * @return nothing.
+     * @description
+     *      This is the init function for JSLint.
+     */
+    TargetNS.Init = function () {
+        // this module needs jQuery!
+        if (typeof jQuery == 'undefined' || !jQuery) {
+            alert('Fred JSLint module needs jQuery loaded');
+            document.getElementById('FredJSLintScripts').style.height = '15px';
+        }
+        else {
+            $(document).ready(function () {
+                Core.Fred.JSLint.GetScripts();
             });
-        },
+        }
+    };
 
-        /**
-         * @function
-         * @return nothing.
-         * @description
-         *      This function checks, if JSLint can be started (all scripts are loaded).
-         */
-        CheckForStart: function () {
-            if (OTRS.Fred.JSLint.Waiting <= 0 && OTRS.Fred.JSLint.Started === 0) {
-                StartJSLint();
-            }
-            else {
-                if (OTRS.Fred.JSLint.Started === 0) {
-                    setTimeout("OTRS.Fred.JSLint.CheckForStart()", 250);
-                }
+    /**
+     * @function
+     * @return nothing
+     * @description Get all scripts to check.
+     */
+    TargetNS.GetScripts = function () {
+        $(document).ready(function() {
+            var Scripts, Source;
+
+            $('script').each(function() {
+                // Exclude the Fred JavaScript ;-)
+                if (!($(this).is('[rel=fred]'))) {
+                    Scripts = $(this).text();
+                    if ($(this).is('[src]'))
+                        Source = $(this).attr('src');
+                    else
+                        Source = 'inline';
+
+                    if (Source == 'inline')
+                    {
+                        TargetNS.AllScripts.push({Src: Source, Script: Scripts});
+                    }
+                    else
+                    {
+                        // If external source is not a thirdparty script, load it!
+                        if (!Source.match(/thirdparty/) && !Source.match(/chrome:\/\//) && !TargetNS.Sources[Source]) {
+                            TargetNS.Waiting++;
+                            TargetNS.Sources[Source] = 1;
+                            $.get(Source, {}, function(data) {
+                                TargetNS.AllScripts.push({Src: this.url, Script: data});
+                                TargetNS.Waiting--;
+                                setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
+                            });
+                        }
+                    }
+                 }
+            });
+
+            // start jslint, if all ajax requests are ready
+            setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
+        });
+    };
+
+    /**
+     * @function
+     * @return nothing.
+     * @description
+     *      This function checks, if JSLint can be started (all scripts are loaded).
+     */
+    TargetNS.CheckForStart = function () {
+        if (TargetNS.Waiting <= 0 && TargetNS.Started === 0) {
+            StartJSLint();
+        }
+        else {
+            if (TargetNS.Started === 0) {
+                setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
             }
         }
     };
-}());
+    return TargetNS;
+}(Core.Fred.JSLint || {}));
