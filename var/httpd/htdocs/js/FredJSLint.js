@@ -69,7 +69,7 @@ Core.Fred.JSLint = (function (TargetNS) {
             predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
         };
 
-    TargetNS.AllScripts = [];
+    TargetNS.AllScripts = TargetNS.AllScripts || [];
     TargetNS.Waiting = 0;
     TargetNS.Started = 0;
     TargetNS.Sources = {};
@@ -105,7 +105,6 @@ Core.Fred.JSLint = (function (TargetNS) {
             $('script').each(function () {
                 // Exclude the Fred JavaScript ;-)
                 Scripts = $(this).text();
-
 
                 if ($(this).is('[src]')) {
                     Source = $(this).attr('src');
