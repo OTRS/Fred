@@ -1,4 +1,5 @@
 "use strict";
+/*global JSLINT: false */
 
 var Core = Core || {};
 Core.Fred = Core.Fred || {};
@@ -22,7 +23,7 @@ Core.Fred.JSLint = (function (TargetNS) {
         TargetNS.Started++;
 
         // Start JSLint for every script we found and output the result
-        $.each(TargetNS.AllScripts, function() {
+        $.each(TargetNS.AllScripts, function () {
             var ErrorObject, Output, i;
 
             Result = JSLINT(this.Script, TargetNS.Options);
@@ -31,7 +32,7 @@ Core.Fred.JSLint = (function (TargetNS) {
                     ErrorObject = JSLINT.errors[i];
                     if (ErrorObject) {
                         Output = '<div class="FredJSLintError">';
-                        Output += '<p><span class="Error">Error: </span><strong>' + ErrorObject.reason +'</strong> Source:     ' + this.Src + ':' + ErrorObject.line +':' + ErrorObject.character + '</p>';
+                        Output += '<p><span class="Error">Error: </span><strong>' + ErrorObject.reason + '</strong> Source:     ' + this.Src + ':' + ErrorObject.line + ':' + ErrorObject.character + '</p>';
                         Output += '<code>' + ErrorObject.evidence + '</code>';
                         Output += '</div>';
                         $('#FredJSLintScripts').append(Output);
@@ -65,8 +66,8 @@ Core.Fred.JSLint = (function (TargetNS) {
             regexp: true,
             strict: true,
             immed: true,
-            predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document'],
-    };
+            predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
+        };
 
     TargetNS.AllScripts = [];
     TargetNS.Waiting = 0;
@@ -81,7 +82,7 @@ Core.Fred.JSLint = (function (TargetNS) {
      */
     TargetNS.Init = function () {
         // this module needs jQuery!
-        if (typeof jQuery == 'undefined' || !jQuery) {
+        if (typeof jQuery === 'undefined' || !jQuery) {
             alert('Fred JSLint module needs jQuery loaded');
             document.getElementById('FredJSLintScripts').style.height = '15px';
         }
@@ -98,40 +99,37 @@ Core.Fred.JSLint = (function (TargetNS) {
      * @description Get all scripts to check.
      */
     TargetNS.GetScripts = function () {
-        $(document).ready(function() {
+        $(document).ready(function () {
             var Scripts, Source;
 
-            $('script').each(function() {
+            $('script').each(function () {
                 // Exclude the Fred JavaScript ;-)
-                if (!($(this).is('[rel=fred]'))) {
-                    Scripts = $(this).text();
-                    if ($(this).is('[src]'))
-                        Source = $(this).attr('src');
-                    else
-                        Source = 'inline';
+                Scripts = $(this).text();
+                Source = $(this).attr('src') || 'inline';
 
-                    if (Source == 'inline')
-                    {
-                        TargetNS.AllScripts.push({Src: Source, Script: Scripts});
+                if (Source === 'inline') {
+                    TargetNS.AllScripts.push({Src: Source, Script: Scripts});
+                }
+                else {
+                    // If external source is not a thirdparty script, load it!
+                    if (!Source.match(/thirdparty/) && !Source.match(/chrome:\/\//) && !TargetNS.Sources[Source]) {
+                        TargetNS.Waiting++;
+                        TargetNS.Sources[Source] = 1;
+                        $.get(Source, {}, function (data) {
+                            TargetNS.AllScripts.push({Src: this.url, Script: data});
+                            TargetNS.Waiting--;
+                            setTimeout(function () {
+                                Core.Fred.JSLint.CheckForStart();
+                            }, 250);
+                        });
                     }
-                    else
-                    {
-                        // If external source is not a thirdparty script, load it!
-                        if (!Source.match(/thirdparty/) && !Source.match(/chrome:\/\//) && !TargetNS.Sources[Source]) {
-                            TargetNS.Waiting++;
-                            TargetNS.Sources[Source] = 1;
-                            $.get(Source, {}, function(data) {
-                                TargetNS.AllScripts.push({Src: this.url, Script: data});
-                                TargetNS.Waiting--;
-                                setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
-                            });
-                        }
-                    }
-                 }
+                }
             });
 
             // start jslint, if all ajax requests are ready
-            setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
+            setTimeout(function () {
+                Core.Fred.JSLint.CheckForStart();
+            }, 250);
         });
     };
 
@@ -147,7 +145,9 @@ Core.Fred.JSLint = (function (TargetNS) {
         }
         else {
             if (TargetNS.Started === 0) {
-                setTimeout("Core.Fred.JSLint.CheckForStart()", 250);
+                setTimeout(function () {
+                    Core.Fred.JSLint.CheckForStart();
+                }, 250);
             }
         }
     };
