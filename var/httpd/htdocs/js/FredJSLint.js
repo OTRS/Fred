@@ -105,7 +105,14 @@ Core.Fred.JSLint = (function (TargetNS) {
             $('script').each(function () {
                 // Exclude the Fred JavaScript ;-)
                 Scripts = $(this).text();
-                Source = $(this).attr('src') || 'inline';
+
+
+                if ($(this).is('[src]')) {
+                    Source = $(this).attr('src');
+                }
+                else {
+                    Source = 'inline';
+                }
 
                 if (Source === 'inline') {
                     TargetNS.AllScripts.push({Src: Source, Script: Scripts});
