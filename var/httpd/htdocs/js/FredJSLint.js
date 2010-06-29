@@ -127,7 +127,7 @@ Core.Fred.JSLint = (function (TargetNS) {
                             setTimeout(function () {
                                 Core.Fred.JSLint.CheckForStart();
                             }, 250);
-                        });
+                        }, 'text');
                     }
                 }
             });
