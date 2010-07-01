@@ -48,13 +48,18 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
          */
         $('input:text, input: password, input:checkbox, input:radio, select, textarea').each(function(){
             var $this = $(this),
-                Label = $([]);
+                $Label = $([]);
 
+            // first look for labels which refer to this element by id
             if ($this.attr('id') && $this.attr('id').length) {
-                Label = $('label[for=' + $this.attr('id')  + ']');
+                $Label = $('label[for=' + $this.attr('id')  + ']');
+            }
+            // then look for labels which surround the current element
+            if (!$Label.length) {
+                $Label = $this.parents('label');
             }
 
-            if (Label.length > 1) {
+            if ($Label.length > 1) {
                 OutputError(
                     $this,
                     'AccessibilityMultipleLabel',
@@ -70,7 +75,7 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
             }
 
             // ok, no title available, now look for an assigned label element
-            if (!Label || !Label.length) {
+            if (!$Label || !$Label.length) {
                 OutputError(
                     $this,
                     'AccessibilityMissingLabel',
