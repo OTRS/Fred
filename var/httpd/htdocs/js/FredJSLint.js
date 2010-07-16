@@ -63,7 +63,6 @@ Core.Fred.JSLint = (function (TargetNS) {
             eqeqeq: true,
             plusplus: false,
             bitwise: true,
-            regexp: true,
             strict: true,
             immed: true,
             predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
