@@ -187,6 +187,35 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
             });
         }
 
+        // check for events
+        $("div").each(function(){
+
+            var $this = $(this);
+            // Get element HTML by wrapping it in a div and calling .html() on that
+
+            var $Container = $('<div></div>');
+            $Container.append( $this.clone() );
+
+            var Code = $Container.html();
+
+            // search for events in html element code
+            var $Events = Code.match(/\s+on\w+=/ig);
+
+            // send error to output
+            if ($Events != null){
+                // clean leading space and equals sing from the RegEx matching
+                for (var $Event in $Events){
+                    $Events[$Event] = $Events[$Event].match(/on\w+/);
+                };
+                OutputError(
+                    $this,
+                    'BadPracticeEvent',
+                    'Event <code>"' + $Events + '"</code> used',
+                    'Please remove it and replace it with a proper substitute.'
+                );
+            };
+        });
+
     }
     CheckFunctions.push(CheckBadPractice);
 
