@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.38 2010-05-18 11:44:12 mg Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.39 2010-08-13 16:43:21 cg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>2.5.x</Framework>
     <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
@@ -126,5 +126,7 @@
         <File Permission="644" Location="Kernel/System/Fred/SQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/TranslationDebug.pm"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/FredHTMLCheck.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/FredJSLint.js"/>
     </Filelist>
 </otrs_package>
