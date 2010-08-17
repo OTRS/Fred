@@ -20,13 +20,17 @@ Core.Fred.JSLint = (function (TargetNS) {
         var Result;
 
         // This func should not be started more than one time...
+        if (TargetNS.Started) {
+            return;
+        }
         TargetNS.Started++;
 
         // Start JSLint for every script we found and output the result
         $.each(TargetNS.AllScripts, function () {
             var ErrorObject, Output, i;
 
-            Result = JSLINT(this.Script, TargetNS.Options);
+
+            Result = JSLINT(this.Script, (this.Src === 'inline') ? TargetNS.InlineOptions : TargetNS.RemoteOptions);
             if (!Result) {
                 for (i = 0; i < JSLINT.errors.length; i++) {
                     ErrorObject = JSLINT.errors[i];
@@ -42,6 +46,7 @@ Core.Fred.JSLint = (function (TargetNS) {
             else {
                 $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ' ok</p>');
             }
+
         });
 
         if (TargetNS.AllScripts.length === 0) {
@@ -53,20 +58,25 @@ Core.Fred.JSLint = (function (TargetNS) {
      * @field
      * @description All options for JSLint.
      */
-    TargetNS.Options = {
-            browser: true,
-            white: true,
-            devel: true,
-            onevar: true,
-            undef: true,
-            nomen: true,
-            eqeqeq: true,
-            plusplus: false,
-            bitwise: true,
-            strict: true,
-            immed: true,
-            predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
-        };
+    TargetNS.CommonOptions = {
+        browser: true,
+        white: true,
+        indent: 4,
+        devel: true,
+        onevar: true,
+        undef: true,
+        nomen: true,
+        eqeqeq: true,
+        plusplus: false,
+        bitwise: true,
+        strict: true,
+        immed: true,
+        predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
+    };
+    TargetNS.RemoteOptions = $.extend(TargetNS.CommonOptions, {});
+    TargetNS.InlineOptions = $.extend(TargetNS.CommonOptions, {
+        white: false
+    });
 
     TargetNS.AllScripts = TargetNS.AllScripts || [];
     TargetNS.Waiting = 0;
@@ -120,12 +130,10 @@ Core.Fred.JSLint = (function (TargetNS) {
                     if (!Source.match(/thirdparty/) && !Source.match(/chrome:\/\//) && !TargetNS.Sources[Source]) {
                         TargetNS.Waiting++;
                         TargetNS.Sources[Source] = 1;
+
                         $.get(Source, {}, function (data) {
                             TargetNS.AllScripts.push({Src: this.url, Script: data});
                             TargetNS.Waiting--;
-                            setTimeout(function () {
-                                Core.Fred.JSLint.CheckForStart();
-                            }, 250);
                         }, 'text');
                     }
                 }
