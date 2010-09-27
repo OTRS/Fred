@@ -2,9 +2,9 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.40 2010-09-27 07:16:31 mg Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.41 2010-09-27 07:18:26 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
-    <Framework>2.5.x</Framework>
+    <Framework>3.0.x</Framework>
     <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
