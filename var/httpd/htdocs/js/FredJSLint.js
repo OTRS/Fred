@@ -17,7 +17,8 @@ Core.Fred.JSLint = (function (TargetNS) {
      * @description Start JSLint check.
      */
     function StartJSLint() {
-        var Result;
+        var Result,
+            ErrorsFound = false;
 
         // This func should not be started more than one time...
         if (TargetNS.Started) {
@@ -35,19 +36,26 @@ Core.Fred.JSLint = (function (TargetNS) {
                 for (i = 0; i < JSLINT.errors.length; i++) {
                     ErrorObject = JSLINT.errors[i];
                     if (ErrorObject) {
+                        $('#FredJSLintRunning').remove();
                         Output = '<div class="FredJSLintError">';
                         Output += '<p><span class="Error">Error: </span><strong>' + ErrorObject.reason + '</strong> Source:     ' + this.Src + ':' + ErrorObject.line + ':' + ErrorObject.character + '</p>';
                         Output += '<code>' + ErrorObject.evidence + '</code>';
                         Output += '</div>';
                         $('#FredJSLintScripts').append(Output);
+                        ErrorsFound = true;
                     }
                 }
             }
-            else {
-                $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ' ok</p>');
-            }
-
+            // activate else branch to see positive check results per file for fred debugging
+            //else {
+            //    $('#FredJSLintRunning').remove();
+            //    $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ' ok</p>');
+            //}
         });
+        if (!ErrorsFound) {
+            $('#FredJSLintRunning').remove();
+            $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">All checks ok.</p>');
+        }
 
         if (TargetNS.AllScripts.length === 0) {
             $('#FredJSLintScripts').append('<p>No scripts found!</p>').css('height', '15px');
