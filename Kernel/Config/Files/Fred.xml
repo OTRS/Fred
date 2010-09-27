@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.26 2010-02-27 17:44:13 bes Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.27 2010-09-27 07:15:30 mg Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -82,17 +82,6 @@
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
         <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfür notwendig.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::Module###HTMLValidate" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want an realtime HTMLValidator.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Validator ausgeführt werden soll.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
