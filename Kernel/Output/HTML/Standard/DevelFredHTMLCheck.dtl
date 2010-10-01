@@ -2,7 +2,7 @@
 # DevelFredHTMLCheck.dtl - a frontend to show the HTML-Check results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredHTMLCheck.dtl,v 1.8 2010-07-01 08:25:02 mg Exp $
+# $Id: DevelFredHTMLCheck.dtl,v 1.9 2010-10-01 12:13:32 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,9 +21,12 @@
 <!-- dtl:block:HTMLCheckAllowed -->
     <script src="$Config{"Frontend::JavaScriptPath"}FredHTMLCheck.js" type="text/javascript"></script>
     <script type="text/javascript">
-        OTRS.Fred.HTMLCheck.CheckForStart();
+        "use strict";
+        Core.Fred.HTMLCheck.CheckForStart();
     </script>
-    <div style="padding:5px;" id="FredHTMLCheckResults" class="DevelFredBoxContent"></div>
+    <div style="padding:5px;" id="FredHTMLCheckResults" class="DevelFredBoxContent">
+        <div id="FredHTMLCheckRunning">Checks are running...</div>
+    </div>
 <!-- dtl:block:HTMLCheckAllowed -->
 
 </div>

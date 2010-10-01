@@ -1,34 +1,41 @@
 "use strict";
 
-var OTRS = OTRS || {};
-OTRS.Fred = OTRS.Fred || {};
+var OTRS = Core || {};
+Core.Fred = Core.Fred || {};
 
 /**
  * @namespace
- * @exports TargetNS as OTRS.Fred.HTMLCheck
+ * @exports TargetNS as Core.Fred.HTMLCheck
  * @description
  *      This namespace contains all logic for the Fred module HTMLCHeck
  */
-OTRS.Fred.HTMLCheck = (function (TargetNS) {
+Core.Fred.HTMLCheck = (function (TargetNS) {
 
-    var CheckFunctions = [];
+    var CheckFunctions = [],
+        ErrorsFound = false;
 
     function HTMLEncode(Text){
-        return Text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        return Text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     function OutputError($Element, ErrorType, ErrorDescription, Hint){
+        var $Container,
+            Code,
+            Message;
+
+        $('#FredHTMLCheckRunning').remove();
+        ErrorsFound = true;
 
         // Get element HTML by wrapping it in a div and calling .html() on that
-        var $Container = $('<div></div>');
+        $Container = $('<div></div>');
         $Container.append( $Element.clone() );
 
-        var Code = $Container.html();
+        Code = $Container.html();
         if (Code.length > 100) {
             Code = Code.substring(0, 100) + '...';
         }
 
-        var Message = $('<p class="Small"></p>');
+        Message = $('<p class="Small"></p>');
         Message.append('<span class="Error">Error:</span> <strong>' + ErrorDescription + '</strong><div>' + Hint + '</div><div><code>' + HTMLEncode(Code) + '</code></div>');
         $('#FredHTMLCheckResults').append(Message);
     }
@@ -48,7 +55,8 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
          */
         $('input:text, input: password, input:checkbox, input:radio, select, textarea').each(function(){
             var $this = $(this),
-                $Label = $([]);
+                $Label = $([]),
+                Title;
 
             // first look for labels which refer to this element by id
             if ($this.attr('id') && $this.attr('id').length) {
@@ -69,7 +77,7 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
             }
 
             // first check if a title attribute is present, that is also ok for accessibility
-            var Title = $this.attr('title');
+            Title = $this.attr('title');
             if (Title && Title.length) {
                 return;
             }
@@ -122,6 +130,11 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
      */
 
     function CheckBadPractice() {
+        var ObsoleteElement2Replacement,
+            ObsoleteElement,
+            ObsoleteClasses,
+            ObsoleteClass;
+
         // check for inputs which should be buttons
         $('input:button, input:submit, input:reset').each(function(){
             var $this = $(this);
@@ -133,6 +146,9 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
             );
         });
 
+        /*
+        TODO: look for a fix for chrome. In Chrome, the size attribute has a value of 20 if
+            it was not specified.
         // check for inputs with size attributes
         $('input:not(:file)').each(function(){
             var $this = $(this);
@@ -145,16 +161,18 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
                 );
             }
         });
+        */
 
         // check for obsolete elements
-        var ObsoleteElement2Replacement = {
+        ObsoleteElement2Replacement = {
             b: '<code>&lt;strong&gt;</code>',
             i: '<code>&lt;em&gt;</code>',
             font: '<code>&lt;span&gt;</code> with a CSS class',
             nobr: 'a proper substitute (depends on context)'
         };
 
-        for (var ObsoleteElement in ObsoleteElement2Replacement) {
+        /*jslint forin: true */
+        for (ObsoleteElement in ObsoleteElement2Replacement) {
             // check for inputs with size attributes
             $(ObsoleteElement).each(function(){
                 var $this = $(this);
@@ -168,13 +186,13 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
         }
 
         // check for obsolete classes
-        var ObsoleteClasses = {
+        ObsoleteClasses = {
             mainbody: 1,
             contentkey: 1,
             contentvalue: 1
         };
 
-        for (var ObsoleteClass in ObsoleteClasses) {
+        for (ObsoleteClass in ObsoleteClasses) {
             // check for inputs with size attributes
             $('.' + ObsoleteClass).each(function(){
                 var $this = $(this);
@@ -190,30 +208,37 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
         // check for events
         $("div").each(function(){
 
-            var $this = $(this);
+            var $this = $(this),
+                $Container,
+                Code,
+                Events,
+                Event;
             // Get element HTML by wrapping it in a div and calling .html() on that
 
-            var $Container = $('<div></div>');
+            $Container = $('<div></div>');
             $Container.append( $this.clone() );
 
-            var Code = $Container.html();
+            Code = $Container.html();
 
             // search for events in html element code
-            var $Events = Code.match(/\s+on\w+=/ig);
+            Events = Code.match(/\s+on\w+=/ig);
 
             // send error to output
-            if ($Events != null){
+            if (Events !== null){
                 // clean leading space and equals sing from the RegEx matching
-                for (var $Event in $Events){
-                    $Events[$Event] = $Events[$Event].match(/on\w+/);
-                };
-                OutputError(
-                    $this,
-                    'BadPracticeEvent',
-                    'Event <code>"' + $Events + '"</code> used',
-                    'Please remove it and replace it with a proper substitute.'
-                );
-            };
+                for (Event in Events){
+                    Events[Event] = Events[Event].match(/on\w+/);
+                }
+                // don't output this error for fred itself
+                if (!$this.closest('.DevelFredContainer').length) {
+                    OutputError(
+                            $this,
+                            'BadPracticeEvent',
+                            'Event <code>"' + Events + '"</code> used',
+                            'Please remove it and replace it with a proper substitute.'
+                    );
+                }
+            }
         });
 
     }
@@ -228,11 +253,13 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
     TargetNS.CheckForStart = function () {
         if (jQuery) {
             $(document).ready(function(){
-                OTRS.Fred.HTMLCheck.Run();
+                Core.Fred.HTMLCheck.Run();
             });
         }
         else {
-            setTimeout("OTRS.Fred.HTMLCheck.CheckForStart()", 250);
+            setTimeout(function(){
+                Core.Fred.HTMLCheck.CheckForStart();
+            }, 250);
         }
     };
 
@@ -247,10 +274,11 @@ OTRS.Fred.HTMLCheck = (function (TargetNS) {
         $.each(CheckFunctions, function(){
             this();
         });
-        if ($('#FredHTMLCheckResults').text() === '') {
+        $('#FredHTMLCheckRunning').remove();
+        if (!ErrorsFound) {
             $('#FredHTMLCheckResults').html('<p class="Confirmation">All checks ok.</p>');
         }
     };
 
     return TargetNS;
-}(OTRS.Fred.HTMLCheck || {}));
+}(Core.Fred.HTMLCheck || {}));
