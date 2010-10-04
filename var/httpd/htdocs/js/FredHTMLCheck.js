@@ -189,7 +189,9 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         ObsoleteClasses = {
             mainbody: 1,
             contentkey: 1,
-            contentvalue: 1
+            contentvalue: 1,
+            searchactive: 1,
+            searchpassive: 1
         };
 
         for (ObsoleteClass in ObsoleteClasses) {
