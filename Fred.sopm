@@ -2,10 +2,9 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.44 2010-10-12 11:33:38 mae Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.45 2010-10-29 13:34:00 mg Exp $</CVS>
     <Framework>2.4.x</Framework>
     <Framework>3.0.x</Framework>
-    <ModuleRequired Version="2.02">Devel::SmallProf</ModuleRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -19,8 +18,6 @@
         <ul>
             <li> Devel::Cover </li>
             <li> Devel::NYTProf </li>
-            <li> Devel::SmallProf </li>
-            <li> Devel::DProf</li>
         </ul>
         If you want to use the HTMLValidate module of Fred, you also need to install the following program <br/>
         <ul>
@@ -34,6 +31,8 @@
         <ul>
         <li> HTMLCheck: <br/>
                     performs different HTML quality checks in JavaScript </li>
+        <li> JSLint: <br/>
+                    performs different JavaScript quality checks in JavaScript </li>
         <li> STDERRLog: <br/>
                     every entry contained in STDERR is displayed </li>
         <li> TranslationDebug: <br/>
@@ -46,10 +45,6 @@
                     show the current content of the serverside session </li>
         <li> NYTProf: <br/>
                     a profiling tool which suits all needs </li>
-        <li> DProf: <br/>
-                    a profiling tool which evaluates the time required for each function to be executed </li>
-        <li> SmallProf: <br/>
-                    a profiling tool performing a line-by-line code evaluation </li>
         <li> EnvDump: <br/>
                     show info about the environment of the layout object </li>
         <li> Cover: <br/>
@@ -80,13 +75,11 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredCover.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredDProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredEnvDump.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredJSLint.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredNYTProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSessionDump.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredSmallProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSQLLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredTranslationDebug.pm"/>
@@ -98,14 +91,12 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredContainer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCover.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredDProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredEnvDump.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredJSLint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredNYTProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSessionDump.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSetting.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSmallProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSQLLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.dtl"/>
@@ -114,13 +105,11 @@
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Cover.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/DProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/EnvDump.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/JSLint.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/NYTProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/SessionDump.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/SmallProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/SQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/TranslationDebug.pm"/>

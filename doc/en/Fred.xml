@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: Fred.xml,v 1.1 2010-02-28 10:21:53 bes Exp $ -->
+<!-- $Id: Fred.xml,v 1.2 2010-10-29 13:34:01 mg Exp $ -->
 
 <book lang='en'>
 
@@ -33,11 +33,14 @@
     <title>Feature List</title>
     <sect1>
         <title>HTMLCheck</title>
-        <para>the HTML output is checked by means of HTML::Lint </para>
+        <para>Performs different bad/best practice checks on the generated pages via JavaScript.</para>
     </sect1>
     <sect1>
-        <title>HTMLValidate</title>
-        <para>real HTML validation based on an external tool </para>
+        <title>JSLint</title>
+        <para>
+            Examines the code quality of all JavaScript code that is used
+            on the page on the fly (also via JavaScript), using the great tool JSLint.
+        </para>
     </sect1>
     <sect1>
         <title>STDERRLog</title>
@@ -62,14 +65,6 @@
     <sect1>
         <title>NYTProf</title>
         <para>a profiling tool which suits all needs </para>
-    </sect1>
-    <sect1>
-        <title>DProf</title>
-        <para>a profiling tool which evaluates the time required for each function to be executed </para>
-    </sect1>
-    <sect1>
-        <title>SmallProf</title>
-        <para>a profiling tool performing a line-by-line code evaluation </para>
     </sect1>
     <sect1>
         <title>EnvDump</title>

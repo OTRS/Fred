@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.27 2010-09-27 07:15:30 mg Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.28 2010-10-29 13:34:01 mg Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -27,28 +27,6 @@
     <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
         <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::Module###SmallProf" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the SmallProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die SmallProf-Profiling Funktion nutzen möchte.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::Module###DProf" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the DProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die DProf-Profiling Funktion nutzen möchte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
