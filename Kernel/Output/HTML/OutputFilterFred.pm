@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.26 2010-05-19 07:01:36 mg Exp $
+# $Id: OutputFilterFred.pm,v 1.27 2010-11-09 13:08:57 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -45,8 +45,6 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
-
     $Self->{LayoutObject} = $Param{LayoutObject};
     return $Self;
 }
@@ -57,6 +55,11 @@ sub Run {
     # perhaps no output is generated
     if ( !$Param{Data} ) {
         die 'Fred: At the moment, your code generates no output!';
+    }
+
+    # do not show the debug bar in Fred's setting window
+    if ( $Self->{LayoutObject}->{Action} eq 'DevelFred' ) {
+        return 1;
     }
 
     # do nothing if output is a attachment
@@ -102,8 +105,10 @@ sub Run {
         }
     }
 
+    my $FredObject = Kernel::System::Fred->new( %{$Self} );
+
     # load the activated modules
-    $Self->{FredObject}->DataGet(
+    $FredObject->DataGet(
         FredModulesRef => $ModulesDataRef,
         HTMLDataRef    => $Param{Data},
     );
@@ -162,12 +167,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-05-19 07:01:36 $
+$Revision: 1.27 $ $Date: 2010-11-09 13:08:57 $
 
 =cut

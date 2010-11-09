@@ -2,12 +2,15 @@
 # CHANGES - change log of Fred
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Fred,v 1.1 2010-11-02 08:40:10 mg Exp $
+# $Id: CHANGES-Fred,v 1.2 2010-11-09 13:08:57 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+0.3.13 2010-??-??
+ - 2010-11-09 Fixed Fred settings page HTML generation.
 
 0.3.12 2010-10-29
  - 2010-10-29 Removed support for Devel::DProf and Devel::SmallProf.
