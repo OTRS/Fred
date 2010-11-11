@@ -2,48 +2,32 @@
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSetting.dtl,v 1.13 2010-05-20 12:46:09 mg Exp $
+# $Id: DevelFredSetting.dtl,v 1.14 2010-11-11 10:38:01 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table bgcolor="#000000" cellspacing="3" cellpadding="0" width="100%">
-    <tr>
-        <td bgcolor="#ba0f0f">
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="DevelFredSetting">
-                <input type="hidden" name="Action" value="DevelFred">
-                <input type="hidden" name="Subaction" value="SettingAction">
-                <table bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
-                    <tr>
-                        <td bgcolor="#ba0f0f">
-                            <strong><font color="#ffffff">Fred-Setting</font></strong>
-                        </td>
-                    </tr>
+
+<div class="DevelFredSetting">
+    <h1>Fred-Setting</h1>
+    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="DevelFredSetting">
+        <input type="hidden" name="Action" value="DevelFred"/>
+        <input type="hidden" name="Subaction" value="SettingAction"/>
+        <ul>
 <!-- dtl:block:FredModule -->
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="FredModule" value="$QData{"FredModule"}" $Data{"Checked"}>
-                            $QData{"FredModule"}
+            <li>
+                <input type="checkbox" name="FredModule" id="$QData{"FredModule"}" value="$QData{"FredModule"}" $Data{"Checked"}/>
+                <label for="$QData{"FredModule"}">$QData{"FredModule"}</label>
 <!-- dtl:block:Config -->
-                            <a href="$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=$Data{"ModuleName"};SysConfigGroup=Fred"  onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onclick="window.resizeTo(900,500)">($Text{"Config"})</a>
+                <a href="$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=$Data{"ModuleName"};SysConfigGroup=Fred" title="Setting" onclick="window.resizeTo(900,500)">($Text{"Config"})</a>
 <!-- dtl:block:Config -->
-                        </td>
-                    </tr>
+            </li>
 <!-- dtl:block:FredModule -->
-                    <tr>
-                        <td>
-                            <br>
-                            $Text{"Attention: You can't use any of SmallProf, DProf, NYTProf, and Cover at the same time!"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            <input type="submit" value="$Text{"Save"}" class="button">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </td>
-    </tr>
-</table>
+        </ul>
+        <p>
+            $Text{"Attention: You can't use Devel::NYTProf and Devel::Cover at the same time!"}
+        </p>
+        <button type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+    </form>
+</div>
