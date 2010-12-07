@@ -79,7 +79,7 @@ Core.Fred.JSLint = (function (TargetNS) {
         bitwise: true,
         strict: true,
         immed: true,
-        predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document']
+        predef: ['Core', 'isJQueryObject', '$', 'jQuery', 'CKEDITOR', 'window', 'document', 'printStackTrace']
     };
     TargetNS.RemoteOptions = $.extend(TargetNS.CommonOptions, {});
     TargetNS.InlineOptions = $.extend(TargetNS.CommonOptions, {
