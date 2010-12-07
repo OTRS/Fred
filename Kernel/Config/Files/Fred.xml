@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.28 2010-10-29 13:34:01 mg Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.29 2010-12-07 19:10:06 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -15,7 +15,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred console.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen möchte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen mï¿½chte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -26,7 +26,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
-        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
+        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen mï¿½chte (nur fï¿½r Experten).</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -37,7 +37,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###NYTProf" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the NYTProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen möchte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen mï¿½chte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -59,7 +59,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfür notwendig.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefï¿½hrt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfï¿½r notwendig.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -70,7 +70,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###JSLint" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
-        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgeführt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
+        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgefï¿½hrt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -81,7 +81,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want the translation debugger.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Übersetzungsdebugger genutzt werden soll.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der ï¿½bersetzungsdebugger genutzt werden soll.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -158,6 +158,30 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="CustomerFrontend::Module###DevelFred" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Admin</Description>
+                <Title>Fred-Developertools</Title>
+                <NavBarName>Admin</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PublicFrontend::Module###DevelFred" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Admin</Description>
+                <Title>Fred-Developertools</Title>
+                <NavBarName>Admin</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###ShownLines" Required="0" Valid="1">
         <Description Lang="en">Here you can insert the number of shown profiling lines.</Description>
         <Description Lang="de">Hier kann die Anzahl der angezeigten ausgewerteten Zeilen angegeben werden.</Description>
@@ -183,7 +207,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###Packages" Required="0" Valid="0">
         <Description Lang="en">Check only the following packages in SmallProf.</Description>
-        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprüft werden.</Description>
+        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprï¿½ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -217,7 +241,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###FunctionTree" Required="0" Valid="1">
         <Description Lang="en">Show the function tree.</Description>
-        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und Abhängigkeit in welcher die Funktionen aufgerufen werden.</Description>
+        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und Abhï¿½ngigkeit in welcher die Funktionen aufgerufen werden.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -229,7 +253,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###DisabledPackages" Required="0" Valid="0">
         <Description Lang="en">Don't check the following packages in DProf.</Description>
-        <Description Lang="de">Es sollen folgende Packages von DProf nicht geprüft werden.</Description>
+        <Description Lang="de">Es sollen folgende Packages von DProf nicht geprï¿½ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -262,7 +286,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###DisabledFiles" Required="0" Valid="0">
         <Description Lang="en">Don't check the following perl files or path in SmallProf.</Description>
-        <Description Lang="de">Es sollen folgende Dateien und Pfade in SmallProf nicht geprüft werden.</Description>
+        <Description Lang="de">Es sollen folgende Dateien und Pfade in SmallProf nicht geprï¿½ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
