@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.28 2010-11-11 10:38:01 mg Exp $
+# $Id: OutputFilterFred.pm,v 1.29 2010-12-10 14:36:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -58,7 +58,7 @@ sub Run {
     }
 
     # do not show the debug bar in Fred's setting window
-    if ( $Self->{LayoutObject}->{Action} eq 'DevelFred' ) {
+    if ( $Self->{LayoutObject}->{Action} && $Self->{LayoutObject}->{Action} eq 'DevelFred' ) {
 
         # Inject CSS into <head></head> for valid HTML
         my $CSSOutput = $Self->{LayoutObject}->Output(
@@ -180,6 +180,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-11-11 10:38:01 $
+$Revision: 1.29 $ $Date: 2010-12-10 14:36:38 $
 
 =cut
