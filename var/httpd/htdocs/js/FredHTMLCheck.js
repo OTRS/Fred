@@ -31,8 +31,8 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         $Container.append( $Element.clone() );
 
         Code = $Container.html();
-        if (Code.length > 100) {
-            Code = Code.substring(0, 100) + '...';
+        if (Code.length > 160) {
+            Code = Code.substring(0, 160) + '...';
         }
 
         Message = $('<p class="Small"></p>');
@@ -99,13 +99,29 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         $('a').each(function(){
             var $this = $(this);
 
+            // ignore if it's a "a name" and no "a href"
             if ($this.attr('name') && !$this.attr('href')) {
                 return;
             }
 
+            // log if an attribute title extists but nothing is in there, something missed somebody (e. g. title="")
+            $.each($this[0].attributes, function () {
+                if (this.name === 'title' && !this.value.length) {
+                    OutputError(
+                        $this,
+                        'AccessibilityInaccessibleLink',
+                        'Link with title but without value',
+                        'Please make sure that every link has a title attribute not empty.'
+                    );
+                }
+            });
+
+            // everything is ok, if text in a href exists
             if ($this.text() && $this.text().length) {
                 return;
             }
+
+            // everything is ok, if title in a href exists
             if ($this.attr('title') && $this.attr('title').length) {
                 return;
             }
