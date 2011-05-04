@@ -146,10 +146,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
      */
 
     function CheckBadPractice() {
-        var ObsoleteElement2Replacement,
-            ObsoleteElement,
-            ObsoleteClasses,
-            ObsoleteClass;
+        var ObsoleteElement2Replacement;
 
         // check for inputs which should be buttons
         $('input:button, input:submit, input:reset').each(function(){
@@ -187,41 +184,36 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             nobr: 'a proper substitute (depends on context)'
         };
 
-        /*jslint forin: true */
-        for (ObsoleteElement in ObsoleteElement2Replacement) {
-            // check for inputs with size attributes
-            $(ObsoleteElement).each(function(){
-                var $this = $(this);
-                OutputError(
+        // check for inputs with size attributes
+        $('b, i, font, nobr').each(function(){
+            var $this = $(this);
+            OutputError(
                     $this,
                     'BadPracticeObsoleteElement',
-                    'Obsolete element <code>&lt;' + ObsoleteElement + '&gt;</code> used',
-                    'Please replace it with: ' + ObsoleteElement2Replacement[ObsoleteElement] + '.'
-                );
-            });
-        }
+                    'Obsolete element <code>&lt;' + this.tagName + '&gt;</code> used',
+                    'Please replace it with: ' + ObsoleteElement2Replacement[this.tagName] + '.'
+            );
+        });
 
-        // check for obsolete classes
-        ObsoleteClasses = {
-            mainbody: 1,
-            contentkey: 1,
-            contentvalue: 1,
-            searchactive: 1,
-            searchpassive: 1
-        };
-
-        for (ObsoleteClass in ObsoleteClasses) {
-            // check for inputs with size attributes
-            $('.' + ObsoleteClass).each(function(){
+        function ObsoleteClassError(ClassName) {
+            // Return a function that can be used as a callback by each().
+            return function() {
                 var $this = $(this);
                 OutputError(
-                    $this,
-                    'BadPracticeObsoleteClass',
-                    'Obsolete class <code>"' + ObsoleteClass + '"</code> used',
-                    'Please remove it and replace it with a proper substitute.'
+                        $this,
+                        'BadPracticeObsoleteClass',
+                        'Obsolete class <code>"' + ClassName + '"</code> used',
+                        'Please remove it and replace it with a proper substitute.'
                 );
-            });
+            };
         }
+
+        // check for inputs with size attributes
+        $('.mainbody').each(ObsoleteClassError('mainbody'));
+        $('.contentkey').each(ObsoleteClassError('contentkey'));
+        $('.contentvalue').each(ObsoleteClassError('contentvalue'));
+        $('.searchactive').each(ObsoleteClassError('searchactive'));
+        $('.searchpassive').each(ObsoleteClassError('searchpassive'));
 
         // check for events
         $("div").each(function(){
@@ -245,7 +237,9 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             if (Events !== null){
                 // clean leading space and equals sing from the RegEx matching
                 for (Event in Events){
-                    Events[Event] = Events[Event].match(/on\w+/);
+                    if (Events.hasOwnProperty(Event)) {
+                        Events[Event] = Events[Event].match(/on\w+/);
+                    }
                 }
                 // don't output this error for fred itself
                 if (!$this.closest('.DevelFredContainer').length) {
