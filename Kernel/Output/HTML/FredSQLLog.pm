@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.8 2009-04-06 10:25:13 mh Exp $
+# $Id: FredSQLLog.pm,v 1.9 2011-09-15 13:02:18 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -84,14 +84,14 @@ sub CreateFredOutput {
         }
         my $Class = '';
         if ( $Line->[4] ) {
-            $Class = ' class="contentkey"';
+            $Class = ' class="strong"';
         }
 
         $HTMLLines .= "        <tr$Class>\n"
-            . "          <td>$Line->[0]</td>\n"
-            . "          <td>$Line->[1]</td>\n"
-            . "          <td>$Line->[2]</td>\n"
-            . "          <td>$Line->[3]</td>\n"
+            . "          <td>$Line->[0]&nbsp;</td>\n"
+            . "          <td>$Line->[1]&nbsp;</td>\n"
+            . "          <td>$Line->[2]&nbsp;</td>\n"
+            . "          <td>$Line->[3]&nbsp;</td>\n"
             . "          <td>$Line->[4]</td>\n"
             . "        </tr>";
     }
@@ -122,12 +122,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.9 $ $Date: 2011-09-15 13:02:18 $
 
 =cut
