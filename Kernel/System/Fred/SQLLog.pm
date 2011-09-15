@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Fred/SQLLog.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.17 2009-12-09 10:13:40 bes Exp $
+# $Id: SQLLog.pm,v 1.18 2011-09-15 12:40:35 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -312,6 +312,14 @@ sub InsertWord {
         return;
     }
 
+    # Fixup multiline SQL statements
+    if ( $Param{What} =~ m/^SQL/smx ) {
+        my @What = split ';', $Param{What};
+        $What[1] =~ s/\n/[ ]/smxg;
+        $What[1] =~ s/\s+/ /smxg;
+        $Param{What} = join ';', @What;
+    }
+
     # apppend the line to log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
     open my $Filehandle, '>>', $File or die "Can't write $File !\n";
@@ -331,12 +339,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2009-12-09 10:13:40 $
+$Revision: 1.18 $ $Date: 2011-09-15 12:40:35 $
 
 =cut
