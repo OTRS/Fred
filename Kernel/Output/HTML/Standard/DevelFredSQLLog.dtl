@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.13 2011-09-15 13:02:18 mg Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.14 2011-11-25 08:15:10 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,6 +16,12 @@
     </h1>
     <div class="DevelFredBoxContent">
 
+        <h2 style="color:black; padding: 6px 2px; margin: 0;">
+            Executed <strong>$Data{"AllStatements"}</strong> Statements
+            (<strong>$QData{"SelectStatements"}</strong> SELECTS + <strong>$QData{"DoStatements"}</strong> DOs)
+            in <strong>$QData{"Time"}</strong> sec.
+        </h2>
+
         <table id="FredSQLLogTable" width="100%">
             <tr class="contentkey">
                 <td>Kind</td>
@@ -25,10 +31,12 @@
                 <td>Equal Statements</td>
             </tr>
 $Data{"HTMLLines"}
-            <tr class="contentkey">
-                <td colspan="3"><strong>$Data{"AllStatements"} Statements = $Data{"SelectStatements"} SELECTS + $Data{"DoStatements"} DOs</strong></td>
-                <td colspan="2"><strong>$Data{"Time"} sec</strong></td>
-            </tr>
         </table>
+
+        <h2 style="color:black; padding: 6px 2px; margin: 0;">
+            Executed <strong>$Data{"AllStatements"}</strong> Statements
+            (<strong>$QData{"SelectStatements"}</strong> SELECTS + <strong>$QData{"DoStatements"}</strong> DOs)
+            in <strong>$QData{"Time"}</strong> sec.
+        </h2>
     </div>
 </div>

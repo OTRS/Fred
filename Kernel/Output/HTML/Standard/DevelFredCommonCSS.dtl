@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.12 2011-09-15 13:02:18 mg Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.13 2011-11-25 08:15:10 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,4 +98,16 @@ body #FredJSLintScripts pre {
 .DevelFredSetting p {
     padding: 10px 0;
 }
+
+table#FredSQLLogTable {
+    border: 1px solid #CCC;
+}
+
+table#FredSQLLogTable th,
+table#FredSQLLogTable td
+{
+    border: 1px solid #CCC;
+    padding: 2px;
+}
+
 </style>
