@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.13 2011-11-25 08:15:10 mg Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.14 2011-11-26 09:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 <style type="text/css">
 .DevelFredContainer {
     position: absolute;
-    width: 50%;
+    width: $Config{"Fred::ConsoleWidth"};
     top: 5px;
     right: 5px;
     z-index: 5000;
@@ -25,7 +25,7 @@
 }
 
 .DevelFredBoxContent {
-    max-height: 200px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -110,4 +110,15 @@ table#FredSQLLogTable td
     padding: 2px;
 }
 
+table#FredSQLLogTable td.SQLStatement
+{
+    width: 400px;
+}
+
+table#FredSQLLogTable td.BindParameter div
+{
+    max-width: 300px;
+    width: 300px;
+    overflow-x: auto;
+}
 </style>
