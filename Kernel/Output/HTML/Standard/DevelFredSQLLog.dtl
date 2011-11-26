@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.14 2011-11-25 08:15:10 mg Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.15 2011-11-26 09:16:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,9 @@
 
         <table id="FredSQLLogTable" width="100%">
             <tr class="contentkey">
-                <td>Kind</td>
+                <td>Statement-Type</td>
                 <td>Statement</td>
+                <td>Bind-Parameter</td>
                 <td>Package</td>
                 <td>Time 1/100 sec</td>
                 <td>Equal Statements</td>

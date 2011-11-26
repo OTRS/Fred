@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.9 2011-09-15 13:02:18 mg Exp $
+# $Id: FredSQLLog.pm,v 1.10 2011-11-26 09:16:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -83,16 +83,17 @@ sub CreateFredOutput {
             $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
         }
         my $Class = '';
-        if ( $Line->[4] ) {
+        if ( $Line->[5] ) {
             $Class = ' class="strong"';
         }
 
         $HTMLLines .= "        <tr$Class>\n"
             . "          <td>$Line->[0]&nbsp;</td>\n"
-            . "          <td>$Line->[1]&nbsp;</td>\n"
-            . "          <td>$Line->[2]&nbsp;</td>\n"
+            . "          <td class=\"SQLStatement\">$Line->[1]&nbsp;</td>\n"
+            . "          <td class=\"BindParameter\"><div>$Line->[2]&nbsp;</div></td>\n"
             . "          <td>$Line->[3]&nbsp;</td>\n"
-            . "          <td>$Line->[4]</td>\n"
+            . "          <td>$Line->[4]&nbsp;</td>\n"
+            . "          <td>$Line->[5]</td>\n"
             . "        </tr>";
     }
 
@@ -128,6 +129,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2011-09-15 13:02:18 $
+$Revision: 1.10 $ $Date: 2011-11-26 09:16:10 $
 
 =cut

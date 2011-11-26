@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.18 2011-09-15 12:40:35 mg Exp $
+# $Id: SQLLog.pm,v 1.19 2011-11-26 09:16:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -106,10 +106,10 @@ sub DataGet {
         # do not show the log from the previous request
         last LINE if $Line =~ /FRED/;
 
-        # a typical line from SQL.log looks like:
-        # SQL-SELECT;SELECT 1 + 1 FROM dual;Kernel::System::User;0.004397
-        my @SplitLogLine = split /;/, $Line;
-        if ( $SplitLogLine[0] eq 'SQL-DO' && $SplitLogLine[1] =~ /^SELECT/ ) {
+# a typical line from SQL.log looks like:
+# SQL-SELECT##!##SELECT 1 + 1 FROM dual WHERE id = ? AND user_id = ?##!##1, 2##!##Kernel::System::User##!##0.004397
+        my @SplitLogLine = split /##!##/, $Line;
+        if ( $SplitLogLine[0] eq 'SQL-DO' && $SplitLogLine[1] =~ m{ \A SELECT }xms ) {
             $SplitLogLine[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
         }
         push @LogMessages, \@SplitLogLine;
@@ -119,9 +119,9 @@ sub DataGet {
         }
 
         # transfer in 1/100 sec
-        if ( $SplitLogLine[3] ) {
-            $Param{ModuleRef}->{Time} += $SplitLogLine[3];
-            $SplitLogLine[3] *= 100;
+        if ( $SplitLogLine[4] ) {
+            $Param{ModuleRef}->{Time} += $SplitLogLine[4];
+            $SplitLogLine[4] *= 100;
         }
     }
 
@@ -208,8 +208,10 @@ sub ActivateModuleTodos {
             $Prepare = 0;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
+            print $FilehandleII "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n";
+            print $FilehandleII "my \$BindString = \@Array ? join ', ', \@Array : '';\n";
             print $FilehandleII
-                "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller;\$DiffTime\");\n";
+                "\$SQLLogObject->InsertWord(What => \"SQL-SELECT##!##\$SQL##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
 
@@ -230,8 +232,10 @@ sub ActivateModuleTodos {
             $DoSQL = 0;
             print $FilehandleII "# FRED - manipulated\n";
             print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
+            print $FilehandleII "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n";
+            print $FilehandleII "my \$BindString = \@Array ? join ', ', \@Array : '';\n";
             print $FilehandleII
-                "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller;\$DiffTime\");\n";
+                "\$SQLLogObject->InsertWord(What => \"SQL-DO##!##\$Param{SQL}##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n";
             print $FilehandleII "# FRED - manipulated\n";
         }
 
@@ -269,15 +273,19 @@ sub DeactivateModuleTodos {
     open my $FilehandleII, '>', $File or die "Can't write $File !\n";
 
     my %RemoveLine = (
-        "# FRED - manipulated\n"                                                              => 1,
-        "use Kernel::System::Fred::SQLLog;\n"                                                 => 1,
-        "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n"                => 1,
-        "my \$Caller = caller();\n"                                                           => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\;\$DiffTime\");\n" => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\;\$DiffTime\");\n"    => 1,
-        "use Time::HiRes qw(gettimeofday tv_interval);\n"                                     => 1,
-        "my \$t0 = [gettimeofday];\n"                                                         => 1,
-        "my \$DiffTime = tv_interval(\$t0);\n"                                                => 1,
+        "# FRED - manipulated\n"                                               => 1,
+        "use Kernel::System::Fred::SQLLog;\n"                                  => 1,
+        "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n" => 1,
+        "my \$Caller = caller();\n"                                            => 1,
+        "use Time::HiRes qw(gettimeofday tv_interval);\n"                      => 1,
+        "my \$t0 = [gettimeofday];\n"                                          => 1,
+        "my \$DiffTime = tv_interval(\$t0);\n"                                 => 1,
+        "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n"             => 1,
+        "my \$BindString = \@Array ? join ', ', \@Array : '';\n"               => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT##!##\$SQL##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n"
+            => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-DO##!##\$Param{SQL}##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n"
+            => 1,
     );
 
     for my $Line (@Lines) {
@@ -314,10 +322,10 @@ sub InsertWord {
 
     # Fixup multiline SQL statements
     if ( $Param{What} =~ m/^SQL/smx ) {
-        my @What = split ';', $Param{What};
+        my @What = split '##!##', $Param{What};
         $What[1] =~ s/\n/[ ]/smxg;
         $What[1] =~ s/\s+/ /smxg;
-        $Param{What} = join ';', @What;
+        $Param{What} = join '##!##', @What;
     }
 
     # apppend the line to log file
@@ -345,6 +353,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2011-09-15 12:40:35 $
+$Revision: 1.19 $ $Date: 2011-11-26 09:16:10 $
 
 =cut
