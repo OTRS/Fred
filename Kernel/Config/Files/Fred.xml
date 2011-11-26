@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.29 2010-12-07 19:10:06 ub Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.30 2011-11-26 09:14:54 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -13,9 +13,18 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
+        <Description Lang="en">Defines the width of the Fred console in percent.</Description>
+        <Description Lang="de">Definiert die Breite der Fred-Console in prozent.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">70%</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred console.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen mï¿½chte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen möchte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -26,7 +35,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
-        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen mï¿½chte (nur fï¿½r Experten).</Description>
+        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -37,7 +46,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###NYTProf" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the NYTProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen mï¿½chte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen möchte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -59,7 +68,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefï¿½hrt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfï¿½r notwendig.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfür notwendig.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -70,7 +79,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###JSLint" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
-        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgefï¿½hrt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
+        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgeführt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -81,7 +90,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want the translation debugger.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der ï¿½bersetzungsdebugger genutzt werden soll.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Übersetzungsdebugger genutzt werden soll.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
