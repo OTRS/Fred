@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.19 2011-11-26 09:16:10 ub Exp $
+# $Id: SQLLog.pm,v 1.20 2011-11-28 09:41:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -286,6 +286,8 @@ sub DeactivateModuleTodos {
             => 1,
         "\$SQLLogObject->InsertWord(What => \"SQL-DO##!##\$Param{SQL}##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n"
             => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\;\$DiffTime\");\n" => 1,
+        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\;\$DiffTime\");\n"    => 1,
     );
 
     for my $Line (@Lines) {
@@ -353,6 +355,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2011-11-26 09:16:10 $
+$Revision: 1.20 $ $Date: 2011-11-28 09:41:00 $
 
 =cut
