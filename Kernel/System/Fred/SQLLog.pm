@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.20 2011-11-28 09:41:00 ub Exp $
+# $Id: SQLLog.pm,v 1.21 2011-11-28 13:49:37 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -162,87 +162,6 @@ Do all jobs which are necessary to activate this special module.
 sub ActivateModuleTodos {
     my $Self = shift;
 
-    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/DB.pm';
-
-    # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # to use SQLLog I have to manipulate the DB.pm file
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
-
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-    $Self->{LogObject}->Log( Priority => 'notice', Message => "write file!" );
-    my $Prepare;
-    my $DoSQL;
-    for my $Line (@Lines) {
-        if (
-            $Line =~ m[^                               \s*
-                        if                              \s*
-                        \(                              \s*
-                        !                               \s*
-                        \(                              \s*
-                        \$Self->{Curs(e|o)r}            \s* # because of an typo bugfix in 2.3
-                        =                               \s*
-                        \$Self->{dbh}->prepare\(\$SQL\) \s*
-                        \)                              \s*
-                        \)                              \s*
-                        {
-            ]x
-            )
-        {
-            $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log Prepare!" );
-            $Prepare = 1;
-            print $FilehandleII "# FRED - manipulated\n";
-            print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
-            print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
-            print $FilehandleII "my \$t0 = [gettimeofday];\n";
-            print $FilehandleII
-                "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
-            print $FilehandleII "my \$Caller = caller();\n";
-            print $FilehandleII "# FRED - manipulated\n";
-
-        }
-        if ( $Line =~ m{^    # slow log feature} && $Prepare ) {
-            $Prepare = 0;
-            print $FilehandleII "# FRED - manipulated\n";
-            print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
-            print $FilehandleII "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n";
-            print $FilehandleII "my \$BindString = \@Array ? join ', ', \@Array : '';\n";
-            print $FilehandleII
-                "\$SQLLogObject->InsertWord(What => \"SQL-SELECT##!##\$SQL##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n";
-            print $FilehandleII "# FRED - manipulated\n";
-        }
-
-        if ( $Line =~ /^    # send sql to database/ ) {
-            $Self->{LogObject}->Log( Priority => 'notice', Message => "insert fred log do!" );
-            $DoSQL = 1;
-            print $FilehandleII "# FRED - manipulated\n";
-            print $FilehandleII "use Kernel::System::Fred::SQLLog;\n";
-            print $FilehandleII "use Time::HiRes qw(gettimeofday tv_interval);\n";
-            print $FilehandleII "my \$t0 = [gettimeofday];\n";
-            print $FilehandleII
-                "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n";
-            print $FilehandleII "my \$Caller = caller();\n";
-            print $FilehandleII "# FRED - manipulated\n";
-        }
-
-        if ( $Line =~ m{^    return 1;} && $DoSQL ) {
-            $DoSQL = 0;
-            print $FilehandleII "# FRED - manipulated\n";
-            print $FilehandleII "my \$DiffTime = tv_interval(\$t0);\n";
-            print $FilehandleII "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n";
-            print $FilehandleII "my \$BindString = \@Array ? join ', ', \@Array : '';\n";
-            print $FilehandleII
-                "\$SQLLogObject->InsertWord(What => \"SQL-DO##!##\$Param{SQL}##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n";
-            print $FilehandleII "# FRED - manipulated\n";
-        }
-
-        print $FilehandleII $Line;
-    }
-    close $FilehandleII;
-
     return 1;
 }
 
@@ -253,6 +172,9 @@ Do all jobs which are necessary to deactivate this special module.
     $FredObject->DeactivateModuleTodos(
         ModuleName => $ModuleName,
     );
+
+DEPRECATED. This code is still here to correct old patched instances of DB.pm.
+Previously, Fred patched this module to write the database performance data.
 
 =cut
 
@@ -355,6 +277,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2011-11-28 09:41:00 $
+$Revision: 1.21 $ $Date: 2011-11-28 13:49:37 $
 
 =cut

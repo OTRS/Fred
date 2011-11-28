@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.30 2011-11-26 09:14:54 ub Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.31 2011-11-28 13:49:37 mg Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -334,6 +334,17 @@
         <SubGroup>Cover</SubGroup>
         <Setting>
             <String Regex="">cover</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="DB::DBListener###000-FredSQLLog" Required="1" Valid="1">
+        <Description Lang="en">Command for generating a HTML view.</Description>
+        <Description Lang="de">Kommando zum Erzeugen einer HTML-Ansicht.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object">Kernel::System::DBListener::FredSQLLog</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
