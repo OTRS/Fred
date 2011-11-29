@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.31 2011-11-28 13:49:37 mg Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.32 2011-11-29 15:32:46 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -19,7 +19,7 @@
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">70%</String>
+            <String Regex="">50%</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">
