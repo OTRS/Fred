@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.32 2011-11-29 15:32:46 ub Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.33 2012-01-23 13:46:56 sb Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -24,7 +24,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred console.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen möchte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen mÃ¶chte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -35,7 +35,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
-        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
+        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen mÃ¶chte (nur fÃ¼r Experten).</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -46,7 +46,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###NYTProf" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want to use the NYTProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen möchte.</Description>
+        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen mÃ¶chte.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -68,7 +68,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfür notwendig.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgefÃ¼hrt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfÃ¼r notwendig.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -79,7 +79,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###JSLint" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
-        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgeführt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
+        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgefÃ¼hrt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -90,7 +90,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
         <Description Lang="en">Turn on if you want the translation debugger.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Übersetzungsdebugger genutzt werden soll.</Description>
+        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Ãœbersetzungsdebugger genutzt werden soll.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -216,7 +216,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###Packages" Required="0" Valid="0">
         <Description Lang="en">Check only the following packages in SmallProf.</Description>
-        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprï¿½ft werden.</Description>
+        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprÃ¼ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -250,7 +250,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###FunctionTree" Required="0" Valid="1">
         <Description Lang="en">Show the function tree.</Description>
-        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und Abhï¿½ngigkeit in welcher die Funktionen aufgerufen werden.</Description>
+        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und AbhÃ¤ngigkeit in welcher die Funktionen aufgerufen werden.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -262,7 +262,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###DisabledPackages" Required="0" Valid="0">
         <Description Lang="en">Don't check the following packages in DProf.</Description>
-        <Description Lang="de">Es sollen folgende Packages von DProf nicht geprï¿½ft werden.</Description>
+        <Description Lang="de">Es sollen folgende Packages von DProf nicht geprÃ¼ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -295,7 +295,7 @@
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###DisabledFiles" Required="0" Valid="0">
         <Description Lang="en">Don't check the following perl files or path in SmallProf.</Description>
-        <Description Lang="de">Es sollen folgende Dateien und Pfade in SmallProf nicht geprï¿½ft werden.</Description>
+        <Description Lang="de">Es sollen folgende Dateien und Pfade in SmallProf nicht geprÃ¼ft werden.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
