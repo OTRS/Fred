@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredConfigLog.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConfigLog.pm,v 1.6 2009-04-06 10:25:13 mh Exp $
+# $Id: FredConfigLog.pm,v 1.7 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -67,8 +67,6 @@ create the output of the translationdebugging log
 sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
-    my $HTMLLines = '';
-
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
@@ -78,13 +76,21 @@ sub CreateFredOutput {
         return;
     }
 
+    my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+
         for my $TD ( @{$Line} ) {
             $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
         }
+
         if ( $Line->[1] eq 'True' ) {
             $Line->[1] = '';
         }
+
+        for my $Count ( 0 .. 3 ) {
+            $Line->[$Count] ||= '';
+        }
+
         $HTMLLines .= "        <tr>\n"
             . "          <td align=\"right\">$Line->[3]</td>\n"
             . "          <td>$Line->[0]</td>\n"
@@ -93,14 +99,14 @@ sub CreateFredOutput {
             . "        </tr>";
     }
 
-    if ($HTMLLines) {
-        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredConfigLog',
-            Data         => {
-                HTMLLines => $HTMLLines,
-            },
-        );
-    }
+    return if !$HTMLLines;
+
+    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredConfigLog',
+        Data         => {
+            HTMLLines => $HTMLLines,
+        },
+    );
 
     return 1;
 }
@@ -115,12 +121,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.7 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

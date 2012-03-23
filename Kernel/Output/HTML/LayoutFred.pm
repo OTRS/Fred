@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LayoutFred.pm - provides generic HTML output for fred
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFred.pm,v 1.6 2009-04-21 11:44:01 tr Exp $
+# $Id: LayoutFred.pm,v 1.7 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =item CreateFredOutput()
 
@@ -39,16 +39,20 @@ sub CreateFredOutput {
         return;
     }
 
+    MODULENAME:
     for my $ModuleName ( keys %{ $Param{FredModulesRef} } ) {
 
         # load backend
         my $BackendObject = $Self->_LoadLayoutBackend( ModuleName => $ModuleName );
 
         # get module data
-        if ($BackendObject) {
-            $BackendObject->CreateFredOutput( ModuleRef => $Param{FredModulesRef}->{$ModuleName} );
-        }
+        next MODULENAME if !$BackendObject;
+
+        $BackendObject->CreateFredOutput(
+            ModuleRef => $Param{FredModulesRef}->{$ModuleName},
+        );
     }
+
     return 1;
 }
 
@@ -77,6 +81,7 @@ sub _LoadLayoutBackend {
     # load backend
     my $GenericModule = 'Kernel::Output::HTML::Fred' . $Param{ModuleName};
     if ( $Self->{MainObject}->Require($GenericModule) ) {
+
         my $BackendObject = $GenericModule->new(
             %{$Self},
             %Param,
@@ -85,6 +90,7 @@ sub _LoadLayoutBackend {
 
         return $BackendObject if $BackendObject;
     }
+
     return;
 }
 
@@ -96,12 +102,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-04-21 11:44:01 $
+$Revision: 1.7 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

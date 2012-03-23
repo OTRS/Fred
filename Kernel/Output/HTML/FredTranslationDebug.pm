@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredTranslationDebug.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredTranslationDebug.pm,v 1.5 2009-04-06 10:25:13 mh Exp $
+# $Id: FredTranslationDebug.pm,v 1.6 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -67,8 +67,6 @@ create the output of the translationdebugging log
 sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
-    my $HTMLLines = '';
-
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
@@ -78,18 +76,19 @@ sub CreateFredOutput {
         return;
     }
 
+    my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
         $HTMLLines .= "        <tr><td>$Line</td></tr>";
     }
 
-    if ($HTMLLines) {
-        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredTranslationDebug',
-            Data         => {
-                HTMLLines => $HTMLLines,
-            },
-        );
-    }
+    return 1 if !$HTMLLines;
+
+    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredTranslationDebug',
+        Data         => {
+            HTMLLines => $HTMLLines,
+        },
+    );
 
     return 1;
 }
@@ -104,12 +103,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.6 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

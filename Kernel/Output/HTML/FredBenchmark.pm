@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredBenchmark.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredBenchmark.pm,v 1.4 2009-04-06 10:25:13 mh Exp $
+# $Id: FredBenchmark.pm,v 1.5 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -81,10 +81,13 @@ sub CreateFredOutput {
 
     my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+
         $HTMLLines .= '<tr>';
+
         for my $Cell ( @{$Line} ) {
             $HTMLLines .= "<td>$Cell</td>";
         }
+
         $HTMLLines .= '</tr>';
     }
 
@@ -111,12 +114,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-04-06 10:25:13 $
+$Revision: 1.5 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/DevelFred.pm - a special developer module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFred.pm,v 1.19 2010-11-09 13:08:57 mg Exp $
+# $Id: DevelFred.pm,v 1.20 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 use Kernel::System::Fred;
 
@@ -42,7 +42,8 @@ sub new {
         $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
     }
 
-# With framework version 2.5 or higher Kernel::System::Config is renamed to Kernel::System::SysConfig
+    # With framework version 2.5 or higher Kernel::System::Config
+    # is renamed to Kernel::System::SysConfig
     my $FrameworkVersion = $Param{ConfigObject}->Get('Version');
     if ( $FrameworkVersion =~ /^2\.(0|1|2|3|4)\./ ) {
         $Param{MainObject}->Require('Kernel::System::Config');
@@ -55,6 +56,7 @@ sub new {
 
     $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
     $Self->{Subaction} = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
+
     return $Self;
 }
 

@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredConsole.pm - layout backend module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConsole.pm,v 1.9 2010-05-20 12:46:09 mg Exp $
+# $Id: FredConsole.pm,v 1.10 2012-03-23 16:19:09 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -67,8 +67,6 @@ create the output of the STDERR log
 sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
-    my $HTMLLines = '';
-
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
@@ -84,21 +82,21 @@ sub CreateFredOutput {
         . ( join ' - ', @{ $Param{ModuleRef}->{Data} } )
         . '</strong>';
 
-    if ( $Param{ModuleRef}->{Status} ) {
+    return 1 if !$Param{ModuleRef}->{Status};
 
-        if ( $Param{ModuleRef}->{Setting} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'Setting',
-            );
-        }
-        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredConsole',
-            Data         => {
-                Text    => $Console,
-                ModPerl => _ModPerl(),
-            },
+    if ( $Param{ModuleRef}->{Setting} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Setting',
         );
     }
+
+    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredConsole',
+        Data         => {
+            Text    => $Console,
+            ModPerl => _ModPerl(),
+        },
+    );
 
     return 1;
 }
@@ -106,13 +104,15 @@ sub CreateFredOutput {
 sub _ModPerl {
 
     # find out, if modperl is used
-
     my $ModPerl = 'is not activated';
+
     if ( exists $ENV{MOD_PERL} && defined $mod_perl::VERSION ) {
         $ModPerl = $mod_perl::VERSION;
     }
+
     return $ModPerl;
 }
+
 1;
 
 =back
@@ -123,12 +123,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-05-20 12:46:09 $
+$Revision: 1.10 $ $Date: 2012-03-23 16:19:09 $
 
 =cut
