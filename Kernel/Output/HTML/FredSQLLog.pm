@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.10 2011-11-26 09:16:10 ub Exp $
+# $Id: FredSQLLog.pm,v 1.11 2012-03-23 16:18:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -67,8 +67,6 @@ create the output of the translationdebugging log
 sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
-    my $HTMLLines = '';
-
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
         $Self->{LogObject}->Log(
@@ -78,13 +76,20 @@ sub CreateFredOutput {
         return;
     }
 
+    my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+
         for my $TD ( @{$Line} ) {
             $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
         }
+
         my $Class = '';
         if ( $Line->[5] ) {
             $Class = ' class="strong"';
+        }
+
+        for my $Count ( 0 .. 5 ) {
+            $Line->[$Count] ||= '';
         }
 
         $HTMLLines .= "        <tr$Class>\n"
@@ -97,18 +102,18 @@ sub CreateFredOutput {
             . "        </tr>";
     }
 
-    if ($HTMLLines) {
-        $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredSQLLog',
-            Data         => {
-                HTMLLines        => $HTMLLines,
-                AllStatements    => $Param{ModuleRef}->{AllStatements},
-                DoStatements     => $Param{ModuleRef}->{DoStatements},
-                SelectStatements => $Param{ModuleRef}->{SelectStatements},
-                Time             => $Param{ModuleRef}->{Time},
-            },
-        );
-    }
+    return 1 if !$HTMLLines;
+
+    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+        TemplateFile => 'DevelFredSQLLog',
+        Data         => {
+            HTMLLines        => $HTMLLines,
+            AllStatements    => $Param{ModuleRef}->{AllStatements},
+            DoStatements     => $Param{ModuleRef}->{DoStatements},
+            SelectStatements => $Param{ModuleRef}->{SelectStatements},
+            Time             => $Param{ModuleRef}->{Time},
+        },
+    );
 
     return 1;
 }
@@ -129,6 +134,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2011-11-26 09:16:10 $
+$Revision: 1.11 $ $Date: 2012-03-23 16:18:07 $
 
 =cut
