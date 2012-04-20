@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.30 2012-03-23 16:19:09 mh Exp $
+# $Id: OutputFilterFred.pm,v 1.31 2012-04-20 07:40:15 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -97,7 +97,6 @@ sub Run {
     # do nothing if it does not contain the <html> element, might be
     # an embedded layout rendering
     if ( ${ $Param{Data} } !~ m{<html[^>]*>}msx ) {
-        print STDERR "NOT AN HTML DOCUMENT\n";
         return 1;
     }
 
@@ -178,6 +177,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2012-03-23 16:19:09 $
+$Revision: 1.31 $ $Date: 2012-04-20 07:40:15 $
 
 =cut
