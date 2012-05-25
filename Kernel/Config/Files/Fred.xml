@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.33 2012-01-23 13:46:56 sb Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.34 2012-05-25 00:49:07 mh Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -10,6 +10,11 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>
                 <Item Key="Debug">0</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="ALL">1</Item>
+                    </Hash>
+                </Item>
             </Hash>
         </Setting>
     </ConfigItem>
