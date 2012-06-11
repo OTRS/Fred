@@ -1,8 +1,8 @@
 # --
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.14 2011-11-26 09:15:30 ub Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.15 2012-06-11 08:45:07 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@
 }
 
 .DevelFredBoxContent {
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
 }
 

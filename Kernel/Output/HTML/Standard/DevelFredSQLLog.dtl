@@ -1,17 +1,17 @@
 # --
 # DevelFredSQLLog.dtl - a frontend to show the sql log
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.15 2011-11-26 09:16:10 ub Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.16 2012-06-11 08:45:07 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="DevelFredBox">
+<div class="DevelFredBox" id="DevelFredBoxSQLLog">
     <h1>
-        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredSQLLogTable').style.display = this.checked ? 'block' : 'none';"/>
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredBoxSQLLog').style.display = this.checked ? 'block' : 'none';"/>
         Fred-SQL-Log
     </h1>
     <div class="DevelFredBoxContent">
