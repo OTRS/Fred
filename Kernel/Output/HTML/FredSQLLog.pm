@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredSQLLog.pm - layout backend module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.11 2012-03-23 16:18:07 mh Exp $
+# $Id: FredSQLLog.pm,v 1.12 2012-06-15 13:56:12 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -76,38 +76,32 @@ sub CreateFredOutput {
         return;
     }
 
-    my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
 
-        for my $TD ( @{$Line} ) {
-            $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
-        }
+        $Self->{LayoutObject}->Block(
+            Name => 'Row',
+            Data => {
+                Time            => $Line->[4] * 1000,
+                EqualStatements => $Line->[5] || '',
+                Statement       => $Line->[1],
+                Package         => $Line->[3],
+            },
+        );
 
-        my $Class = '';
-        if ( $Line->[5] ) {
-            $Class = ' class="strong"';
-        }
+        if ( $Line->[2] ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'RowBindParameters',
+                Data => {
+                    BindParameters => $Line->[2],
+                },
+            );
 
-        for my $Count ( 0 .. 5 ) {
-            $Line->[$Count] ||= '';
         }
-
-        $HTMLLines .= "        <tr$Class>\n"
-            . "          <td>$Line->[0]&nbsp;</td>\n"
-            . "          <td class=\"SQLStatement\">$Line->[1]&nbsp;</td>\n"
-            . "          <td class=\"BindParameter\"><div>$Line->[2]&nbsp;</div></td>\n"
-            . "          <td>$Line->[3]&nbsp;</td>\n"
-            . "          <td>$Line->[4]&nbsp;</td>\n"
-            . "          <td>$Line->[5]</td>\n"
-            . "        </tr>";
     }
-
-    return 1 if !$HTMLLines;
 
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredSQLLog',
         Data         => {
-            HTMLLines        => $HTMLLines,
             AllStatements    => $Param{ModuleRef}->{AllStatements},
             DoStatements     => $Param{ModuleRef}->{DoStatements},
             SelectStatements => $Param{ModuleRef}->{SelectStatements},
@@ -134,6 +128,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2012-03-23 16:18:07 $
+$Revision: 1.12 $ $Date: 2012-06-15 13:56:12 $
 
 =cut

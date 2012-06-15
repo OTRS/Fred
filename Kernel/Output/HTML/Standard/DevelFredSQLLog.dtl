@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.16 2012-06-11 08:45:07 mg Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.17 2012-06-15 13:56:12 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,32 +12,46 @@
 <div class="DevelFredBox" id="DevelFredBoxSQLLog">
     <h1>
         <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredBoxSQLLog').style.display = this.checked ? 'block' : 'none';"/>
-        Fred-SQL-Log
+        Fred-SQL-Log &mdash;
+        Executed <strong>$Data{"AllStatements"}</strong> Statements
+        (<strong>$QData{"SelectStatements"}</strong> SELECTs + <strong>$QData{"DoStatements"}</strong> DOs)
+        in <strong>$QData{"Time"}</strong> s.
     </h1>
     <div class="DevelFredBoxContent">
-
-        <h2 style="color:black; padding: 6px 2px; margin: 0;">
-            Executed <strong>$Data{"AllStatements"}</strong> Statements
-            (<strong>$QData{"SelectStatements"}</strong> SELECTS + <strong>$QData{"DoStatements"}</strong> DOs)
-            in <strong>$QData{"Time"}</strong> sec.
-        </h2>
-
         <table id="FredSQLLogTable" width="100%">
-            <tr class="contentkey">
-                <td>Statement-Type</td>
-                <td>Statement</td>
-                <td>Bind-Parameter</td>
-                <td>Package</td>
-                <td>Time 1/100 sec</td>
-                <td>Equal Statements</td>
-            </tr>
-$Data{"HTMLLines"}
+            <thead>
+                <tr class="contentkey">
+                    <th class="Time" title="Time (ms)">ms</th>
+                    <th class="EqualStatements" title="Equal Statements">Equal</th>
+                    <th class="SQLStatement">Statement</th>
+                    <th class="BindParameters" title="Bind parameters">Bind</th>
+                    <th class="Package">Package</th>
+                </tr>
+            </thead>
+            <tbody>
+<!-- dtl:block:Row -->
+                <tr class="contentkey">
+                    <td class="Time" title="$QData{"Time"} ms">$QData{"Time", "6"}</td>
+                    <td class="EqualStatements">$QData{"EqualStatements"}</td>
+                    <td class="SQLStatement">$QData{"Statement"}</td>
+                    <td class="BindParameters">
+<!-- dtl:block:RowBindParameters -->
+                        <a class="ShowBindParameters" title="$QData{"BindParameters"}">Show</a>
+                        <div>$QData{"BindParameters"}</div>
+<!-- dtl:block:RowBindParameters -->
+                    </td>
+                    <td class="Package">$QData{"Package"}</td>
+                </tr>
+            </tbody>
+<!-- dtl:block:Row -->
         </table>
-
-        <h2 style="color:black; padding: 6px 2px; margin: 0;">
-            Executed <strong>$Data{"AllStatements"}</strong> Statements
-            (<strong>$QData{"SelectStatements"}</strong> SELECTS + <strong>$QData{"DoStatements"}</strong> DOs)
-            in <strong>$QData{"Time"}</strong> sec.
-        </h2>
     </div>
 </div>
+
+<!-- js_on_document_complete -->
+<script>
+$('a.ShowBindParameters').unbind('click').bind('click', function(Event) {
+    $(this).hide().parent().find('div').show();
+});
+</script>
+<!-- js_on_document_complete -->
