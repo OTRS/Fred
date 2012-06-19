@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.23 2012-06-15 13:56:12 mg Exp $
+# $Id: SQLLog.pm,v 1.24 2012-06-19 13:59:19 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -246,7 +246,9 @@ sub InsertWord {
     # Fixup multiline SQL statements
     if ( $Param{What} =~ m/^SQL/smx ) {
         my @What = split '##!##', $Param{What};
-        $What[1] =~ s/\n/[ ]/smxg;
+
+        # hide white space
+        $What[1] =~ s/\r?\n/ /smxg;
         $What[1] =~ s/\s+/ /smxg;
         $Param{What} = join '##!##', @What;
     }
@@ -276,6 +278,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2012-06-15 13:56:12 $
+$Revision: 1.24 $ $Date: 2012-06-19 13:59:19 $
 
 =cut
