@@ -1,8 +1,8 @@
 # --
 # Kernel/System/DBListener/FredSQLLog.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.1 2011-11-28 13:49:37 mg Exp $
+# $Id: FredSQLLog.pm,v 1.2 2012-06-20 12:12:16 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,12 +54,26 @@ sub PostPrepare {
     return if ( !$Self->{Active} );
 
     my $DiffTime = tv_interval( $Self->{PrepareStart} );
-    my $Caller   = caller(1);
+
+    my @StackTrace;
+
+    COUNT:
+    for ( my $Count = 1; $Count < 30; $Count++ ) {
+        my ( $Package1, $Filename1, $Line1, $Subroutine1 ) = caller($Count);
+        last COUNT if !$Line1;
+        my ( $Package2, $Filename2, $Line2, $Subroutine2 ) = caller( 1 + $Count );
+        $Subroutine2 ||= $0;    # if there is no caller module use the file name
+        $Subroutine2 =~ s/Kernel::System/K::S/;
+        $Subroutine2 =~ s/Kernel::Modules/K::M/;
+        push @StackTrace, "$Subroutine2:$Line1";
+    }
 
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
     my $BindString = @Array ? join ', ', @Array : '';
     $Self->{SQLLogObject}->InsertWord(
-        What => "SQL-SELECT##!##$Param{SQL}##!##$BindString##!##$Caller##!##$DiffTime",
+        What => "SQL-SELECT##!##$Param{SQL}##!##$BindString##!##"
+            . join( ';', @StackTrace )
+            . "##!##$DiffTime",
     );
 }
 
@@ -77,12 +91,26 @@ sub PostDo {
     return if ( !$Self->{Active} );
 
     my $DiffTime = tv_interval( $Self->{DoStart} );
-    my $Caller   = caller(1);
+
+    my @StackTrace;
+
+    COUNT:
+    for ( my $Count = 1; $Count < 30; $Count++ ) {
+        my ( $Package1, $Filename1, $Line1, $Subroutine1 ) = caller($Count);
+        last COUNT if !$Line1;
+        my ( $Package2, $Filename2, $Line2, $Subroutine2 ) = caller( 1 + $Count );
+        $Subroutine2 ||= $0;    # if there is no caller module use the file name
+        $Subroutine2 =~ s/Kernel::System/K::S/;
+        $Subroutine2 =~ s/Kernel::Modules/K::M/;
+        push @StackTrace, "$Subroutine2:$Line1";
+    }
 
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
     my $BindString = @Array ? join ', ', @Array : '';
     $Self->{SQLLogObject}->InsertWord(
-        What => "SQL-DO##!##$Param{SQL}##!##$BindString##!##$Caller##!##$DiffTime",
+        What => "SQL-DO##!##$Param{SQL}##!##$BindString##!##"
+            . join( ';', @StackTrace )
+            . "##!##$DiffTime",
     );
 }
 
@@ -102,6 +130,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2011-11-28 13:49:37 $
+$Revision: 1.2 $ $Date: 2012-06-20 12:12:16 $
 
 =cut

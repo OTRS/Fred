@@ -2,7 +2,7 @@
 # DevelFredSQLLog.dtl - a frontend to show the sql log
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredSQLLog.dtl,v 1.17 2012-06-15 13:56:12 mg Exp $
+# $Id: DevelFredSQLLog.dtl,v 1.18 2012-06-20 12:12:16 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@
                     <th class="EqualStatements" title="Equal Statements">Equal</th>
                     <th class="SQLStatement">Statement</th>
                     <th class="BindParameters" title="Bind parameters">Bind</th>
-                    <th class="Package">Package</th>
+                    <th class="StackTrace">Package</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +40,11 @@
                         <div>$QData{"BindParameters"}</div>
 <!-- dtl:block:RowBindParameters -->
                     </td>
-                    <td class="Package">$QData{"Package"}</td>
+                    <td class="StackTrace">
+<!-- dtl:block:StackTrace -->
+                        $QData{"StackTrace"}<br/>
+<!-- dtl:block:StackTrace -->
+                    </td>
                 </tr>
             </tbody>
 <!-- dtl:block:Row -->
