@@ -2,7 +2,7 @@
 # Kernel/System/DBListener/FredSQLLog.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.2 2012-06-20 12:12:16 mg Exp $
+# $Id: FredSQLLog.pm,v 1.3 2012-06-30 08:38:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,6 +65,7 @@ sub PostPrepare {
         $Subroutine2 ||= $0;    # if there is no caller module use the file name
         $Subroutine2 =~ s/Kernel::System/K::S/;
         $Subroutine2 =~ s/Kernel::Modules/K::M/;
+        $Subroutine2 =~ s/Kernel::Output/K::O/;
         push @StackTrace, "$Subroutine2:$Line1";
     }
 
@@ -130,6 +131,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2012-06-20 12:12:16 $
+$Revision: 1.3 $ $Date: 2012-06-30 08:38:20 $
 
 =cut
