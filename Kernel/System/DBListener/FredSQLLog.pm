@@ -2,7 +2,7 @@
 # Kernel/System/DBListener/FredSQLLog.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredSQLLog.pm,v 1.3 2012-06-30 08:38:20 ub Exp $
+# $Id: FredSQLLog.pm,v 1.4 2012-07-02 08:55:00 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,7 +70,14 @@ sub PostPrepare {
     }
 
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
+
+    # Replace newlines
+    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;
+
+    # Limit bind param length
+    @Array = map { length($_) > 100 ? ( substr( $_, 0, 100 ) . '[...]' ) : $_ } @Array;
     my $BindString = @Array ? join ', ', @Array : '';
+
     $Self->{SQLLogObject}->InsertWord(
         What => "SQL-SELECT##!##$Param{SQL}##!##$BindString##!##"
             . join( ';', @StackTrace )
@@ -107,7 +114,14 @@ sub PostDo {
     }
 
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
+
+    # Replace newlines
+    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;
+
+    # Limit bind param length
+    @Array = map { length($_) > 100 ? ( substr( $_, 0, 100 ) . '[...]' ) : $_ } @Array;
     my $BindString = @Array ? join ', ', @Array : '';
+
     $Self->{SQLLogObject}->InsertWord(
         What => "SQL-DO##!##$Param{SQL}##!##$BindString##!##"
             . join( ';', @StackTrace )
@@ -131,6 +145,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-06-30 08:38:20 $
+$Revision: 1.4 $ $Date: 2012-07-02 08:55:00 $
 
 =cut
