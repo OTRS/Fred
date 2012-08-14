@@ -10,6 +10,16 @@ Core.Fred = Core.Fred || {};
  *      This namespace contains all logic for the Fred module JSLint
  */
 Core.Fred.JSLint = (function (TargetNS) {
+
+    function htmlEscape(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
     /**
      * @function
      * @private
@@ -39,7 +49,7 @@ Core.Fred.JSLint = (function (TargetNS) {
                         $('#FredJSLintRunning').remove();
                         Output = '<div class="FredJSLintError">';
                         Output += '<p><span class="Error">Error: </span><strong>' + ErrorObject.reason + '</strong> Source:     ' + this.Src + ':' + ErrorObject.line + ':' + ErrorObject.character + '</p>';
-                        Output += '<code>' + ErrorObject.evidence + '</code>';
+                        Output += '<code>' + htmlEscape(ErrorObject.evidence) + '</code>';
                         Output += '</div>';
                         $('#FredJSLintScripts').append(Output);
                         ErrorsFound = true;

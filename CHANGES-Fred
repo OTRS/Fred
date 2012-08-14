@@ -2,12 +2,14 @@
 # CHANGES - change log of Fred
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Fred,v 1.7 2012-05-08 13:27:51 mb Exp $
+# $Id: CHANGES-Fred,v 1.8 2012-08-14 10:00:57 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+3.1.6 ?????
+ - 2012-08-14 Improved HTML escaping in the JSLint module.
 
 3.1.5 2012-05-08
  - 2012-05-08 Added framework support for upcoming OTRS 3.2.x.
