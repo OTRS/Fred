@@ -2,7 +2,7 @@
 # Kernel/System/Fred/SQLLog.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SQLLog.pm,v 1.24 2012-06-19 13:59:19 mg Exp $
+# $Id: SQLLog.pm,v 1.25 2012-09-17 10:54:44 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -172,51 +172,10 @@ Do all jobs which are necessary to deactivate this special module.
         ModuleName => $ModuleName,
     );
 
-DEPRECATED. This code is still here to correct old patched instances of DB.pm.
-Previously, Fred patched this module to write the database performance data.
-
 =cut
 
 sub DeactivateModuleTodos {
     my $Self = shift;
-
-    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/DB.pm';
-
-    # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # to use SQLLog I had to manipulate the DB.pm file
-    # here I undo my manipulation
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
-
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
-
-    my %RemoveLine = (
-        "# FRED - manipulated\n"                                               => 1,
-        "use Kernel::System::Fred::SQLLog;\n"                                  => 1,
-        "my \$SQLLogObject = Kernel::System::Fred::SQLLog->new(\%{\$Self});\n" => 1,
-        "my \$Caller = caller();\n"                                            => 1,
-        "use Time::HiRes qw(gettimeofday tv_interval);\n"                      => 1,
-        "my \$t0 = [gettimeofday];\n"                                          => 1,
-        "my \$DiffTime = tv_interval(\$t0);\n"                                 => 1,
-        "\@Array = map { defined \$_ ? \$_ : 'undef' } \@Array;\n"             => 1,
-        "my \$BindString = \@Array ? join ', ', \@Array : '';\n"               => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT##!##\$SQL##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n"
-            => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-DO##!##\$Param{SQL}##!##\$BindString##!##\$Caller##!##\$DiffTime\");\n"
-            => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-DO;\$Param{SQL};\$Caller\;\$DiffTime\");\n" => 1,
-        "\$SQLLogObject->InsertWord(What => \"SQL-SELECT;\$SQL;\$Caller\;\$DiffTime\");\n"    => 1,
-    );
-
-    for my $Line (@Lines) {
-        if ( !$RemoveLine{$Line} ) {
-            print $FilehandleII $Line;
-        }
-    }
-    close $FilehandleII;
 
     return 1;
 }
@@ -278,6 +237,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2012-06-19 13:59:19 $
+$Revision: 1.25 $ $Date: 2012-09-17 10:54:44 $
 
 =cut
