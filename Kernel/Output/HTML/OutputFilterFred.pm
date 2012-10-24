@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.32 2012-10-24 09:46:16 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.33 2012-10-24 10:02:02 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,11 +13,12 @@ package Kernel::Output::HTML::OutputFilterFred;
 
 use strict;
 use warnings;
+use Digest::MD5 qw(md5);
 
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -159,36 +160,37 @@ sub Run {
     ${ $Param{Data} } =~ s{</head>}{$CSSOutput\n\t</head>}smx;
 
     # Add a short JS snippet to make the Fred Box draggable
-    ${ $Param{Data} } .= <<'EOF';
+    my $SystemName = md5( $Self->{ConfigObject}->Get('Home') );
+    ${ $Param{Data} } .= <<EOF;
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-$('#DevelFredContainer').draggable({
+\$('#DevelFredContainer').draggable({
     stop: function(event, ui) {
         var Top = ui.offset.top,
             Left = ui.offset.left;
 
         if (window && window['localStorage'] !== undefined) {
-            localStorage['FRED_console_left'] = Left;
-            localStorage['FRED_console_top']  = Top;
+            localStorage['FRED_console_left_$SystemName'] = Left;
+            localStorage['FRED_console_top_$SystemName']  = Top;
         }
     }
 });
 
 if (window && window['localStorage'] !== undefined) {
 
-    var SavedLeft = localStorage['FRED_console_left'];
-        SavedTop  = localStorage['FRED_console_top'];
+    var SavedLeft = localStorage['FRED_console_left_$SystemName'];
+        SavedTop  = localStorage['FRED_console_top_$SystemName'];
 
-    if (SavedLeft > $('body').width()) {
-        SavedLeft = $('body').width();
+    if (SavedLeft > \$('body').width()) {
+        SavedLeft = \$('body').width();
     }
-    if (SavedTop > $('body').height()) {
-        SavedTop = $('body').height();
+    if (SavedTop > \$('body').height()) {
+        SavedTop = \$('body').height();
     }
 
     if (SavedLeft && SavedTop) {
-        $('#DevelFredContainer').css('left', SavedLeft + 'px');
-        $('#DevelFredContainer').css('top', SavedTop + 'px');
+        \$('#DevelFredContainer').css('left', SavedLeft + 'px');
+        \$('#DevelFredContainer').css('top', SavedTop + 'px');
     }
 }
 
@@ -215,6 +217,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2012-10-24 09:46:16 $
+$Revision: 1.33 $ $Date: 2012-10-24 10:02:02 $
 
 =cut
