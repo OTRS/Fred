@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Fred.xml,v 1.35 2012-08-22 09:45:57 mb Exp $</CVS>
+    <CVS>$Id: Fred.xml,v 1.36 2012-10-24 11:36:23 mab Exp $</CVS>
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Lang="en">Subscribe the output filter at the system.</Description>
         <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
@@ -25,6 +25,15 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <String Regex="">50%</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::ConsoleOpacity" Required="0" Valid="1">
+        <Description Lang="en">Defines the opacity of the Fred console, e.g. 0.9 for 10% transparency.</Description>
+        <Description Lang="de">Definiert die Deckkraft der Fred-Console, z. B. 0.9 für 10% Transparenz.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">0.9</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">

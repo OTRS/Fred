@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.33 2012-10-24 10:02:02 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.34 2012-10-24 11:36:23 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Digest::MD5 qw(md5);
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -178,14 +178,16 @@ sub Run {
 
 if (window && window['localStorage'] !== undefined) {
 
-    var SavedLeft = localStorage['FRED_console_left_$SystemName'];
-        SavedTop  = localStorage['FRED_console_top_$SystemName'];
+    var SavedLeft  = localStorage['FRED_console_left_$SystemName'],
+        SavedTop   = localStorage['FRED_console_top_$SystemName'],
+        FredWidth  = \$('#DevelFredContainer').width(),
+        FredHeight = \$('#DevelFredContainer').height();
 
     if (SavedLeft > \$('body').width()) {
-        SavedLeft = \$('body').width();
+        SavedLeft = \$('body').width() - FredWidth;
     }
     if (SavedTop > \$('body').height()) {
-        SavedTop = \$('body').height();
+        SavedTop = \$('body').height() - FredHeight;
     }
 
     if (SavedLeft && SavedTop) {
@@ -217,6 +219,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2012-10-24 10:02:02 $
+$Revision: 1.34 $ $Date: 2012-10-24 11:36:23 $
 
 =cut

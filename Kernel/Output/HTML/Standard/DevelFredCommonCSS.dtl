@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.18 2012-10-24 09:46:17 mab Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.19 2012-10-24 11:36:23 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,9 @@
 .DevelFredContainer {
     position: fixed;
     width: $Config{"Fred::ConsoleWidth"};
+    -moz-opacity: $Config{"Fred::ConsoleOpacity"};
+    -webkit-opacity: $Config{"Fred::ConsoleOpacity"};
+    opacity: $Config{"Fred::ConsoleOpacity"};
     top: 33px;
     right: 16px;
     z-index: 5000;
@@ -44,6 +47,7 @@
     color: white;
     margin: 0;
     padding: 2px;
+    cursor: move;
 }
 
 .DevelFredBox div,
