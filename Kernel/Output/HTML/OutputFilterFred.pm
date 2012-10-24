@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.34 2012-10-24 11:36:23 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.35 2012-10-24 16:50:03 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Digest::MD5 qw(md5);
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -165,6 +165,7 @@ sub Run {
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
 \$('#DevelFredContainer').draggable({
+    handle: 'h1',
     stop: function(event, ui) {
         var Top = ui.offset.top,
             Left = ui.offset.left;
@@ -219,6 +220,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2012-10-24 11:36:23 $
+$Revision: 1.35 $ $Date: 2012-10-24 16:50:03 $
 
 =cut
