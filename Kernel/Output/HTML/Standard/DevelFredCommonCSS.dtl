@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.17 2012-09-17 07:18:53 mg Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.18 2012-10-24 09:46:17 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,7 @@
 # --
 <style type="text/css">
 .DevelFredContainer {
-    position: absolute;
+    position: fixed;
     width: $Config{"Fred::ConsoleWidth"};
     top: 33px;
     right: 16px;
@@ -93,6 +93,7 @@ body #FredJSLintScripts pre {
     color: white;
     margin: 0 0 10px 0;
     padding: 2px;
+    cursor: move !important;
 }
 
 .DevelFredSetting p {
