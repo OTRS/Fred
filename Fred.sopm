@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.49 2012-05-08 12:21:49 mb Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.50 2012-10-25 16:50:55 mab Exp $</CVS>
     <Framework>3.1.x</Framework>
     <Framework>3.2.x</Framework>
     <Vendor>OTRS AG</Vendor>
@@ -85,6 +85,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredTranslationDebug.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterPostShowSystemNameInHeader.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredBenchmark.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
