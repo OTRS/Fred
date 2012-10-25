@@ -2,7 +2,7 @@
 # DevelFredCommonCSS.dtl - common CSS for Fred modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredCommonCSS.dtl,v 1.19 2012-10-24 11:36:23 mab Exp $
+# $Id: DevelFredCommonCSS.dtl,v 1.20 2012-10-25 08:11:01 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,12 @@
     right: 16px;
     z-index: 5000;
     overflow-y: auto;
+}
+
+.DevelFredContainer:hover {
+    -webkit-opacity: 1.0;
+    -moz-opacity: 1.0;
+    opacity: 1.0;
 }
 
 .DevelFredBox {
