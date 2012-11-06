@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FredJSLint.pm - layout backend module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredJSLint.pm,v 1.2 2010-01-29 10:01:35 mn Exp $
+# $Id: FredJSLint.pm,v 1.3 2012-11-06 09:10:55 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -76,20 +76,6 @@ sub CreateFredOutput {
         return;
     }
 
-    my $FrameworkVersion = $Self->{ConfigObject}->Get('Version');
-    if ( $FrameworkVersion =~ /^2\.(0|1|2|3|4)\./ ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'JSLintNotAllowed',
-            Data => {},
-        );
-    }
-    else {
-        $Self->{LayoutObject}->Block(
-            Name => 'JSLintAllowed',
-            Data => {},
-        );
-    }
-
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredJSLint',
         Data         => {},
@@ -108,12 +94,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-29 10:01:35 $
+$Revision: 1.3 $ $Date: 2012-11-06 09:10:55 $
 
 =cut
