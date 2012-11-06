@@ -1,8 +1,8 @@
 # --
 # DevelFredConsole.dtl - a html console for a better fred handling
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DevelFredConsole.dtl,v 1.12 2010-05-19 07:01:36 mg Exp $
+# $Id: DevelFredConsole.dtl,v 1.13 2012-11-06 09:13:26 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,3 +24,44 @@
         </span>
     </div>
 </div>
+
+<script type="text/javascript">
+"use strict";
+
+$(document).ready(function() {
+
+    $('#DevelFredContainer').draggable({
+        handle: 'h1',
+        stop: function(event, ui) {
+            var Top = ui.offset.top,
+                Left = ui.offset.left;
+
+            if (window && window.localStorage !== undefined) {
+                window.localStorage['FRED_console_left_$LQData{"$Config{"Home"}"}'] = Left;
+                window.localStorage['FRED_console_top_$LQData{"$Config{"Home"}"}']  = Top;
+            }
+        }
+    });
+
+    if (window && window.localStorage !== undefined) {
+
+        var SavedLeft  = window.localStorage['FRED_console_left_$LQData{"$Config{"Home"}"}'],
+            SavedTop   = window.localStorage['FRED_console_top_$LQData{"$Config{"Home"}"}'],
+            FredWidth  = $('#DevelFredContainer').width(),
+            FredHeight = $('#DevelFredContainer').height();
+
+        if (SavedLeft > $('body').width()) {
+            SavedLeft = $('body').width() - FredWidth;
+        }
+        if (SavedTop > $('body').height()) {
+            SavedTop = $('body').height() - FredHeight;
+        }
+
+        if (SavedLeft && SavedTop) {
+            $('#DevelFredContainer').css('left', SavedLeft + 'px');
+            $('#DevelFredContainer').css('top', SavedTop + 'px');
+        }
+    }
+});
+
+</script>

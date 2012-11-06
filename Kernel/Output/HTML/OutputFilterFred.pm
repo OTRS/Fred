@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.36 2012-11-06 08:34:33 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.37 2012-11-06 09:13:26 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use URI::Escape;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -159,50 +159,6 @@ sub Run {
     );
     ${ $Param{Data} } =~ s{</head>}{$CSSOutput\n\t</head>}smx;
 
-    # Add a short JS snippet to make the Fred Box draggable
-    my $SystemName = uri_escape( $Self->{ConfigObject}->Get('Home') );
-    ${ $Param{Data} } .= <<EOF;
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-"use strict";
-
-\$('#DevelFredContainer').draggable({
-    handle: 'h1',
-    stop: function(event, ui) {
-        var Top = ui.offset.top,
-            Left = ui.offset.left;
-
-        if (window && window.localStorage !== undefined) {
-            window.localStorage['FRED_console_left_$SystemName'] = Left;
-            window.localStorage['FRED_console_top_$SystemName']  = Top;
-        }
-    }
-});
-
-if (window && window.localStorage !== undefined) {
-
-    var SavedLeft  = window.localStorage['FRED_console_left_$SystemName'],
-        SavedTop   = window.localStorage['FRED_console_top_$SystemName'],
-        FredWidth  = \$('#DevelFredContainer').width(),
-        FredHeight = \$('#DevelFredContainer').height();
-
-    if (SavedLeft > \$('body').width()) {
-        SavedLeft = \$('body').width() - FredWidth;
-    }
-    if (SavedTop > \$('body').height()) {
-        SavedTop = \$('body').height() - FredHeight;
-    }
-
-    if (SavedLeft && SavedTop) {
-        \$('#DevelFredContainer').css('left', SavedLeft + 'px');
-        \$('#DevelFredContainer').css('top', SavedTop + 'px');
-    }
-}
-
-//]]></script>
-<!--dtl:js_on_document_complete-->
-EOF
-
     return 1;
 }
 
@@ -222,6 +178,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2012-11-06 08:34:33 $
+$Revision: 1.37 $ $Date: 2012-11-06 09:13:26 $
 
 =cut
