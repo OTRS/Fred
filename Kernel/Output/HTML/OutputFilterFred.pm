@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFred.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.35 2012-10-24 16:50:03 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.36 2012-11-06 08:34:33 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,12 +13,12 @@ package Kernel::Output::HTML::OutputFilterFred;
 
 use strict;
 use warnings;
-use Digest::MD5 qw(md5);
+use URI::Escape;
 
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -160,27 +160,29 @@ sub Run {
     ${ $Param{Data} } =~ s{</head>}{$CSSOutput\n\t</head>}smx;
 
     # Add a short JS snippet to make the Fred Box draggable
-    my $SystemName = md5( $Self->{ConfigObject}->Get('Home') );
+    my $SystemName = uri_escape( $Self->{ConfigObject}->Get('Home') );
     ${ $Param{Data} } .= <<EOF;
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+"use strict";
+
 \$('#DevelFredContainer').draggable({
     handle: 'h1',
     stop: function(event, ui) {
         var Top = ui.offset.top,
             Left = ui.offset.left;
 
-        if (window && window['localStorage'] !== undefined) {
-            localStorage['FRED_console_left_$SystemName'] = Left;
-            localStorage['FRED_console_top_$SystemName']  = Top;
+        if (window && window.localStorage !== undefined) {
+            window.localStorage['FRED_console_left_$SystemName'] = Left;
+            window.localStorage['FRED_console_top_$SystemName']  = Top;
         }
     }
 });
 
-if (window && window['localStorage'] !== undefined) {
+if (window && window.localStorage !== undefined) {
 
-    var SavedLeft  = localStorage['FRED_console_left_$SystemName'],
-        SavedTop   = localStorage['FRED_console_top_$SystemName'],
+    var SavedLeft  = window.localStorage['FRED_console_left_$SystemName'],
+        SavedTop   = window.localStorage['FRED_console_top_$SystemName'],
         FredWidth  = \$('#DevelFredContainer').width(),
         FredHeight = \$('#DevelFredContainer').height();
 
@@ -220,6 +222,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2012-10-24 16:50:03 $
+$Revision: 1.36 $ $Date: 2012-11-06 08:34:33 $
 
 =cut
