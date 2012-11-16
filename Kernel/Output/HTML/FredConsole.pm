@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FredConsole.pm - layout backend module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FredConsole.pm,v 1.10 2012-03-23 16:19:09 mh Exp $
+# $Id: FredConsole.pm,v 1.11 2012-11-16 15:33:28 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -95,6 +95,7 @@ sub CreateFredOutput {
         Data         => {
             Text    => $Console,
             ModPerl => _ModPerl(),
+            Perl    => $],
         },
     );
 
@@ -129,6 +130,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2012-03-23 16:19:09 $
+$Revision: 1.11 $ $Date: 2012-11-16 15:33:28 $
 
 =cut
