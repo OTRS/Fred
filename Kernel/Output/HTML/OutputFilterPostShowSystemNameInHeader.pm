@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/OutputFilterPostShowSystemNameInHeader.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterPostShowSystemNameInHeader.pm,v 1.1 2012-10-25 16:50:54 mab Exp $
+# $Id: OutputFilterPostShowSystemNameInHeader.pm,v 1.2 2013-03-08 08:53:59 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,9 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
+
+use Cwd;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,10 +57,24 @@ sub Run {
     my $BackgroundColor = $Self->{ConfigObject}->Get('Fred::BackgroundColor')
         || 'red';
 
+    # Add current git branch to output
+    my $Home = $Self->{ConfigObject}->Get('Home');
+    if ( -d "$Home/.git" ) {
+        my $OldWorkingDir = getcwd();
+        chdir($Home);
+        my $GitResult = `git branch`;
+        chdir($OldWorkingDir);
+
+        if ($GitResult) {
+            my ($BranchName) = $GitResult =~ m/^[*] \s+ (\S+)/xms;
+            $SystemName .= " ($BranchName)";
+        }
+    }
+
     # inject system name right into the middle of the header to always have the attention
     my $Search  = '(<div \s* id="Logo"></div>)';
     my $Replace = <<"FILTERINPUT_HTML";
-<div style="font-size:18px; background-color: $BackgroundColor; padding: 10px 10px 15px 10px; width: 200px; text-align: center; position: absolute; left: 50%; margin-left: -110px; top: 0px; border-radius: 0px 0px 5px 5px;">$SystemName</div>
+<div style="font-size:18px; background-color: $BackgroundColor; padding: 10px 10px 15px 10px; width: 400px; text-align: center; position: absolute; left: 50%; margin-left: -110px; top: 0px; border-radius: 0px 0px 5px 5px;">$SystemName</div>
 FILTERINPUT_HTML
     ${ $Param{Data} } =~ s{$Search}{$Replace$1}xms;
 
