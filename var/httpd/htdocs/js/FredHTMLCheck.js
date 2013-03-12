@@ -1,6 +1,7 @@
 "use strict";
+/*global JSLINT: false, $: false, jQuery: false */
 
-var OTRS = Core || {};
+var Core = Core || {};
 Core.Fred = Core.Fred || {};
 
 /**
@@ -14,11 +15,11 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
     var CheckFunctions = [],
         ErrorsFound = false;
 
-    function HTMLEncode(Text){
+    function htmlEncode(Text){
         return Text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    function OutputError($Element, ErrorType, ErrorDescription, Hint){
+    function outputError($Element, ErrorType, ErrorDescription, Hint){
         var $Container,
             Code,
             Message;
@@ -36,7 +37,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         }
 
         Message = $('<p class="Small"></p>');
-        Message.append('<span class="Error">Error:</span> <strong>' + ErrorDescription + '</strong><div>' + Hint + '</div><div><code>' + HTMLEncode(Code) + '</code></div>');
+        Message.append('<span class="Error">Error:</span> <strong>' + ErrorDescription + '</strong><div>' + Hint + '</div><div><code>' + htmlEncode(Code) + '</code></div>');
         $('#FredHTMLCheckResults').append(Message);
     }
 
@@ -68,7 +69,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             }
 
             if ($Label.length > 1) {
-                OutputError(
+                outputError(
                     $this,
                     'AccessibilityMultipleLabel',
                     'Input element with more than one assigned labels',
@@ -84,7 +85,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // ok, no title available, now look for an assigned label element
             if (!$Label || !$Label.length) {
-                OutputError(
+                outputError(
                     $this,
                     'AccessibilityMissingLabel',
                     'Input element without a describing label or title attribute',
@@ -107,7 +108,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             // log if an attribute title extists but nothing is in there, something missed somebody (e. g. title="")
             $.each($this[0].attributes, function () {
                 if (this.name === 'title' && !this.value.length) {
-                    OutputError(
+                    outputError(
                         $this,
                         'AccessibilityInaccessibleLink',
                         'Link with title but without value',
@@ -126,7 +127,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                 return;
             }
 
-            OutputError(
+            outputError(
                 $this,
                 'AccessibilityInaccessibleLink',
                 'Link without text or title',
@@ -151,7 +152,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         // check for inputs which should be buttons
         $('input:button, input:submit, input:reset').each(function(){
             var $this = $(this);
-            OutputError(
+            outputError(
                 $this,
                 'BadPracticeInputButton',
                 'Old input with type button, submit or reset detected',
@@ -166,7 +167,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         $('input:not(:file)').each(function(){
             var $this = $(this);
             if ($this.attr('size') && $this.attr('size') > 0) {
-                OutputError(
+                outputError(
                     $this,
                     'BadPracticeInputSize',
                     'Input element with size attribute',
@@ -187,7 +188,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         // check for inputs with size attributes
         $('b, i, font, nobr').each(function(){
             var $this = $(this);
-            OutputError(
+            outputError(
                     $this,
                     'BadPracticeObsoleteElement',
                     'Obsolete element <code>&lt;' + this.tagName + '&gt;</code> used',
@@ -195,11 +196,11 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             );
         });
 
-        function ObsoleteClassError(ClassName) {
+        function obsoleteClassError(ClassName) {
             // Return a function that can be used as a callback by each().
             return function() {
                 var $this = $(this);
-                OutputError(
+                outputError(
                         $this,
                         'BadPracticeObsoleteClass',
                         'Obsolete class <code>"' + ClassName + '"</code> used',
@@ -209,11 +210,11 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         }
 
         // check for inputs with size attributes
-        $('.mainbody').each(ObsoleteClassError('mainbody'));
-        $('.contentkey').each(ObsoleteClassError('contentkey'));
-        $('.contentvalue').each(ObsoleteClassError('contentvalue'));
-        $('.searchactive').each(ObsoleteClassError('searchactive'));
-        $('.searchpassive').each(ObsoleteClassError('searchpassive'));
+        $('.mainbody').each(obsoleteClassError('mainbody'));
+        $('.contentkey').each(obsoleteClassError('contentkey'));
+        $('.contentvalue').each(obsoleteClassError('contentvalue'));
+        $('.searchactive').each(obsoleteClassError('searchactive'));
+        $('.searchpassive').each(obsoleteClassError('searchpassive'));
 
         // check for events
         $("div").each(function(){
@@ -235,15 +236,16 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // send error to output
             if (Events !== null){
-                // clean leading space and equals sing from the RegEx matching
+                // clean leading space and equals sign from the RegEx matching
                 for (Event in Events){
                     if (Events.hasOwnProperty(Event)) {
                         Events[Event] = Events[Event].match(/on\w+/);
                     }
                 }
-                // don't output this error for fred itself
-                if (!$this.closest('.DevelFredContainer').length) {
-                    OutputError(
+                // Don't output this error for fred itself.
+                // We also currently need onclick events in the main menu.
+                if ( !$this.closest('.DevelFredContainer, #Navigation').length ) {
+                    outputError(
                             $this,
                             'BadPracticeEvent',
                             'Event <code>"' + Events + '"</code> used',

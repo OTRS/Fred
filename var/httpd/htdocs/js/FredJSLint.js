@@ -1,5 +1,5 @@
 "use strict";
-/*global JSLINT: false */
+/*global JSLINT: false, $: false, jQuery: false */
 
 var Core = Core || {};
 Core.Fred = Core.Fred || {};
@@ -26,7 +26,7 @@ Core.Fred.JSLint = (function (TargetNS) {
      * @return nothing
      * @description Start JSLint check.
      */
-    function StartJSLint() {
+    function startJSLint() {
         var Result,
             ErrorsFound = false;
 
@@ -40,6 +40,10 @@ Core.Fred.JSLint = (function (TargetNS) {
         $.each(TargetNS.AllScripts, function () {
             var ErrorObject, Output, i;
 
+            // Ignore invalid code that is injected by the google analytics opt-out plugin for browsers.
+            if ( this.Src === 'inline' && this.Script.match(/_gaUserPrefs/) ) {
+                return;
+            }
 
             Result = JSLINT(this.Script, (this.Src === 'inline') ? TargetNS.InlineOptions : TargetNS.RemoteOptions);
             if (!Result) {
@@ -110,7 +114,7 @@ Core.Fred.JSLint = (function (TargetNS) {
     TargetNS.Init = function () {
         // this module needs jQuery!
         if (typeof jQuery === 'undefined' || !jQuery) {
-            alert('Fred JSLint module needs jQuery loaded');
+            window.alert('Fred JSLint module needs jQuery loaded');
             document.getElementById('FredJSLintScripts').style.height = '15px';
         }
         else {
@@ -172,7 +176,7 @@ Core.Fred.JSLint = (function (TargetNS) {
      */
     TargetNS.CheckForStart = function () {
         if (TargetNS.Waiting <= 0 && TargetNS.Started === 0) {
-            StartJSLint();
+            startJSLint();
         }
         else {
             if (TargetNS.Started === 0) {
