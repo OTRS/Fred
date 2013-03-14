@@ -19,6 +19,10 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         return Text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    function escapeSelector (Selector) {
+        return Selector.replace(/(:|\.|\[|\])/g,'\\$1');
+    }
+
     function outputError($Element, ErrorType, ErrorDescription, Hint){
         var $Container,
             Code,
@@ -61,7 +65,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // first look for labels which refer to this element by id
             if ($this.attr('id') && $this.attr('id').length) {
-                $Label = $('label[for=' + $this.attr('id')  + ']');
+                $Label = $('label[for=' + escapeSelector($this.attr('id'))  + ']');
             }
             // then look for labels which surround the current element
             if (!$Label.length) {
