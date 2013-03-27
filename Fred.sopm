@@ -2,9 +2,10 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <CVS>$Id: Fred.sopm,v 1.50 2012-10-25 16:50:55 mab Exp $</CVS>
+    <CVS>$Id: Fred.sopm,v 1.51 2013-03-27 13:34:36 mg Exp $</CVS>
     <Framework>3.1.x</Framework>
     <Framework>3.2.x</Framework>
+    <Framework>3.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
