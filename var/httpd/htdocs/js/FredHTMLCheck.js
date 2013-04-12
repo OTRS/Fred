@@ -228,8 +228,14 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                 Code,
                 Events,
                 Event;
-            // Get element HTML by wrapping it in a div and calling .html() on that
 
+            // Don't output this error for fred itself.
+            // We also currently need onclick events in the main menu.
+            if ( $this.closest('.DevelFredContainer, #Navigation').length ) {
+                return;
+            }
+
+            // Get element HTML by wrapping it in a div and calling .html() on that
             $Container = $('<div></div>');
             $Container.append( $this.clone() );
 
@@ -246,16 +252,12 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                         Events[Event] = Events[Event].match(/on\w+/);
                     }
                 }
-                // Don't output this error for fred itself.
-                // We also currently need onclick events in the main menu.
-                if ( !$this.closest('.DevelFredContainer, #Navigation').length ) {
-                    outputError(
-                            $this,
-                            'BadPracticeEvent',
-                            'Event <code>"' + Events + '"</code> used',
-                            'Please remove it and replace it with a proper substitute.'
-                    );
-                }
+                outputError(
+                    $this,
+                    'BadPracticeEvent',
+                    'Event <code>"' + Events + '"</code> used',
+                    'Please remove it and replace it with a proper substitute.'
+                );
             }
         });
 
