@@ -20,7 +20,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
     }
 
     function escapeSelector (Selector) {
-        return Selector.replace(/(:|\.|\[|\])/g,'\\$1');
+        return Selector.replace(/(#|:|\.|\[|\])/g,'\\$1');
     }
 
     function outputError($Element, ErrorType, ErrorDescription, Hint){
