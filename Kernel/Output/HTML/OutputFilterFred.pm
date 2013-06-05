@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFred.pm,v 1.37 2012-11-06 09:13:26 mab Exp $
+# $Id: OutputFilterFred.pm,v 1.38 2013-06-05 08:13:04 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use URI::Escape;
 use Kernel::System::Fred;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -68,13 +68,12 @@ sub Run {
         return 1;
     }
 
-    # do nothing if output is a attachment
+    # do nothing if output is an attachment download or AJAX request
     if (
         ${ $Param{Data} } =~ /^Content-Disposition: attachment;/mi
         || ${ $Param{Data} } =~ /^Content-Disposition: inline;/mi
         )
     {
-        print STDERR "ATTACHMENT DOWNLOAD\n";
         return 1;
     }
 
@@ -178,6 +177,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2012-11-06 09:13:26 $
+$Revision: 1.38 $ $Date: 2013-06-05 08:13:04 $
 
 =cut
