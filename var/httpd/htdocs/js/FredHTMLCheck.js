@@ -196,7 +196,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                     $this,
                     'BadPracticeObsoleteElement',
                     'Obsolete element <code>&lt;' + this.tagName + '&gt;</code> used',
-                    'Please replace it with: ' + ObsoleteElement2Replacement[this.tagName] + '.'
+                    'Please replace it with: ' + ObsoleteElement2Replacement[this.tagName.toLowerCase()] + '.'
             );
         });
 
@@ -249,7 +249,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                 // clean leading space and equals sign from the RegEx matching
                 for (Event in Events){
                     if (Events.hasOwnProperty(Event)) {
-                        Events[Event] = Events[Event].match(/on\w+/);
+                        Events[Event] = Events[Event].toString().match(/on\w+/);
                     }
                 }
                 outputError(
