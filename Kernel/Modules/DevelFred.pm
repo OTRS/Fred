@@ -1,8 +1,6 @@
 # --
 # Kernel/Modules/DevelFred.pm - a special developer module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: DevelFred.pm,v 1.20 2012-03-23 16:19:09 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,9 +11,6 @@ package Kernel::Modules::DevelFred;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
 
 use Kernel::System::Fred;
 

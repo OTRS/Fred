@@ -1,8 +1,6 @@
 # --
 # Kernel/Output/HTML/LayoutFred.pm - provides generic HTML output for fred
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: LayoutFred.pm,v 1.7 2012-03-23 16:19:09 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +13,6 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
 
 =item CreateFredOutput()
 
@@ -105,9 +102,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.7 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

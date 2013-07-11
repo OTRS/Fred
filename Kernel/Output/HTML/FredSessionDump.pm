@@ -1,8 +1,6 @@
 # --
 # Kernel/Output/HTML/FredSessionDump.pm - layout backend module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: FredSessionDump.pm,v 1.5 2012-03-23 16:19:09 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +13,6 @@ use strict;
 use warnings;
 
 use Data::Dumper;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -122,9 +117,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.5 $ $Date: 2012-03-23 16:19:09 $
 
 =cut

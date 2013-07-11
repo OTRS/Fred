@@ -2,12 +2,13 @@
 # AAAFred.pm - the config to bind STDERR to an log file usable for fred
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
-# $Id: AAAFred.pm,v 1.9 2009-04-06 10:25:25 mh Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+use strict;
+use warnings;
 
 if ( $ENV{HTTP_USER_AGENT} ) {
 

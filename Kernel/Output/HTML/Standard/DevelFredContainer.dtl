@@ -1,8 +1,6 @@
 # --
 # DevelFredContainer.dtl - container for Fred output
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# --
-# $Id: DevelFredContainer.dtl,v 1.1 2010-04-15 22:17:44 mg Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

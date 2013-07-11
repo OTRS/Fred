@@ -1,8 +1,6 @@
 # --
 # DevelFredSetting.dtl - a frontend for a fast fred setting handling
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# --
-# $Id: DevelFredSetting.dtl,v 1.14 2010-11-11 10:38:01 mg Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

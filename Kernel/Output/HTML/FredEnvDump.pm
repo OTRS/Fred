@@ -1,8 +1,6 @@
 # --
 # Kernel/Output/HTML/FredEnvDump.pm - layout backend module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: FredEnvDump.pm,v 1.2 2012-11-20 18:59:32 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,9 +11,6 @@ package Kernel::Output::HTML::FredEnvDump;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
 
 use Data::Dumper;
 
@@ -117,9 +112,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.2 $ $Date: 2012-11-20 18:59:32 $
 
 =cut

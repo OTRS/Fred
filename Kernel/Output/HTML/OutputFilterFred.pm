@@ -1,8 +1,6 @@
 # --
 # Kernel/Output/HTML/OutputFilterFred.pm
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
-# --
-# $Id: OutputFilterFred.pm,v 1.38 2013-06-05 08:13:04 mg Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +14,6 @@ use warnings;
 use URI::Escape;
 
 use Kernel::System::Fred;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -174,9 +169,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.38 $ $Date: 2013-06-05 08:13:04 $
 
 =cut

@@ -1,8 +1,6 @@
 # --
 # Kernel/System/Fred/HTMLCheck.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: HTMLCheck.pm,v 1.12 2012-11-20 19:00:02 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,9 +11,6 @@ package Kernel::System::Fred::HTMLCheck;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -99,9 +94,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.12 $ $Date: 2012-11-20 19:00:02 $
 
 =cut
