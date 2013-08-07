@@ -93,9 +93,9 @@ sub _LoadLayoutBackend {
     return;
 }
 
-=back
-
 1;
+
+=back
 
 =head1 TERMS AND CONDITIONS
 
