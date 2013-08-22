@@ -190,7 +190,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         };
 
         // check for inputs with size attributes
-        $('b, i, font, nobr').each(function(){
+        $('font, nobr').each(function(){
             var $this = $(this);
             outputError(
                     $this,
