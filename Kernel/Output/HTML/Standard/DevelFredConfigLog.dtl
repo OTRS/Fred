@@ -14,7 +14,7 @@
     </h1>
     <div class="DevelFredBoxContent" id="DevelFredConfigLogContent">
         <table>
-            <tr class="contentkey">
+            <tr>
                 <th align="right">Calls</th>
                 <th>Config</th>
                 <th>Status</th>

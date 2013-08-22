@@ -18,7 +18,7 @@
     <div class="DevelFredBoxContent">
         <table id="FredSQLLogTable" width="100%">
             <thead>
-                <tr class="contentkey">
+                <tr>
                     <th class="Time" title="Time (ms)">ms</th>
                     <th class="EqualStatements" title="Equal Statements">Equal</th>
                     <th class="SQLStatement">Statement</th>
@@ -28,7 +28,7 @@
             </thead>
             <tbody>
 <!-- dtl:block:Row -->
-                <tr class="contentkey">
+                <tr>
                     <td class="Time" title="$QData{"Time"} ms">$QData{"Time", "6"}</td>
                     <td class="EqualStatements">$QData{"EqualStatements"}</td>
                     <td class="SQLStatement">$QData{"Statement"}</td>
@@ -52,6 +52,7 @@
 
 <!-- js_on_document_complete -->
 <script>
+'use strict';
 $('a.ShowBindParameters').unbind('click').bind('click', function(Event) {
     $(this).hide().parent().find('div').show();
 });

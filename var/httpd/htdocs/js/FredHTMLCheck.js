@@ -58,7 +58,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         /*
          * check if input elements either have a label or an assigned title text
          */
-        $('input:text, input:password, input:checkbox, input:radio, select, textarea').each(function(){
+        $('input:text:visible, input:password:visible, input:checkbox:visible, input:radio:visible, select:visible, textarea:visible').each(function(){
             var $this = $(this),
                 $Label = $([]),
                 Title;
