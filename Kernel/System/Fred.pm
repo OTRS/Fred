@@ -104,7 +104,7 @@ sub DataGet {
         return;
     }
 
-    for my $ModuleName ( keys %{ $Param{FredModulesRef} } ) {
+    for my $ModuleName ( sort keys %{ $Param{FredModulesRef} } ) {
 
         # load backend
         my $BackendObject = $Self->_LoadBackend( ModuleName => $ModuleName );

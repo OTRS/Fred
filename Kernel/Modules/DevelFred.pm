@@ -212,7 +212,7 @@ sub Run {
         my $UpdateFlag;
         delete $ModuleForRef->{Console};
 
-        for my $Module ( keys %{$ModuleForRef} ) {
+        for my $Module ( sort keys %{$ModuleForRef} ) {
 
             # update the sysconfig settings
             if (
@@ -241,7 +241,7 @@ sub Run {
         }
 
         # deactivate fredmodule todos
-        for my $Module ( keys %{$ModuleForRef} ) {
+        for my $Module ( sort keys %{$ModuleForRef} ) {
             if ( $ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module} ) {
 
                 # Errorhandling should be improved!
@@ -252,7 +252,7 @@ sub Run {
         }
 
         # active fred module todos
-        for my $Module ( keys %{$ModuleForRef} ) {
+        for my $Module ( sort keys %{$ModuleForRef} ) {
             if ( !$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module} ) {
 
                 # Errorhandling should be improved!

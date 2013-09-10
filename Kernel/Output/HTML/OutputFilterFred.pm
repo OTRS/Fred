@@ -98,7 +98,7 @@ sub Run {
     # get data of the activated modules
     my $ModuleForRef   = $Self->{ConfigObject}->Get('Fred::Module');
     my $ModulesDataRef = {};
-    for my $Module ( keys %{$ModuleForRef} ) {
+    for my $Module ( sort keys %{$ModuleForRef} ) {
         if ( $ModuleForRef->{$Module}->{Active} ) {
             $ModulesDataRef->{$Module} = {};
         }
@@ -121,7 +121,7 @@ sub Run {
         $Output .= $ModulesDataRef->{Console}->{Output};
         delete $ModulesDataRef->{Console};
     }
-    for my $Module ( keys %{$ModulesDataRef} ) {
+    for my $Module ( sort keys %{$ModulesDataRef} ) {
         $Output .= $ModulesDataRef->{$Module}->{Output} || '';
     }
 

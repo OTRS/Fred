@@ -89,7 +89,7 @@ sub DataGet {
     }
 
     my @Modules;
-    for my $Module ( keys %{ $Param{FredModulesRef} } ) {
+    for my $Module ( sort keys %{ $Param{FredModulesRef} } ) {
         if ( $Module ne 'Console' ) {
             push @Modules, $Module;
         }
