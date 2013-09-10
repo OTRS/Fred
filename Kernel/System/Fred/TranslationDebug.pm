@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Fred/TranslationDebug.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -8,6 +8,7 @@
 # --
 
 package Kernel::System::Fred::TranslationDebug;
+## no critic(Perl::Critic::Policy::OTRS::ProhibitOpen)
 
 use strict;
 use warnings;
@@ -126,11 +127,11 @@ sub ActivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebug I have to manipulate the Language.pm file
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     for my $Line (@Lines) {
         print $FilehandleII $Line;
         if ( $Line =~ /# warn if the value is not def/ ) {
@@ -167,11 +168,11 @@ sub DeactivateModuleTodos {
 
     # to use TranslationDebugger I have to manipulate the Language.pm file
     # here I undo my manipulation
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     my @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
 
     my %RemoveLine = (
         "# FRED - manipulated\n"                        => 1,
@@ -214,7 +215,7 @@ sub InsertWord {
 
     # save the word in log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
-    open my $Filehandle, '>>', $File or die "Can't write $File !\n";
+    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What} . "\n";
     close $Filehandle;
 

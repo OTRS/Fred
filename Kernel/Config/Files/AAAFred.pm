@@ -10,6 +10,8 @@
 use strict;
 use warnings;
 
+use vars qw($Self);
+
 if ( $ENV{HTTP_USER_AGENT} ) {
 
     # check if the needed path is available
@@ -26,7 +28,7 @@ if ( $ENV{HTTP_USER_AGENT} ) {
     }
 
     # move STDOUT to tmp file
-    if ( !open STDERR, '>>', $File ) {
+    if ( !open STDERR, '>>', $File ) { ## no critic
         print STDERR "ERROR: Can't write $File!";
     }
 }

@@ -8,6 +8,7 @@
 # --
 
 package Kernel::Output::HTML::FredEnvDump;
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 
 use strict;
 use warnings;

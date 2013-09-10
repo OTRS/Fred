@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Fred/NYTProf.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -8,6 +8,8 @@
 # --
 
 package Kernel::System::Fred::NYTProf;
+## no critic(Perl::Critic::Policy::OTRS::ProhibitOpen)
+## nofilter(TidyAll::Plugin::OTRS::Perl::Time)
 
 use strict;
 use warnings;
@@ -143,13 +145,13 @@ sub ActivateModuleTodos {
     }
 
     # read the whole file
-    open my $ReadFH, '<', $File or die "Can't open $File: $!";
+    open my $ReadFH, '<', $File || die "Can't open $File: $!";
     my ( $OldShebang, @Lines ) = <$ReadFH>;
     close $ReadFH;
     chomp $OldShebang;
 
     # add -d:NYTProf to the shebang and overwrite the file
-    open my $WriteFH, '>', $File or die "Can't write $File: $!";
+    open my $WriteFH, '>', $File || die "Can't write $File: $!";
     if ( $OldShebang !~ m/-d:NYTProf/ ) {
         my $Now = localtime();
         print $WriteFH
@@ -192,7 +194,7 @@ sub DeactivateModuleTodos {
     }
 
     # read the index.pl file
-    open my $ReadFH, '<', $File or die "Can't open $File: $!";
+    open my $ReadFH, '<', $File || die "Can't open $File: $!";
     my @Lines = <$ReadFH>;
     close $ReadFH;
 
@@ -205,7 +207,7 @@ sub DeactivateModuleTodos {
     }
 
     # save the index.pl file
-    open my $WriteFH, '>', $File or die "Can't write $File: $!";
+    open my $WriteFH, '>', $File || die "Can't write $File: $!";
     print $WriteFH @Lines;
     close $WriteFH;
     $Self->{LogObject}->Log(

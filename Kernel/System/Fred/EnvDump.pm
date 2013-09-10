@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Fred/EnvDump.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,11 +78,11 @@ sub DataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed_Ref (qw( ModuleRef )) {
-        if ( !$Param{$Needed_Ref} ) {
+    for my $Needed (qw( ModuleRef )) {
+        if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed_Ref!",
+                Message  => "Need $Needed!",
             );
             return;
         }

@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Fred/ConfigLog.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -8,6 +8,7 @@
 # --
 
 package Kernel::System::Fred::ConfigLog;
+## no critic(Perl::Critic::Policy::OTRS::ProhibitOpen)
 
 use strict;
 use warnings;
@@ -109,15 +110,15 @@ sub DataGet {
     }
 
     @LogMessages = ();
-    for my $Line ( keys %IndividualConfig ) {
+    for my $Line ( sort keys %IndividualConfig ) {
         my @SplitedLine = split /;/, $Line;
         push @SplitedLine, $IndividualConfig{$Line};
         push @LogMessages, \@SplitedLine;
     }
 
     # sort the data
-    my $Config_Ref = $Self->{ConfigObject}->Get('Fred::ConfigLog');
-    my $OrderBy = defined( $Config_Ref->{OrderBy} ) ? $Config_Ref->{OrderBy} : 3;
+    my $Config = $Self->{ConfigObject}->Get('Fred::ConfigLog');
+    my $OrderBy = defined( $Config->{OrderBy} ) ? $Config->{OrderBy} : 3;
     if ( $OrderBy == 3 ) {
         @LogMessages = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
     }
@@ -150,11 +151,11 @@ sub ActivateModuleTodos {
     die "Can't manipulate $File because it is a symlink!" if -l $File;
 
     # to use TranslationDebug I have to manipulate the Language.pm file
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     @Lines = <$Filehandle>;
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
     my $SubGet = '';
     for my $Line (@Lines) {
         print $FilehandleII $Line;
@@ -212,13 +213,13 @@ sub DeactivateModuleTodos {
 
     # to use TranslationDebugger I have to manipulate the Language.pm file
     # here I undo my manipulation
-    open my $Filehandle, '<', $File or die "Can't open $File !\n";
+    open my $Filehandle, '<', $File || die "Can't open $File !\n";
     while ( my $Line = <$Filehandle> ) {
         push @Lines, $Line;
     }
     close $Filehandle;
 
-    open my $FilehandleII, '>', $File or die "Can't write $File !\n";
+    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
 
     my %RemoveLine = (
         "# FRED - manipulated\n"                                           => 1,
@@ -262,7 +263,7 @@ sub InsertWord {
 
     # save the word in log file
     my $File = $Param{Home} . '/var/fred/Config.log';
-    open my $Filehandle, '>>', $File or die "Can't write $File !\n";
+    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What} . "\n";
     close $Filehandle;
 

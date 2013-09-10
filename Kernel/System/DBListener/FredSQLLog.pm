@@ -1,6 +1,6 @@
 # --
 # Kernel/System/DBListener/FredSQLLog.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@ sub PostPrepare {
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
 
     # Replace newlines
-    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;
+    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;    ## no critic
 
     # Limit bind param length
     @Array = map { length($_) > 100 ? ( substr( $_, 0, 100 ) . '[...]' ) : $_ } @Array;
@@ -111,7 +111,7 @@ sub PostDo {
     my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
 
     # Replace newlines
-    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;
+    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;    ## no critic
 
     # Limit bind param length
     @Array = map { length($_) > 100 ? ( substr( $_, 0, 100 ) . '[...]' ) : $_ } @Array;
@@ -135,4 +135,3 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-

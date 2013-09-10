@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Fred/SQLLog.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -8,6 +8,7 @@
 # --
 
 package Kernel::System::Fred::SQLLog;
+## no critic(Perl::Critic::Policy::OTRS::ProhibitOpen)
 
 use strict;
 use warnings;
@@ -209,7 +210,7 @@ sub InsertWord {
 
     # apppend the line to log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
-    open my $Filehandle, '>>', $File or die "Can't write $File !\n";
+    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What}, "\n";
     close $Filehandle;
 

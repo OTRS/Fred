@@ -1,6 +1,6 @@
 # --
 # Kernel/Output/HTML/FredConsole.pm - layout backend module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -104,9 +104,11 @@ sub _ModPerl {
     # find out, if modperl is used
     my $ModPerl = 'is not activated';
 
+    ## no critic
     if ( exists $ENV{MOD_PERL} && defined $mod_perl::VERSION ) {
         $ModPerl = $mod_perl::VERSION;
     }
+    ## use critic
 
     return $ModPerl;
 }
