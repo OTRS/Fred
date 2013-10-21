@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
     <ConfigItem Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
-        <Description Lang="en">Subscribe the output filter at the system.</Description>
-        <Description Lang="de">Meldet den OutputFilterFred am System an.</Description>
+        <Description Translatable="1">Subscribe the output filter at the system.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -18,8 +17,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
-        <Description Lang="en">Defines the width of the Fred console in percent.</Description>
-        <Description Lang="de">Definiert die Breite der Fred-Console in prozent.</Description>
+        <Description Translatable="1">Defines the width of the Fred console in percent.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -27,8 +25,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::ConsoleOpacity" Required="0" Valid="1">
-        <Description Lang="en">Defines the opacity of the Fred console, e.g. 0.9 for 10% transparency.</Description>
-        <Description Lang="de">Definiert die Deckkraft der Fred-Console, z. B. 0.9 für 10% Transparenz.</Description>
+        <Description Translatable="1">Defines the opacity of the Fred console, e.g. 0.9 for 10% transparency.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -36,8 +33,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Console" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the fred console.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die Fred-Console nutzen möchte.</Description>
+        <Description Translatable="1">Turn on if you want to use the fred console.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -47,8 +43,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
-        <Description Lang="de">Hier aktivieren, wenn man das Fred-Benchmarktool nutzen möchte (nur für Experten).</Description>
+        <Description Translatable="1">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -58,8 +53,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###NYTProf" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the NYTProf profiling function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man die NYTProf-Profiling Funktion nutzen möchte.</Description>
+        <Description Translatable="1">Turn on if you want to use the NYTProf profiling function.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -69,8 +63,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###SQLLog" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want an realtime SQL statement log function.</Description>
-        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit der SQL-Statement-Logger genutzt werden soll.</Description>
+        <Description Translatable="1">Turn on if you want an realtime SQL statement log function.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -80,8 +73,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want an realtime HTML-checker.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit ein HTML-Checker ausgeführt werden soll. WICHTIG: Das CPAN-Modul HTML::Lint ist hierfür notwendig.</Description>
+        <Description Translatable="1">Turn on if you want an realtime HTML-checker.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -91,8 +83,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###JSLint" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
-        <Description Lang="de">Hier aktivieren, wenn zur Laufzeit ein JavaScript Code Quality Checker ausgeführt werden soll. Funktioniert nur in CVS Head / OTRS 3 mit jQuery.</Description>
+        <Description Translatable="1">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -102,8 +93,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want the translation debugger.</Description>
-        <Description Lang="de">Hier aktivieren wenn zur Laufzeit der Übersetzungsdebugger genutzt werden soll.</Description>
+        <Description Translatable="1">Turn on if you want the translation debugger.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -113,8 +103,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###ConfigLog" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to use the config log mechanism.</Description>
-        <Description Lang="de">Hier aktivieren, wenn man zur Laufzeit Conig-Logmechanismus nutzen will.</Description>
+        <Description Translatable="1">Turn on if you want to use the config log mechanism.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -124,8 +113,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###STDERRLog" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to see the STDERRLog.</Description>
-        <Description Lang="de">Hier aktivieren wenn man zur Laufzeit das STDERRLog sehen will.</Description>
+        <Description Translatable="1">Turn on if you want to see the STDERRLog.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -135,8 +123,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###SessionDump" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to see the data in the serverside session object.</Description>
-        <Description Lang="de">Hier aktivieren um die Sessiondaten auf dem Server zu sehen.</Description>
+        <Description Translatable="1">Turn on if you want to see the data in the serverside session object.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -146,8 +133,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###EnvDump" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to see the data in the environment of the layout object.</Description>
-        <Description Lang="de">Hier aktivieren um die Umgebung im Layoutobject zu sehen.</Description>
+        <Description Translatable="1">Turn on if you want to see the data in the environment of the layout object.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -157,8 +143,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###Cover" Required="0" Valid="1">
-        <Description Lang="en">Turn on if you want to see the code executed for the last request.</Description>
-        <Description Lang="de">Hier aktivieren um den ausgewerteten Quellcode zu sehen.</Description>
+        <Description Translatable="1">Turn on if you want to see the code executed for the last request.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -168,8 +153,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###DevelFred" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the devel fred object in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration des Entwickler-Objekts Fred im Admin-Bereich.</Description>
+        <Description Translatable="1">Frontend module registration for the devel fred object in the admin area.</Description>
         <Group>Fred</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
@@ -205,8 +189,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###ShownLines" Required="0" Valid="1">
-        <Description Lang="en">Here you can insert the number of shown profiling lines.</Description>
-        <Description Lang="de">Hier kann die Anzahl der angezeigten ausgewerteten Zeilen angegeben werden.</Description>
+        <Description Translatable="1">Here you can insert the number of shown profiling lines.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -214,8 +197,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###OrderBy" Required="0" Valid="1">
-        <Description Lang="en">Which order should the profiling data have?</Description>
-        <Description Lang="de">Nach welcher Reihenfolge sollen die Profilingdaten geordnet werden?</Description>
+        <Description Translatable="1">Which order should the profiling data have?</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -228,8 +210,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###Packages" Required="0" Valid="0">
-        <Description Lang="en">Check only the following packages in SmallProf.</Description>
-        <Description Lang="de">Es sollen nur folgende Packages von SmallProf geprüft werden.</Description>
+        <Description Translatable="1">Check only the following packages in SmallProf.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -239,8 +220,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###ShownLines" Required="0" Valid="1">
-        <Description Lang="en">Here you can insert the number of shown profiling functions (max 40).</Description>
-        <Description Lang="de">Hier kann die Anzahl der angezeigten ausgewerteten Funktionen angegeben werden (maximal 40).</Description>
+        <Description Translatable="1">Here you can insert the number of shown profiling functions (max 40).</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -248,8 +228,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###OrderBy" Required="0" Valid="1">
-        <Description Lang="en">Which order should the profiling data have?</Description>
-        <Description Lang="de">Nach welcher Reihenfolge sollen die Profilingdaten geordnet werden?</Description>
+        <Description Translatable="1">Which order should the profiling data have?</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -262,8 +241,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###FunctionTree" Required="0" Valid="1">
-        <Description Lang="en">Show the function tree.</Description>
-        <Description Lang="de">Zeige den Funktionsbaum. Es zeigt die Abfolge und Abhängigkeit in welcher die Funktionen aufgerufen werden.</Description>
+        <Description Translatable="1">Show the function tree.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -274,8 +252,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::DProf###DisabledPackages" Required="0" Valid="0">
-        <Description Lang="en">Don't check the following packages in DProf.</Description>
-        <Description Lang="de">Es sollen folgende Packages von DProf nicht geprüft werden.</Description>
+        <Description Translatable="1">Don't check the following packages in DProf.</Description>
         <Group>Fred</Group>
         <SubGroup>DProf</SubGroup>
         <Setting>
@@ -307,8 +284,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::SmallProf###DisabledFiles" Required="0" Valid="0">
-        <Description Lang="en">Don't check the following perl files or path in SmallProf.</Description>
-        <Description Lang="de">Es sollen folgende Dateien und Pfade in SmallProf nicht geprüft werden.</Description>
+        <Description Translatable="1">Don't check the following perl files or path in SmallProf.</Description>
         <Group>Fred</Group>
         <SubGroup>SmallProf</SubGroup>
         <Setting>
@@ -319,8 +295,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::ConfigLog###OrderBy" Required="0" Valid="1">
-        <Description Lang="en">Which order should the config log data have?</Description>
-        <Description Lang="de">Nach welcher Reihenfolge sollen die Configlogdaten geordnet werden?</Description>
+        <Description Translatable="1">Which order should the config log data have?</Description>
         <Group>Fred</Group>
         <SubGroup>ConfigLog</SubGroup>
         <Setting>
@@ -332,8 +307,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::NYTProf###GenHTMLCmd" Required="1" Valid="1">
-        <Description Lang="en">Command for generating a HTML view.</Description>
-        <Description Lang="de">Kommando zum Erzeugen einer HTML-Ansicht.</Description>
+        <Description Translatable="1">Command for generating a HTML view.</Description>
         <Group>Fred</Group>
         <SubGroup>NYTProf</SubGroup>
         <Setting>
@@ -341,8 +315,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Cover###GenHTMLCmd" Required="1" Valid="1">
-        <Description Lang="en">Command for generating a HTML view.</Description>
-        <Description Lang="de">Kommando zum Erzeugen einer HTML-Ansicht.</Description>
+        <Description Translatable="1">Command for generating a HTML view.</Description>
         <Group>Fred</Group>
         <SubGroup>Cover</SubGroup>
         <Setting>
@@ -350,8 +323,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="DB::DBListener###000-FredSQLLog" Required="1" Valid="1">
-        <Description Lang="en">Command for generating a HTML view.</Description>
-        <Description Lang="de">Kommando zum Erzeugen einer HTML-Ansicht.</Description>
+        <Description Translatable="1">Command for generating a HTML view.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
