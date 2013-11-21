@@ -92,7 +92,8 @@ sub DataGet {
     # open the STDERR.log file to get the STDERR messages
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/STDERR.log';
     my $Filehandle;
-    if ( !open $Filehandle, '<', $File ) {
+
+    if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/ or /Kernel/Config/Files/AAAFred.pm.",
             "Can't read /var/fred/STDERR.log",
