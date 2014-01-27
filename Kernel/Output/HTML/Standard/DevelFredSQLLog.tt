@@ -1,0 +1,60 @@
+# --
+# DevelFredSQLLog.tt - a frontend to show the sql log
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="DevelFredBox" id="DevelFredBoxSQLLog">
+    <h1>
+        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredBoxSQLLog').style.display = this.checked ? 'block' : 'none';"/>
+        Fred-SQL-Log &mdash;
+        Executed <strong>[% Data.AllStatements %]</strong> Statements
+        (<strong>[% Data.SelectStatements | html %]</strong> SELECTs + <strong>[% Data.DoStatements | html %]</strong> DOs)
+        in <strong>[% Data.Time | html %]</strong> s.
+    </h1>
+    <div class="DevelFredBoxContent">
+        <table id="FredSQLLogTable" width="100%">
+            <thead>
+                <tr>
+                    <th class="Time" title="Time (ms)">ms</th>
+                    <th class="EqualStatements" title="Equal Statements">Equal</th>
+                    <th class="SQLStatement">Statement</th>
+                    <th class="BindParameters" title="Bind parameters">Bind</th>
+                    <th class="StackTrace">Package</th>
+                </tr>
+            </thead>
+            <tbody>
+[% RenderBlockStart("Row") %]
+                <tr>
+                    <td class="Time" title="[% Data.Time | html %] ms">[% Data.Time | truncate(6) | html %]</td>
+                    <td class="EqualStatements">[% Data.EqualStatements | html %]</td>
+                    <td class="SQLStatement">[% Data.Statement | html %]</td>
+                    <td class="BindParameters">
+[% RenderBlockStart("RowBindParameters") %]
+                        <a class="ShowBindParameters" title="[% Data.BindParameters | html %]">Show</a>
+                        <div>[% Data.BindParameters | html %]</div>
+[% RenderBlockEnd("RowBindParameters") %]
+                    </td>
+                    <td class="StackTrace">
+[% RenderBlockStart("StackTrace") %]
+                        [% Data.StackTrace | html %]<br/>
+[% RenderBlockEnd("StackTrace") %]
+                    </td>
+                </tr>
+            </tbody>
+[% RenderBlockEnd("Row") %]
+        </table>
+    </div>
+</div>
+
+<!-- js_on_document_complete -->
+<script>
+'use strict';
+$('a.ShowBindParameters').unbind('click').bind('click', function(Event) {
+    $(this).hide().parent().find('div').show();
+});
+</script>
+<!-- js_on_document_complete -->

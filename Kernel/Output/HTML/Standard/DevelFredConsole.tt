@@ -1,5 +1,5 @@
 # --
-# DevelFredConsole.dtl - a html console for a better fred handling
+# DevelFredConsole.tt - a html console for a better fred handling
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -11,14 +11,14 @@
     <h1 style="position: relative;">
         <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredContainer').style.display = 'none';" />
         Fred-Console
-        <span style="position: absolute; top 0px; right: 5px;">mod_perl $QData{"ModPerl"} Perl $QData{"Perl"}</span>
+        <span style="position: absolute; top 0px; right: 5px;">mod_perl [% Data.ModPerl | html %] Perl [% Data.Perl | html %]</span>
     </h1>
     <div class="DevelFredBoxContent" style="position: relative;">
-        $Data{"Text"}
+        [% Data.Text %]
         <span style="position: absolute; top 0px; right: 5px;">
-<!-- dtl:block:Setting -->
-            <a href="$Env{"Baselink"}Action=DevelFred;Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onclick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">settings</a>
-<!-- dtl:block:Setting -->
+[% RenderBlockStart("Setting") %]
+            <a href="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onclick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">settings</a>
+[% RenderBlockEnd("Setting") %]
         </span>
     </div>
 </div>

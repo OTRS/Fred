@@ -1,0 +1,31 @@
+# --
+# DevelFredSetting.tt - a frontend for a fast fred setting handling
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="DevelFredSetting">
+    <h1>Fred-Setting</h1>
+    <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="DevelFredSetting">
+        <input type="hidden" name="Action" value="DevelFred"/>
+        <input type="hidden" name="Subaction" value="SettingAction"/>
+        <ul>
+[% RenderBlockStart("FredModule") %]
+            <li>
+                <input type="checkbox" name="FredModule" id="[% Data.FredModule | html %]" value="[% Data.FredModule | html %]" [% Data.Checked %]/>
+                <label for="[% Data.FredModule | html %]">[% Data.FredModule | html %]</label>
+[% RenderBlockStart("Config") %]
+                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Setting" onclick="window.resizeTo(900,500)">([% Translate("Config") | html %])</a>
+[% RenderBlockEnd("Config") %]
+            </li>
+[% RenderBlockEnd("FredModule") %]
+        </ul>
+        <p>
+            [% Translate("Attention: You can't use Devel::NYTProf and Devel::Cover at the same time!") | html %]
+        </p>
+        <button type="submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+    </form>
+</div>
