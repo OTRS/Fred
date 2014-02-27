@@ -16,7 +16,18 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
+    <ConfigItem Name="Loader::Agent::CommonJS###000-Fred" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>thirdparty/jslint/jslint.js</Item>
+                <Item>Core.Fred.JSLint.js</Item>
+                <Item>Core.Fred.HTMLCheck.js</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>    <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
         <Description Translatable="1">Defines the width of the Fred console in percent.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
