@@ -23,9 +23,6 @@
             </li>
 [% RenderBlockEnd("FredModule") %]
         </ul>
-        <p>
-            [% Translate("Attention: You can't use Devel::NYTProf and Devel::Cover at the same time!") | html %]
-        </p>
         <button type="submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
     </form>
 </div>
