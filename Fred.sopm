@@ -58,17 +58,6 @@
         <br/>
         Welcome! <br/>
         <br/>
-        First of all you should install the necessary perl modules <br/>
-        <ul>
-            <li> Devel::Cover </li>
-            <li> Devel::NYTProf </li>
-        </ul>
-        If you want to use the HTMLValidate module of Fred, you also need to install the following program <br/>
-        <ul>
-        <li> validator (available from http://www.htmlhelp.com/tools/validator/offline/, Linux distributions may have it as package wdg-html-validator) </li>
-        </ul>
-        <br/>
-        <br/>
         What can Fred do?<br/>
         <br/>
         To date, Fred has the following features: <br/>
@@ -87,12 +76,8 @@
                     lists all ConfigGet requests, indicating their frequency </li>
         <li> SessionDump: <br/>
                     show the current content of the serverside session </li>
-        <li> NYTProf: <br/>
-                    a profiling tool which suits all needs </li>
         <li> EnvDump: <br/>
                     show info about the environment of the layout object </li>
-        <li> Cover: <br/>
-                    show the executed code </li>
         </ul>
         <br/>
         *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>

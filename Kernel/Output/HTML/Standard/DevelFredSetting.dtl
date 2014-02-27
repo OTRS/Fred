@@ -23,9 +23,6 @@
             </li>
 <!-- dtl:block:FredModule -->
         </ul>
-        <p>
-            $Text{"Attention: You can't use Devel::NYTProf and Devel::Cover at the same time!"}
-        </p>
         <button type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
     </form>
 </div>
