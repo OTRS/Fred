@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 use Kernel::System::Fred;
+use Kernel::System::SysConfig;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,17 +38,7 @@ sub new {
         $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
     }
 
-    # With framework version 2.5 or higher Kernel::System::Config
-    # is renamed to Kernel::System::SysConfig
-    my $FrameworkVersion = $Param{ConfigObject}->Get('Version');
-    if ( $FrameworkVersion =~ /^2\.(0|1|2|3|4)\./ ) {
-        $Param{MainObject}->Require('Kernel::System::Config');
-        $Self->{ConfigToolObject} = Kernel::System::Config->new( %{$Self} );
-    }
-    else {
-        $Param{MainObject}->Require('Kernel::System::SysConfig');
-        $Self->{ConfigToolObject} = Kernel::System::SysConfig->new( %{$Self} );
-    }
+    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
 
     $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
     $Self->{Subaction} = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
@@ -221,13 +212,11 @@ sub Run {
                 !$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}
                 )
             {
-                $Self->{ConfigToolObject}->ConfigItemUpdate(
+                $Self->{SysConfigObject}->ConfigItemUpdate(
                     Valid => 1,
                     Key   => "Fred::Module###$Module",
                     Value => {
                         'Active' => $SelectedModules{$Module} || 0,
-
-                        #                        'Module' => $ModuleForRef->{$Module}->{Module}
                     },
                 );
                 $UpdateFlag = 1;
@@ -237,7 +226,7 @@ sub Run {
         # this function is neseccary to finish the sysconfig update
         my $Version = $Self->{ConfigObject}->Get('Version');
         if ( $UpdateFlag && $Version =~ m{ ^2\.[012]\. }msx ) {
-            $Self->{ConfigToolObject}->ConfigItemUpdateFinish();
+            $Self->{SysConfigObject}->ConfigItemUpdateFinish();
         }
 
         # deactivate fredmodule todos
