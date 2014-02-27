@@ -12,19 +12,13 @@
         <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredHTMLCheckResults').style.display = this.checked ? 'block' : 'none';"/>
         Fred HTMLCheck Results
     </h1>
-[% RenderBlockStart("HTMLCheckNotAllowed") %]
-    <p>HTMLCHeck check is only possible in OTRS version 3.0 or higher (with jQuery support)...</p>
-[% RenderBlockEnd("HTMLCheckNotAllowed") %]
-
-[% RenderBlockStart("HTMLCheckAllowed") %]
-    <script src="[% Config("Frontend::JavaScriptPath") %]FredHTMLCheck.js" type="text/javascript"></script>
     <script type="text/javascript">
         "use strict";
-        Core.Fred.HTMLCheck.CheckForStart();
+        Core.App.Ready(function(){
+            Core.Fred.HTMLCheck.CheckForStart();
+        });
     </script>
     <div style="padding:5px;" id="FredHTMLCheckResults" class="DevelFredBoxContent">
         <div id="FredHTMLCheckRunning">Checks are running...</div>
     </div>
-[% RenderBlockEnd("HTMLCheckAllowed") %]
-
 </div>

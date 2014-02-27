@@ -75,20 +75,6 @@ sub CreateFredOutput {
         return;
     }
 
-    my $FrameworkVersion = $Self->{ConfigObject}->Get('Version');
-    if ( $FrameworkVersion =~ /^2\.(0|1|2|3|4)\./ ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'HTMLCheckNotAllowed',
-            Data => {},
-        );
-    }
-    else {
-        $Self->{LayoutObject}->Block(
-            Name => 'HTMLCheckAllowed',
-            Data => {},
-        );
-    }
-
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredHTMLCheck',
         Data         => {

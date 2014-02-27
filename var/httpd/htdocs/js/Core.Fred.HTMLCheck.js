@@ -1,5 +1,5 @@
 // --
-// FredHTMLCheck.js - various HTML checks
+// Core.Fred.HTMLCheck.js - various HTML checks
 // Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
