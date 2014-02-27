@@ -62,16 +62,8 @@
         <para>show the current content of the serverside session </para>
     </sect1>
     <sect1>
-        <title>NYTProf</title>
-        <para>a profiling tool which suits all needs </para>
-    </sect1>
-    <sect1>
         <title>EnvDump</title>
         <para>show info about the environment of the layout object </para>
-    </sect1>
-    <sect1>
-        <title>Cover</title>
-        <para>show the executed code </para>
     </sect1>
 </chapter>
 
@@ -108,14 +100,6 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
     <sect1>
         <title>Fred::ConfigLog###OrderBy</title>
         <para>Which order should the config log data have?</para>
-    </sect1>
-    <sect1>
-        <title>Fred::NYTProf###GenHTMLCmd</title>
-        <para>Command for generating a HTML view.</para>
-    </sect1>
-    <sect1>
-        <title>Fred::Cover###GenHTMLCmd</title>
-        <para>Command for generating a HTML view.</para>
     </sect1>
 </chapter>
 
