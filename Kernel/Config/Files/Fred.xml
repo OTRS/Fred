@@ -42,26 +42,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::Module###Benchmark" Required="0" Valid="1">
-        <Description Translatable="1">Turn on if you want to use the fred benchmark tool (only for experts!).</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::Module###NYTProf" Required="0" Valid="1">
-        <Description Translatable="1">Turn on if you want to use the NYTProf profiling function.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Fred::Module###SQLLog" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want an realtime SQL statement log function.</Description>
         <Group>Fred</Group>
@@ -142,16 +122,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::Module###Cover" Required="0" Valid="1">
-        <Description Translatable="1">Turn on if you want to see the code executed for the last request.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Active">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Frontend::Module###DevelFred" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the devel fred object in the admin area.</Description>
         <Group>Fred</Group>
@@ -188,112 +158,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::SmallProf###ShownLines" Required="0" Valid="1">
-        <Description Translatable="1">Here you can insert the number of shown profiling lines.</Description>
-        <Group>Fred</Group>
-        <SubGroup>SmallProf</SubGroup>
-        <Setting>
-            <String Regex="">15</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::SmallProf###OrderBy" Required="0" Valid="1">
-        <Description Translatable="1">Which order should the profiling data have?</Description>
-        <Group>Fred</Group>
-        <SubGroup>SmallProf</SubGroup>
-        <Setting>
-            <Option SelectedID="4">
-                <Item Key="1">Line</Item>
-                <Item Key="2">Calls</Item>
-                <Item Key="3">Time executing</Item>
-                <Item Key="4">Time expended</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::SmallProf###Packages" Required="0" Valid="0">
-        <Description Translatable="1">Check only the following packages in SmallProf.</Description>
-        <Group>Fred</Group>
-        <SubGroup>SmallProf</SubGroup>
-        <Setting>
-            <Array>
-                <Item>Kernel::Output::HTML::Layout</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::DProf###ShownLines" Required="0" Valid="1">
-        <Description Translatable="1">Here you can insert the number of shown profiling functions (max 40).</Description>
-        <Group>Fred</Group>
-        <SubGroup>DProf</SubGroup>
-        <Setting>
-            <String Regex="">15</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::DProf###OrderBy" Required="0" Valid="1">
-        <Description Translatable="1">Which order should the profiling data have?</Description>
-        <Group>Fred</Group>
-        <SubGroup>DProf</SubGroup>
-        <Setting>
-            <Option SelectedID="ExTime">
-                <Item Key="Name">Name</Item>
-                <Item Key="Calls">Calls</Item>
-                <Item Key="ExTime">ExclTime</Item>
-                <Item Key="CuTime">CumulSTime</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::DProf###FunctionTree" Required="0" Valid="1">
-        <Description Translatable="1">Show the function tree.</Description>
-        <Group>Fred</Group>
-        <SubGroup>DProf</SubGroup>
-        <Setting>
-            <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::DProf###DisabledPackages" Required="0" Valid="0">
-        <Description Translatable="1">Don't check the following packages in DProf.</Description>
-        <Group>Fred</Group>
-        <SubGroup>DProf</SubGroup>
-        <Setting>
-            <Array>
-                <Item>MIME::Entity</Item>
-                <Item>utf8</Item>
-                <Item>CGI</Item>
-                <Item>AutoLoader</Item>
-                <Item>Encode</Item>
-                <Item>DynaLoader</Item>
-                <Item>Mail::Internet</Item>
-                <Item>warnings</Item>
-                <Item>Date::Format::Generic</Item>
-                <Item>DBI</Item>
-                <Item>Data::Dumper</Item>
-                <Item>MIME::Head</Item>
-                <Item>MIME::Tools</Item>
-                <Item>DBD::mysql::db</Item>
-                <Item>Mail::Field::AddrList</Item>
-                <Item>File::Glob</Item>
-                <Item>Time::Local</Item>
-                <Item>Mail::Field::Date</Item>
-                <Item>FindBin</Item>
-                <Item>MIME::Parser</Item>
-                <Item>Exporter</Item>
-                <Item>strict</Item>
-                <Item>Mail::Field</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::SmallProf###DisabledFiles" Required="0" Valid="0">
-        <Description Translatable="1">Don't check the following perl files or path in SmallProf.</Description>
-        <Group>Fred</Group>
-        <SubGroup>SmallProf</SubGroup>
-        <Setting>
-            <Array>
-                <Item>/usr/lib/perl5</Item>
-                <Item>../..//Kernel/System/Fred/</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Fred::ConfigLog###OrderBy" Required="0" Valid="1">
         <Description Translatable="1">Which order should the config log data have?</Description>
         <Group>Fred</Group>
@@ -304,22 +168,6 @@
                 <Item Key="0">Config</Item>
                 <Item Key="2">Package</Item>
             </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::NYTProf###GenHTMLCmd" Required="1" Valid="1">
-        <Description Translatable="1">Command for generating a HTML view.</Description>
-        <Group>Fred</Group>
-        <SubGroup>NYTProf</SubGroup>
-        <Setting>
-            <String Regex="">nytprofhtml</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Fred::Cover###GenHTMLCmd" Required="1" Valid="1">
-        <Description Translatable="1">Command for generating a HTML view.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Cover</SubGroup>
-        <Setting>
-            <String Regex="">cover</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="DB::DBListener###000-FredSQLLog" Required="1" Valid="1">

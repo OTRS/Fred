@@ -15,14 +15,11 @@
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"/>
         <File Permission="644" Location="Kernel/Modules/DevelFred.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredBenchmark.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredCover.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredEnvDump.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredJSLint.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredNYTProf.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSessionDump.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSQLLog.pm"/>
@@ -30,16 +27,13 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterPostShowSystemNameInHeader.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredBenchmark.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredContainer.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCover.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredEnvDump.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredHTMLCheck.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredJSLint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredNYTProf.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSessionDump.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSetting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSQLLog.dtl"/>
@@ -47,14 +41,11 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.dtl"/>
         <File Permission="644" Location="Kernel/System/DBListener/FredSQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/Benchmark.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/Cover.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/EnvDump.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/JSLint.pm"/>
-        <File Permission="644" Location="Kernel/System/Fred/NYTProf.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/SessionDump.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/SQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
