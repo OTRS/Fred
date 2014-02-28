@@ -9,18 +9,31 @@
 
 <div class="DevelFredBox">
     <h1>
-        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredConfigLogContent').style.display = this.checked ? 'block' : 'none';"/>
-        Fred-Config-Log
+        Configuration Log
+        <span class="FredToolBar">
+            <i class="icon-search FredSearch" title="Toggle Search Bar"></i>
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </span>
     </h1>
     <div class="DevelFredBoxContent" id="DevelFredConfigLogContent">
-        <table>
-            <tr>
-                <th align="right">Calls</th>
-                <th>Config</th>
-                <th>Status</th>
-                <th>Package</th>
-            </tr>
+        <div class="FredQuickSearch">
+            <input type="text" placeholder="Search for..." />
+            <i class="icon-remove"></i>
+        </div>
+        <table class="FredTableDefault">
+            <thead>
+                <tr>
+                    <th>Calls</th>
+                    <th>Config</th>
+                    <th>Status</th>
+                    <th>Package</th>
+                </tr>
+            </thead>
 [% Data.HTMLLines %]
+            <tr class="Hidden FilterMessage">
+                <td colspan="4">No Items found.</td>
+            </tr>
         </table>
     </div>
 </div>

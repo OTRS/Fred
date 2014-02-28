@@ -16,7 +16,6 @@
     top: 33px;
     right: 16px;
     z-index: 5000;
-    overflow-y: auto;
 }
 
 .DevelFredContainer:hover {
@@ -26,14 +25,56 @@
 }
 
 .DevelFredBox {
-    border: 1px solid black;
-    background-color: white;
+    -webkit-box-shadow: 1px 1px 3px #777;
+    -moz-box-shadow: 1px 1px 3px #777;
+    -ms-box-shadow: 1px 1px 3px #777;
+    -o-box-shadow: 1px 1px 3px #777;
+    box-shadow: 1px 1px 3px #777;
+    background-color: #fff;
     margin-bottom: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .DevelFredBoxContent {
-    max-height: 300px;
+    max-height: 150px;
     overflow-y: auto;
+    border: 1px solid #999;
+}
+
+.DevelFredBoxContent .FredQuickSearch {
+    display: none;
+    background-color: #ccc;
+    padding: 5px;
+    -webkit-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -moz-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -ms-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    -o-box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    box-shadow: inset 1px 1px 3px #777, inset -1px -1px 3px #777;
+    position: relative;
+}
+
+.DevelFredBoxContent .FredQuickSearch input {
+    display: block;
+    width: 98%;
+    border: 1px solid #aaa;
+    font-size: 11px;
+}
+
+.DevelFredBoxContent .FredQuickSearch i {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    font-size: 12px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.DevelFredBoxContent .FredQuickSearch:hover i {
+    color: #333;
 }
 
 .DevelFredBox * {
@@ -47,16 +88,32 @@
 
 .DevelFredBox h1 {
     font-size: 12px;
-    background-color: #ba0f0f;
-    color: white;
-    margin: 0;
-    padding: 2px;
+    background: #255565;
+    color: #fff;
+    margin: 0px;
+    padding: 6px 7px;
     cursor: move;
+    overflow: hidden;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-top-left-radius: 4px;
+    -ms-border-top-left-radius: 4px;
+    -o-border-top-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-top-right-radius: 4px;
+    -ms-border-top-right-radius: 4px;
+    -o-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
-.DevelFredBox div,
-.DevelFredBox table {
-    padding: 2px;
+.DevelFredBox h1 .FredToolBar {
+    float: right;
+}
+
+.DevelFredBox h1 .FredToolBar i {
+    font-size: 13px;
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 .DevelFredBox pre {
@@ -91,21 +148,56 @@ body #FredJSLintScripts pre {
 
 }
 
-.DevelFredSetting {
-    margin: 10px;
+.DevelFredSettings {
+    padding: 15px;
 }
 
-.DevelFredSetting h1 {
-    font-size: 12px;
-    background-color: #ba0f0f;
-    color: white;
-    margin: 0 0 10px 0;
-    padding: 2px;
-    cursor: move !important;
+.DevelFredSettings h1 {
+    font-size: 14px;
+    margin: 0px 0px 10px 0px;
+    text-align: center;
 }
 
-.DevelFredSetting p {
-    padding: 10px 0;
+.DevelFredSettings ul {
+    margin-bottom: 10px;
+}
+
+.DevelFredSettings .CallForAction {
+    margin: 0px auto;
+    display: block;
+}
+
+.DevelFredSettings li {
+    margin-bottom: 2px;
+    font-size: 11px;
+    position: relative;
+}
+
+.DevelFredSettings li span {
+    color: #777777;
+    display: block;
+    font-size: 10px;
+    padding-left: 23px;
+    margin-bottom: 3px;
+    line-height: 130%;
+}
+
+.DevelFredSettings li label {
+    display: block;
+    padding: 3px 20px 3px 5px;
+    background-color: #eee;
+}
+
+.DevelFredSettings li:hover label {
+    background-color: #ddd;
+}
+
+.DevelFredSettings li a {
+    color: #000;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    font-size: 13px;
 }
 
 div#DevelFredBoxSQLLog div.DevelFredBoxContent
@@ -146,5 +238,53 @@ table#FredSQLLogTable td.BindParameters div
     max-width: 300px;
     overflow-x: auto;
     display: none;
+}
+
+table.FredTableDefault {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.FredTableDefault th {
+    font-weight: bold;
+}
+
+table.FredTableDefault td,
+table.FredTableDefault th {
+    padding: 5px 5px;
+    border-bottom: 1px solid #ccc;
+    font-size: 11px;
+    border-right: 1px solid #ddd;
+}
+
+table.FredTableDefault th {
+    background-color: #ddd;
+    border-right-color: #aaa;
+}
+
+table.FredTableDefault tr:nth-child(odd) td {
+    background-color: #eee;
+}
+
+table.FredTableDefault tr:last-child td {
+    border-bottom: 0px;
+}
+
+.DevelFredBox .FredElementList {
+    padding: 5px 3px 3px 5px;
+}
+
+.FredElementList span {
+    font-size: 11px;
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    margin: 0px 3px 3px 0px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
 }
 </style>

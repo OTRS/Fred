@@ -23,6 +23,7 @@
         <Setting>
             <Array>
                 <Item>thirdparty/jslint/jslint.js</Item>
+                <Item>Core.Fred.js</Item>
                 <Item>Core.Fred.JSLint.js</Item>
                 <Item>Core.Fred.HTMLCheck.js</Item>
             </Array>
@@ -90,6 +91,9 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">
+                    Shows a list of untranslated strings. Please note that strings from framework and custom modules will be shown.
+                </Item>
             </Hash>
         </Setting>
     </ConfigItem>

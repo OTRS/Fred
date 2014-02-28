@@ -7,22 +7,27 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="DevelFredSetting">
-    <h1>Fred-Setting</h1>
+<div class="DevelFredSettings">
+    <h1>Fred Settings</h1>
     <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="DevelFredSetting">
-        <input type="hidden" name="Action" value="DevelFred"/>
-        <input type="hidden" name="Subaction" value="SettingAction"/>
-        <ul>
+        <input type="hidden" name="Action" value="DevelFred" />
+        <input type="hidden" name="Subaction" value="SettingAction" />
+        <ul class="FredSettings">
 [% RenderBlockStart("FredModule") %]
             <li>
-                <input type="checkbox" name="FredModule" id="[% Data.FredModule | html %]" value="[% Data.FredModule | html %]" [% Data.Checked %]/>
-                <label for="[% Data.FredModule | html %]">[% Data.FredModule | html %]</label>
+                <label for="[% Data.FredModule | html %]">
+                    <input type="checkbox" name="FredModule" id="[% Data.FredModule | html %]" value="[% Data.FredModule | html %]" [% Data.Checked %]/>
+                    [% Data.FredModule | html %]
+                    <span>
+                        [% Data.Description %]
+                    </span>
+                </label>
 [% RenderBlockStart("Config") %]
-                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Setting" onclick="window.resizeTo(900,500)">([% Translate("Config") | html %])</a>
+                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Settings" target="_top"><i class="icon-gear"></i></a>
 [% RenderBlockEnd("Config") %]
             </li>
 [% RenderBlockEnd("FredModule") %]
         </ul>
-        <button type="submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+        <button type="submit" class="CallForAction" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
     </form>
 </div>

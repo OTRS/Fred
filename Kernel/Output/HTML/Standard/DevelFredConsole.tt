@@ -9,17 +9,18 @@
 
 <div class="DevelFredBox">
     <h1 style="position: relative;">
-        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredContainer').style.display = 'none';" />
-        Fred-Console
-        <span style="position: absolute; top 0px; right: 5px;">mod_perl [% Data.ModPerl | html %] Perl [% Data.Perl | html %]</span>
-    </h1>
-    <div class="DevelFredBoxContent" style="position: relative;">
-        [% Data.Text %]
-        <span style="position: absolute; top 0px; right: 5px;">
+        Fred
+        <div class="FredToolBar">
 [% RenderBlockStart("Setting") %]
-            <a href="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting" onmouseover="window.status='Setting'; return true;" onmouseout="window.status='';" onclick="window.open('', 'setting', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=500,height=440,left=300,top=250');" target="setting">settings</a>
+            <i class="icon-gear FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
 [% RenderBlockEnd("Setting") %]
-        </span>
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </div>
+    </h1>
+    <div class="DevelFredBoxContent FredElementList">
+        <span>mod_perl [% Data.ModPerl | html %]</span>
+        <span>Perl [% Data.Perl | html %]</span>
     </div>
 </div>
 
