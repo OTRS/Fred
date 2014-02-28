@@ -63,6 +63,21 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             return $Result;
         };
     }
+
+    # Override Kernel::Language::Translate() method to intercept missing translations
+    if ( Kernel::Language->can('Translate') && !Kernel::Language->can('TranslateOriginal') ) {
+        *Kernel::Language::TranslateOriginal = \&Kernel::Language::Translate;
+        *Kernel::Language::Translate = sub {
+            my ( $Self, $Text, @Parameters ) = @_;
+
+            if ($Text && !$Self->{Translation}->{$Text}) {
+                $Self->{TranslationDebugObject} //= Kernel::System::Fred::TranslationDebug->new(%{$Self});
+                $Self->{TranslationDebugObject}->InsertWord(What => $Text);
+            }
+
+            return $Self->TranslateOriginal($Text, @Parameters);
+        };
+    }
 }
 
 1;
