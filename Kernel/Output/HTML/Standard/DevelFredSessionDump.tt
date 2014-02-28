@@ -7,6 +7,37 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="DevelFredBox">
-    <h1><input type="checkbox" title="Toggle this widget" onclick="document.getElementById('FredSessionDumpPre').style.display = this.checked ? 'block' : 'none';"/>Fred-SessionDump</h1>
-    <pre id="FredSessionDumpPre" style="display: none">[% Data.Dump | html %]</pre>
+    <h1>
+        SessionDump
+        <span class="FredToolBar">
+            <i class="icon-search FredSearch" title="Search"></i>
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </span>
+    </h1>
+    <div class="DevelFredBoxContent">
+        <div class="FredQuickSearch">
+            <input type="text" placeholder="Search for..." />
+            <i class="icon-remove"></i>
+        </div>
+        <table class="FredTableDefault">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+[% RenderBlockStart("SessionDataRow") %]
+            <tr>
+                <td>[% Data.Key | html %]</td>
+                <td>
+                    <pre>[% Data.Value | html %]</pre>
+                </td>
+            </tr>
+[% RenderBlockEnd("SessionDataRow") %]
+            <tr class="Hidden FilterMessage">
+                <td colspan="2">No Items found.</td>
+            </tr>
+        </table>
+    </div>
 </div>

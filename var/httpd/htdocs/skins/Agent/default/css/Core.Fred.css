@@ -1,22 +1,21 @@
-# --
-# DevelFredCommonCSS.tt - common CSS for Fred modules
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
-# --
-# This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
-# --
-<style type="text/css">
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Fred CSS
+ */
+
 .DevelFredContainer {
     position: fixed;
-    width: [% Config("Fred::ConsoleWidth") %];
-    -moz-opacity: [% Config("Fred::ConsoleOpacity") %];
-    -webkit-opacity: [% Config("Fred::ConsoleOpacity") %];
-    opacity: [% Config("Fred::ConsoleOpacity") %];
     top: 33px;
     right: 16px;
     z-index: 5000;
 }
+
 
 .DevelFredContainer:hover {
     -webkit-opacity: 1.0;
@@ -32,11 +31,6 @@
     box-shadow: 1px 1px 3px #777;
     background-color: #fff;
     margin-bottom: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    border-radius: 5px;
 }
 
 .DevelFredBoxContent {
@@ -77,10 +71,6 @@
     color: #333;
 }
 
-.DevelFredBox * {
-    font-size: 12px;
-}
-
 .DevelFredBox .strong,
 .DevelFredBox .strong * {
     font-weight: bold;
@@ -94,16 +84,6 @@
     padding: 6px 7px;
     cursor: move;
     overflow: hidden;
-    -webkit-border-top-left-radius: 4px;
-    -moz-border-top-left-radius: 4px;
-    -ms-border-top-left-radius: 4px;
-    -o-border-top-left-radius: 4px;
-    border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -moz-border-top-right-radius: 4px;
-    -ms-border-top-right-radius: 4px;
-    -o-border-top-right-radius: 4px;
-    border-top-right-radius: 4px;
 }
 
 .DevelFredBox h1 .FredToolBar {
@@ -114,38 +94,26 @@
     font-size: 13px;
     margin-left: 5px;
     cursor: pointer;
+    font-weight: normal;
 }
 
-.DevelFredBox pre {
-    margin: 0;
-    padding: 0;
-    font-size: 11px;
-}
-
-.DevelFredBox small,
-.DevelFredBox small * {
-    font-size: 11px;
-}
-
-body #FredJSLintScripts {
-    max-height: 300px;
-    overflow: auto;
+#FredJSLintScripts {
+    padding: 5px;
 }
 
 .FredJSLintSuccessfull {
     color: green;
-    font-weight: bold;
 }
 
 .FredJSLintError {
     margin-bottom: 6px;
+    font-size: 11px;
 }
 
 body #FredJSLintScripts p ,
 body #FredJSLintScripts pre {
-    margin:0;
-    padding:0;
-
+    margin: 0px;
+    padding: 0px;
 }
 
 .DevelFredSettings {
@@ -200,46 +168,6 @@ body #FredJSLintScripts pre {
     font-size: 13px;
 }
 
-div#DevelFredBoxSQLLog div.DevelFredBoxContent
-{
-    padding: 0;
-}
-
-table#FredSQLLogTable th,
-table#FredSQLLogTable td
-{
-    border: 1px solid #CCC;
-    padding: 5px;
-}
-
-table#FredSQLLogTable td,
-table#FredSQLLogTable td *
-{
-    font-family: "Courier New", monospace;
-}
-
-table#FredSQLLogTable th
-{
-    font-weight: bold;
-}
-
-table#FredSQLLogTable td.SQLStatement
-{
-    width: 400px;
-}
-
-table#FredSQLLogTable td.EqualStatements
-{
-    font-weight: bold;
-}
-
-table#FredSQLLogTable td.BindParameters div
-{
-    max-width: 300px;
-    overflow-x: auto;
-    display: none;
-}
-
 table.FredTableDefault {
     width: 100%;
     border-collapse: collapse;
@@ -287,4 +215,11 @@ table.FredTableDefault tr:last-child td {
     -o-border-radius: 3px;
     border-radius: 3px;
 }
-</style>
+
+.FredMonoSpace {
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 130%;
+    padding: 10px;
+    white-space: pre-line;
+}

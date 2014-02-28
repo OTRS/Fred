@@ -53,13 +53,6 @@ sub Run {
 
     # do not show the debug bar in Fred's setting window
     if ( $Self->{LayoutObject}->{Action} && $Self->{LayoutObject}->{Action} eq 'DevelFred' ) {
-
-        # Inject CSS into <head></head> for valid HTML
-        my $CSSOutput = $Self->{LayoutObject}->Output(
-            TemplateFile => 'DevelFredCommonCSS',
-        );
-        ${ $Param{Data} } =~ s{</head>}{$CSSOutput\n\t</head>}smx;
-
         return 1;
     }
 
@@ -146,12 +139,6 @@ sub Run {
 
     # Inject JS at the end of the body
     ${ $Param{Data} } =~ s{</body>}{$JSOutput\n\t</body>}smx;
-
-    # Inject CSS into <head></head> for valid HTML
-    my $CSSOutput = $Self->{LayoutObject}->Output(
-        TemplateFile => 'DevelFredCommonCSS',
-    );
-    ${ $Param{Data} } =~ s{</head>}{$CSSOutput\n\t</head>}smx;
 
     return 1;
 }

@@ -76,25 +76,20 @@ sub CreateFredOutput {
 
     # Kernel::System::Fred::EnvDump::DataGet() is not used,
     # as the data of interest is not easily available there.
+    for my $Key ( sort keys %{ $Self->{LayoutObject}->{EnvRef} } ) {
 
-    # create a string representation of the data of interest
-    my $Dumper = Data::Dumper->new(
-        [ $Self->{LayoutObject}->{EnvRef} ],
-        [qw(EnvRef)],
-    );
-
-    # impose string representation in double quoted style
-    $Dumper->Useqq(1);
-
-    # Sort the hashkeys
-    $Dumper->Sortkeys(1);
-
-    my $Dump = $Dumper->Dump();
+        $Self->{LayoutObject}->Block(
+            Name => 'EnvDataRow',
+            Data => {
+                Key   => $Key,
+                Value => $Self->{LayoutObject}->{EnvRef}->{$Key},
+            },
+        );
+    }
 
     # output the html
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredEnvDump',
-        Data => { Dump => $Dump },
     );
 
     return 1;

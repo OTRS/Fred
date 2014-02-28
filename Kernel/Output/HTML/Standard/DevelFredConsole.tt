@@ -7,8 +7,17 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+<style type="text/css">
+.DevelFredContainer {
+    width: [% Config("Fred::ConsoleWidth") %];
+    -moz-opacity: [% Config("Fred::ConsoleOpacity") %];
+    -webkit-opacity: [% Config("Fred::ConsoleOpacity") %];
+    opacity: [% Config("Fred::ConsoleOpacity") %];
+}
+</style>
+
 <div class="DevelFredBox">
-    <h1 style="position: relative;">
+    <h1>
         Fred
         <div class="FredToolBar">
 [% RenderBlockStart("Setting") %]
@@ -23,44 +32,3 @@
         <span>Perl [% Data.Perl | html %]</span>
     </div>
 </div>
-
-<script type="text/javascript">
-"use strict";
-
-$(document).ready(function() {
-
-    $('#DevelFredContainer').draggable({
-        handle: 'h1',
-        stop: function(event, ui) {
-            var Top = ui.offset.top,
-                Left = ui.offset.left;
-
-            if (window && window.localStorage !== undefined) {
-                window.localStorage.FRED_console_left = Left;
-                window.localStorage.FRED_console_top  = Top;
-            }
-        }
-    });
-
-    if (window && window.localStorage !== undefined && window.localStorage.FRED_console_left && window.localStorage.FRED_console_top) {
-
-        var SavedLeft  = window.localStorage.FRED_console_left,
-            SavedTop   = window.localStorage.FRED_console_top,
-            FredWidth  = $('#DevelFredContainer').width(),
-            FredHeight = $('#DevelFredContainer').height();
-
-        if (SavedLeft > $('body').width()) {
-            SavedLeft = $('body').width() - FredWidth;
-        }
-        if (SavedTop > $('body').height()) {
-            SavedTop = $('body').height() - FredHeight;
-        }
-
-        if (SavedLeft && SavedTop) {
-            $('#DevelFredContainer').css('left', SavedLeft + 'px');
-            $('#DevelFredContainer').css('top', SavedTop + 'px');
-        }
-    }
-});
-
-</script>

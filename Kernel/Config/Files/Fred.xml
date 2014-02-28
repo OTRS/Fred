@@ -28,7 +28,18 @@
                 <Item>Core.Fred.HTMLCheck.js</Item>
             </Array>
         </Setting>
-    </ConfigItem>    <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
+    </ConfigItem>
+    <ConfigItem Name="Loader::Agent::CommonCSS###000-Fred" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>Core.Fred.css</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Fred::ConsoleWidth" Required="0" Valid="1">
         <Description Translatable="1">Defines the width of the Fred console in percent.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
@@ -61,6 +72,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Shows a list of all SQL statements executed in this call.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -71,6 +83,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Validates the HTML in this call.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -81,6 +94,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Validates the JS in this call and shows errors and notices.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -91,9 +105,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
-                <Item Key="Description">
-                    Shows a list of untranslated strings. Please note that strings from framework and custom modules will be shown.
-                </Item>
+                <Item Key="Description">Shows a list of untranslated strings. Please note that strings from framework AND custom modules will be shown.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -104,6 +116,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Lists all configuration items which were used in this call (and how often they were called).</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -114,6 +127,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">1</Item>
+                <Item Key="Description">Lists entries from the STDERR log.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -124,6 +138,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Dumps out all session variables.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -134,6 +149,7 @@
         <Setting>
             <Hash>
                 <Item Key="Active">0</Item>
+                <Item Key="Description">Dumps out all environment variables.</Item>
             </Hash>
         </Setting>
     </ConfigItem>
