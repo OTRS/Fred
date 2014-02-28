@@ -12,7 +12,9 @@ use warnings;
 
 use vars qw($Self);
 
+use Kernel::Config::Defaults;
 use Kernel::Language;
+use Kernel::System::Fred::ConfigLog;
 use Kernel::System::Fred::TranslationDebug;
 
 if ( $ENV{HTTP_USER_AGENT} ) {
@@ -56,12 +58,33 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             }
 
             if (!$Self->{Translation}->{$What}) {
-                $Self->{TranslationDebugObject} //= Kernel::System::Fred::TranslationDebug->new(%{$Self});
+                $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new( %{$Self} );
                 $Self->{TranslationDebugObject}->InsertWord(What => $What);
             }
 
             return $Result;
         };
+    }
+
+    # Override Kernel::Config::Get() method to intercept config strings
+    if ( Kernel::Config::Defaults->can('Get') && !Kernel::Config::Defaults->can('GetOriginal') ) {
+        *Kernel::Config::Defaults::GetOriginal = \&Kernel::Config::Defaults::Get;
+        *Kernel::Config::Defaults::Get = sub {
+            my ( $Self, $What ) = @_;
+
+            $Self->{ConfigLogObject} ||= Kernel::System::Fred::ConfigLog->new(
+                ConfigObject => $Self,
+            );
+            my $Caller = caller();
+            if ($Self->{$What}) {
+                $Self->{ConfigLogObject}->InsertWord(What => "$What;True;$Caller;", Home => $Self->{Home});
+            }
+            else {
+                $Self->{ConfigLogObject}->InsertWord(What => "$What;False;$Caller;", Home => $Self->{Home});
+            }
+
+            return $Self->GetOriginal($What);
+       };
     }
 }
 
