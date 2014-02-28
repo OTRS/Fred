@@ -8,8 +8,14 @@
 # --
 
 <div class="DevelFredBox">
-    <h1><input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredTranslationDebugTable').style.display = this.checked ? 'block' : 'none';"/>Fred-TranslationDebug</h1>
-    <table id="FredTranslationDebugTable" bgcolor="#ffffff" cellspacing="0" cellpadding="2" width="100%">
+    <h1>
+        Missing Translations
+        <span class="FredToolBar">
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </span>
+    </h1>
+    <div class="DevelFredBoxContent FredElementList">
 $Data{"HTMLLines"}
-    </table>
+    </div>
 </div>

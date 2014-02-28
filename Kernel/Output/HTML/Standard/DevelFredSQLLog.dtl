@@ -9,21 +9,31 @@
 
 <div class="DevelFredBox" id="DevelFredBoxSQLLog">
     <h1>
-        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('DevelFredBoxSQLLog').style.display = this.checked ? 'block' : 'none';"/>
-        Fred-SQL-Log &mdash;
-        Executed <strong>$Data{"AllStatements"}</strong> Statements
-        (<strong>$QData{"SelectStatements"}</strong> SELECTs + <strong>$QData{"DoStatements"}</strong> DOs)
-        in <strong>$QData{"Time"}</strong> s.
+        SQL
+        <span class="FredToolBar">
+            <i class="icon-search FredSearch" title="Search"></i>
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </span>
     </h1>
     <div class="DevelFredBoxContent">
-        <table id="FredSQLLogTable" width="100%">
+        <div class="FredElementList">
+            <span>Executed <strong>$Data{"AllStatements"}</strong> Statements</span>
+            <span>(<strong>$QData{"SelectStatements"}</strong> SELECTs + <strong>$QData{"DoStatements"}</strong> DOs)</span>
+            <span>in <strong>$QData{"Time"}</strong> s.</span>
+        </div>
+        <div class="FredQuickSearch">
+            <input type="text" placeholder="Search for..." />
+            <i class="icon-remove"></i>
+        </div>
+        <table class="FredTableDefault">
             <thead>
                 <tr>
-                    <th class="Time" title="Time (ms)">ms</th>
-                    <th class="EqualStatements" title="Equal Statements">Equal</th>
-                    <th class="SQLStatement">Statement</th>
-                    <th class="BindParameters" title="Bind parameters">Bind</th>
-                    <th class="StackTrace">Package</th>
+                    <th title="Time (ms)">ms</th>
+                    <th title="Equal Statements">Equal</th>
+                    <th>Statement</th>
+                    <th title="Bind parameters">Bind</th>
+                    <th>Package</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +45,7 @@
                     <td class="BindParameters">
 <!-- dtl:block:RowBindParameters -->
                         <a class="ShowBindParameters" title="$QData{"BindParameters"}">Show</a>
-                        <div>$QData{"BindParameters"}</div>
+                        <div class="Hidden">$QData{"BindParameters"}</div>
 <!-- dtl:block:RowBindParameters -->
                     </td>
                     <td class="StackTrace">
@@ -46,15 +56,9 @@
                 </tr>
             </tbody>
 <!-- dtl:block:Row -->
+            <tr class="Hidden FilterMessage">
+                <td colspan="5">No Items found.</td>
+            </tr>
         </table>
     </div>
 </div>
-
-<!-- js_on_document_complete -->
-<script>
-'use strict';
-$('a.ShowBindParameters').unbind('click').bind('click', function(Event) {
-    $(this).hide().parent().find('div').show();
-});
-</script>
-<!-- js_on_document_complete -->

@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="DevelFredSetting">
+<div class="DevelFredSettings">
     <h1>Fred-Setting</h1>
     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="DevelFredSetting">
         <input type="hidden" name="Action" value="DevelFred"/>
@@ -15,14 +15,19 @@
         <ul>
 <!-- dtl:block:FredModule -->
             <li>
-                <input type="checkbox" name="FredModule" id="$QData{"FredModule"}" value="$QData{"FredModule"}" $Data{"Checked"}/>
-                <label for="$QData{"FredModule"}">$QData{"FredModule"}</label>
+                <label for="$QData{"FredModule"}">
+                    <input type="checkbox" name="FredModule" id="$QData{"FredModule"}" value="$QData{"FredModule"}" $Data{"Checked"}/>
+                    $QData{"FredModule"}
+                    <span>
+                        $QData{"Description"}
+                    </span>
+                </label>
 <!-- dtl:block:Config -->
-                <a href="$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=$Data{"ModuleName"};SysConfigGroup=Fred" title="Setting" onclick="window.resizeTo(900,500)">($Text{"Config"})</a>
+                <a href="$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=$Data{"ModuleName"};SysConfigGroup=Fred" title="Settings" class="FredSettingsLink" target="_blank"><i class="icon-gear"></i></a>
 <!-- dtl:block:Config -->
             </li>
 <!-- dtl:block:FredModule -->
         </ul>
-        <button type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+        <button type="submit" class="CallForAction" value="$Text{"Save"}"><span>$Text{"Save"}</span></button>
     </form>
 </div>

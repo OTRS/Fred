@@ -78,9 +78,10 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'FredModule',
                 Data => {
-                    FredModule => $Module,
-                    Checked    => $Checked,
-                    }
+                    FredModule  => $Module,
+                    Checked     => $Checked,
+                    Description => $ModuleForRef->{$Module}->{Description} || '',
+                },
             );
 
             # Provide a link to the SysConfig only for plugins that have config options
@@ -129,18 +130,21 @@ sub Run {
                 !$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module}
                 )
             {
+                # update certain values
+                $ModuleForRef->{$Module}->{Active} = $SelectedModules{$Module} || 0;
+
                 $Self->{SysConfigObject}->ConfigItemUpdate(
                     Valid => 1,
                     Key   => "Fred::Module###$Module",
-                    Value => {
-                        'Active' => $SelectedModules{$Module} || 0,
-                    },
+                    Value => $ModuleForRef->{$Module},
                 );
                 $UpdateFlag = 1;
             }
         }
 
-        return $Self->{LayoutObject}->Redirect( OP => 'Action=DevelFred;Subaction=Setting' );
+        return $Self->{LayoutObject}->PopupClose(
+            Reload => 1,
+        );
     }
 
     return 1;

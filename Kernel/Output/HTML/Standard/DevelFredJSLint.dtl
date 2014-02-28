@@ -9,8 +9,11 @@
 
 <div class="DevelFredBox">
     <h1>
-        <input type="checkbox" title="Toggle this widget" checked="checked" onclick="document.getElementById('FredJSLintScripts').style.display = this.checked ? 'block' : 'none';"/>
-        Fred-JSLint Results
+        JSLint
+        <span class="FredToolBar">
+            <i class="icon-minus FredMinimize" title="Minimize"></i>
+            <i class="icon-remove FredClose" title="Close"></i>
+        </span>
     </h1>
     <script type="text/javascript">
         "use strict";
@@ -18,7 +21,9 @@
             Core.Fred.JSLint.Init();
         });
     </script>
-    <div style="padding:5px;" id="FredJSLintScripts">
-        <div id="FredJSLintRunning">Checks are running...</div>
+    <div class="DevelFredBoxContent" id="FredJSLintScripts">
+        <div id="FredJSLintRunning">
+            <i class="icon-spinner icon-spin"></i> Checks are running...
+        </div>
     </div>
 </div>

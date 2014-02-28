@@ -27,7 +27,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterPostShowSystemNameInHeader.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredCommonCSS.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredContainer.dtl"/>
@@ -50,9 +49,11 @@
         <File Permission="644" Location="Kernel/System/Fred/SQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/STDERRLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/TranslationDebug.pm"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.Fred.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Fred.HTMLCheck.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Fred.JSLint.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jslint/jslint.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Fred.css"/>
     </Filelist>
     <IntroInstall Type="pre" Title="" Lang="en"><![CDATA[
         <br/>

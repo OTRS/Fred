@@ -82,24 +82,20 @@ sub CreateFredOutput {
             = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
     }
 
-    # create a string representation of the data of interest
-    my $Dumper = Data::Dumper->new(
-        [ $SessionID, \%SessionData ],
-        [qw(SessionID SessionData)],
-    );
+    for my $Key ( sort keys %SessionData ) {
 
-    # impose string representation in double quoted style
-    $Dumper->Useqq(1);
-
-    # Sort the hashkeys
-    $Dumper->Sortkeys(1);
-
-    my $Dump = $Dumper->Dump();
+        $Self->{LayoutObject}->Block(
+            Name => 'SessionDataRow',
+            Data => {
+                Key   => $Key,
+                Value => $SessionData{$Key},
+            },
+        );
+    }
 
     # output the html
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredSessionDump',
-        Data => { Dump => $Dump },
     );
 
     return 1;

@@ -75,7 +75,7 @@ sub CreateFredOutput {
 
     my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
-        $HTMLLines .= "        <tr><td>$Line</td></tr>";
+        $HTMLLines .= "<span>$Line</span>";
     }
 
     return 1 if !$HTMLLines;
