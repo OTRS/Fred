@@ -60,6 +60,9 @@ sub new {
     for my $Object (qw(ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    $Self->{Active} = $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug}->{Active};
+
     return $Self;
 }
 
@@ -119,32 +122,6 @@ Do all jobs which are necessary to activate this special module.
 =cut
 
 sub ActivateModuleTodos {
-    my $Self = shift;
-
-    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
-
-    # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # to use TranslationDebug I have to manipulate the Language.pm file
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
-
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-    for my $Line (@Lines) {
-        print $FilehandleII $Line;
-        if ( $Line =~ /# warn if the value is not def/ ) {
-            print $FilehandleII "# FRED - manipulated\n";
-            print $FilehandleII "use Kernel::System::Fred::TranslationDebug;\n";
-            print $FilehandleII
-                "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n";
-            print $FilehandleII "\$TranslationDebugObject->InsertWord(What => \$What);\n";
-            print $FilehandleII "# FRED - manipulated\n";
-        }
-    }
-    close $FilehandleII;
-
     return 1;
 }
 
@@ -159,35 +136,6 @@ Do all jobs which are necessary to deactivate this special module.
 =cut
 
 sub DeactivateModuleTodos {
-    my $Self = shift;
-
-    my $File = $Self->{ConfigObject}->Get('Home') . '/Kernel/Language.pm';
-
-    # check if it is an symlink, because it can be development system which use symlinks
-    die "Can't manipulate $File because it is a symlink!" if -l $File;
-
-    # to use TranslationDebugger I have to manipulate the Language.pm file
-    # here I undo my manipulation
-    open my $Filehandle, '<', $File || die "Can't open $File !\n";
-    my @Lines = <$Filehandle>;
-    close $Filehandle;
-
-    open my $FilehandleII, '>', $File || die "Can't write $File !\n";
-
-    my %RemoveLine = (
-        "# FRED - manipulated\n"                        => 1,
-        "use Kernel::System::Fred::TranslationDebug;\n" => 1,
-        "my \$TranslationDebugObject = Kernel::System::Fred::TranslationDebug->new(\%{\$Self});\n"
-            => 1,
-        "\$TranslationDebugObject->InsertWord(What => \$What);\n" => 1,
-    );
-
-    for my $Line (@Lines) {
-        if ( !$RemoveLine{$Line} ) {
-            print $FilehandleII $Line;
-        }
-    }
-    close $FilehandleII;
     return 1;
 }
 
@@ -203,6 +151,8 @@ Save a word in the translation debug log
 
 sub InsertWord {
     my ( $Self, %Param ) = @_;
+
+    return if (!$Self->{Active});
 
     # check needed stuff
     if ( !defined( $Param{What} ) ) {
