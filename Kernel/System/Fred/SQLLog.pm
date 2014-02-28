@@ -144,38 +144,6 @@ sub DataGet {
     return 1;
 }
 
-=item ActivateModuleTodos()
-
-Do all jobs which are necessary to activate this special module.
-
-    $FredObject->ActivateModuleTodos(
-        ModuleName => $ModuleName,
-    );
-
-=cut
-
-sub ActivateModuleTodos {
-    my $Self = shift;
-
-    return 1;
-}
-
-=item DeactivateModuleTodos()
-
-Do all jobs which are necessary to deactivate this special module.
-
-    $FredObject->DeactivateModuleTodos(
-        ModuleName => $ModuleName,
-    );
-
-=cut
-
-sub DeactivateModuleTodos {
-    my $Self = shift;
-
-    return 1;
-}
-
 =item InsertWord()
 
 Append a semicolon seperated record line to the the SQL log.
