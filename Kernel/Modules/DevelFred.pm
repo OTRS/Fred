@@ -61,89 +61,6 @@ sub Run {
         );
     }
 
-    #        my $Output   = '';
-    #
-    #        my @TranslationWhiteList = $Self->{XMLObject}->XMLHashGet(
-    #            Type => 'Fred-Translation',
-    #            Key  => 1,
-    #            Cache => 0,
-    #        );
-    #
-    #        my %WhiteList;
-    #        for my $Content (@{$TranslationWhiteList[1]{Translation}}) {
-    #            if ($Content->{Content}) {
-    #                # add add block
-    #                $Self->{LayoutObject}->Block(
-    #                    Name => 'Line',
-    #                    Data => {
-    #                        Word => $Content->{Content},
-    #                    },
-    #                );
-    #            }
-    #        }
-    #
-    #        # build output
-    #        $Output .= $Self->{LayoutObject}->Header(Title => "Fred-Overview");
-    #        $Output .= $Self->{LayoutObject}->NavigationBar();
-    #        $Output .= $Self->{LayoutObject}->Output(
-    #            Data => {%Param},
-    #            TemplateFile => 'DevelFred',
-    #        );
-    #        $Output .= $Self->{LayoutObject}->Footer();
-    #        return $Output;
-    #    }
-    #    # ---------------------------------------------------------- #
-    #    # handle the translation log
-    #    # ---------------------------------------------------------- #
-    #    elsif ($Self->{Subaction} eq 'Translation') {
-    #        my $Value = $Self->{ParamObject}->GetParam(Param => 'Value');
-    #
-    #        my @Data = $Self->{XMLObject}->XMLHashGet(
-    #            Type => 'Fred-Translation',
-    #            Key  => 1,
-    #            Cache => 0,
-    #        );
-    #
-    #        if (!@Data) {
-    #            my @Hash;
-    #
-    #            $Hash[1]{Translation}[1]{Content} = $Value;
-    #            $Self->{XMLObject}->XMLHashAdd(
-    #                Type    => 'Fred-Translation',
-    #                Key     => 1,
-    #                XMLHash => \@Hash,
-    #            );
-    #        }
-    #        else {
-    #            push @{$Data[1]{Translation}}, {Content => $Value};
-    #            $Self->{XMLObject}->XMLHashUpdate(
-    #                Type => 'Fred-Translation',
-    #                Key => '1',
-    #                XMLHash => \@Data,
-    #            );
-    #
-    #        }
-    #
-    #        my $Referer = $ENV{HTTP_REFERER};
-    #        if ($Referer =~ /\?(.+)$/) {
-    #            $Referer = $1;
-    #        }
-    #
-    #        return $Self->{LayoutObject}->Redirect(OP => $Referer);
-    #    }
-    #    elsif ($Self->{Subaction} eq 'TranslationDelete') {
-    #        my @Data = $Self->{XMLObject}->XMLHashDelete(
-    #            Type => 'Fred-Translation',
-    #            Key  => 1,
-    #        );
-    #
-    #        my $Referer = $ENV{HTTP_REFERER};
-    #        if ($Referer =~ /\?(.+)$/) {
-    #            $Referer = $1;
-    #        }
-    #
-    #        return $Self->{LayoutObject}->Redirect(OP => $Referer);
-    #    }
     # ---------------------------------------------------------- #
     # fast handle for fred settings
     # ---------------------------------------------------------- #
@@ -220,34 +137,6 @@ sub Run {
                     },
                 );
                 $UpdateFlag = 1;
-            }
-        }
-
-        # this function is neseccary to finish the sysconfig update
-        my $Version = $Self->{ConfigObject}->Get('Version');
-        if ( $UpdateFlag && $Version =~ m{ ^2\.[012]\. }msx ) {
-            $Self->{SysConfigObject}->ConfigItemUpdateFinish();
-        }
-
-        # deactivate fredmodule todos
-        for my $Module ( sort keys %{$ModuleForRef} ) {
-            if ( $ModuleForRef->{$Module}->{Active} && !$SelectedModules{$Module} ) {
-
-                # Errorhandling should be improved!
-                $Self->{FredObject}->DeactivateModuleTodos(
-                    ModuleName => $Module,
-                );
-            }
-        }
-
-        # active fred module todos
-        for my $Module ( sort keys %{$ModuleForRef} ) {
-            if ( !$ModuleForRef->{$Module}->{Active} && $SelectedModules{$Module} ) {
-
-                # Errorhandling should be improved!
-                $Self->{FredObject}->ActivateModuleTodos(
-                    ModuleName => $Module,
-                );
             }
         }
 

@@ -73,14 +73,6 @@ sub DataGet {
     return 1;
 }
 
-sub ActivateModuleTodos {
-    return 1;
-}
-
-sub DeactivateModuleTodos {
-    return 1;
-}
-
 1;
 
 =back

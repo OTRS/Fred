@@ -140,34 +140,6 @@ sub DataGet {
     return 1;
 }
 
-=item ActivateModuleTodos()
-
-Do all jobs which are necessary to activate this special module.
-
-    $FredObject->ActivateModuleTodos(
-        ModuleName => $ModuleName,
-    );
-
-=cut
-
-sub ActivateModuleTodos {
-    return 1;
-}
-
-=item DeactivateModuleTodos()
-
-Do all jobs which are necessary to deactivate this special module.
-
-    $FredObject->DeactivateModuleTodos(
-        ModuleName => $ModuleName,
-    );
-
-=cut
-
-sub DeactivateModuleTodos {
-    return 1;
-}
-
 1;
 
 =back
