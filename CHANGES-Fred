@@ -6,7 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-3.1.6 ?????
+3.2.1 2014-03-04
+ - 2014-03-04 Refactored. Fred no longer patches framework files. New GUI.
  - 2012-08-14 Improved HTML escaping in the JSLint module.
 
 3.1.5 2012-05-08
