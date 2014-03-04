@@ -13,6 +13,8 @@ package Kernel::System::Fred::ConfigLog;
 use strict;
 use warnings;
 
+use Scalar::Util();
+
 =head1 NAME
 
 Kernel::System::Fred::ConfigLog
@@ -60,6 +62,9 @@ sub new {
     for my $Object (qw(ConfigObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+    # ConfigObject holds a reference to us, so don't reference it to avoid
+    #   a ring reference.
+    Scalar::Util::weaken($Self->{ConfigObject});
 
     # Don't call ConfigObject->Get() here, this could cause deep recursions.
 

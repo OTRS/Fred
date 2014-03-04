@@ -6,6 +6,9 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+3.2.2 2014-03-04
+ - 2014-03-04 Fixed a bug that caused a ring reference in ConfigLog.
+
 3.2.1 2014-03-04
  - 2014-03-04 Refactored. Fred no longer patches framework files. New GUI.
  - 2012-08-14 Improved HTML escaping in the JSLint module.
