@@ -61,7 +61,9 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    if ( ref $Self->{ConfigObject}->Get('Fred::Module') && $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug}) {
+    if ( ref $Self->{ConfigObject}->Get('Fred::Module')
+        && $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug} )
+    {
         $Self->{Active} = $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug}->{Active};
     }
 
