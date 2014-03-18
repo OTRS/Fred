@@ -54,6 +54,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Fred.JSLint.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jslint/jslint.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Fred.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.Fred.css"/>
     </Filelist>
     <IntroInstall Type="pre" Title="" Lang="en"><![CDATA[
         <br/>
