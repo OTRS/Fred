@@ -2,9 +2,7 @@
 <otrs_package version="1.0">
     <Name>Fred</Name>
     <Version>0.0.0</Version>
-    <Framework>3.1.x</Framework>
-    <Framework>3.2.x</Framework>
-    <Framework>3.3.x</Framework>
+    <Framework>3.4.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -54,6 +52,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Fred.JSLint.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jslint/jslint.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Fred.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.Fred.css"/>
     </Filelist>
     <IntroInstall Type="pre" Title="" Lang="en"><![CDATA[
         <br/>
