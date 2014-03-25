@@ -224,16 +224,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="DB::DBListener###000-FredSQLLog" Required="1" Valid="1">
-        <Description Translatable="1">Command for generating a HTML view.</Description>
-        <Group>Fred</Group>
-        <SubGroup>Core</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Object">Kernel::System::DBListener::FredSQLLog</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPost###OutputFilterPostShowSystemNameInHeader" Required="0" Valid="1">
         <Description Translatable="1">Output filter to show the name of the current system in the system header.</Description>
         <Group>Fred</Group>
