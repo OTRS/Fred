@@ -36,7 +36,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSQLLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.tt"/>
-        <File Permission="644" Location="Kernel/System/DBListener/FredSQLLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>

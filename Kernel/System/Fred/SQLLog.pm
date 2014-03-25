@@ -13,6 +13,8 @@ package Kernel::System::Fred::SQLLog;
 use strict;
 use warnings;
 
+use Time::HiRes qw(gettimeofday tv_interval);
+
 =head1 NAME
 
 Kernel::System::Fred::SQLLog
@@ -61,6 +63,14 @@ sub new {
     # get needed objects
     for my $Object (qw(ConfigObject LogObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    if (
+        ref $Self->{ConfigObject}->Get('Fred::Module')
+        && $Self->{ConfigObject}->Get('Fred::Module')->{SQLLog}
+        )
+    {
+        $Self->{Active} = $Self->{ConfigObject}->Get('Fred::Module')->{SQLLog}->{Active};
     }
 
     return $Self;
@@ -183,6 +193,53 @@ sub InsertWord {
     close $Filehandle;
 
     return 1;
+}
+
+sub PreStatement {
+    my ( $Self, %Param ) = @_;
+
+    return if ( !$Self->{Active} );
+
+    $Self->{PrepareStart} = [gettimeofday];
+}
+
+sub PostStatement {
+    my ( $Self, %Param ) = @_;
+
+    return if ( !$Self->{Active} );
+
+    my $DiffTime = tv_interval( $Self->{PrepareStart} );
+
+    my @StackTrace;
+
+    COUNT:
+    for ( my $Count = 1; $Count < 30; $Count++ ) {
+        my ( $Package1, $Filename1, $Line1, $Subroutine1 ) = caller($Count);
+        last COUNT if !$Line1;
+        my ( $Package2, $Filename2, $Line2, $Subroutine2 ) = caller( 1 + $Count );
+        $Subroutine2 ||= $0;    # if there is no caller module use the file name
+        $Subroutine2 =~ s/Kernel::System/K::S/;
+        $Subroutine2 =~ s/Kernel::Modules/K::M/;
+        $Subroutine2 =~ s/Kernel::Output/K::O/;
+        push @StackTrace, "$Subroutine2:$Line1";
+    }
+
+    my @Array = map { defined $_ ? $_ : 'undef' } @{ $Param{Bind} || [] };
+
+    # Replace newlines
+    @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;    ## no critic
+
+    # Limit bind param length
+    @Array = map { length($_) > 100 ? ( substr( $_, 0, 100 ) . '[...]' ) : $_ } @Array;
+    my $BindString = @Array ? join ', ', @Array : '';
+
+    my $Prefix = $Param{SQL} =~ m{^SELECT}ixms ? 'SELECT' : 'DO';
+
+    $Self->InsertWord(
+        What => "SQL-$Prefix##!##$Param{SQL}##!##$BindString##!##"
+            . join( ';', @StackTrace )
+            . "##!##$DiffTime",
+    );
 }
 
 1;

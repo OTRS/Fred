@@ -15,6 +15,7 @@ use vars qw($Self);
 use Kernel::Config::Defaults;
 use Kernel::Language;
 use Kernel::System::Fred::ConfigLog;
+use Kernel::System::Fred::SQLLog;
 use Kernel::System::Fred::TranslationDebug;
 
 if ( $ENV{HTTP_USER_AGENT} ) {
@@ -81,6 +82,36 @@ if ( $ENV{HTTP_USER_AGENT} ) {
         };
     }
 
+    # Override Kernel::System::DB::Prepare() method to intercept database calls
+    if ( Kernel::System::DB->can('Prepare') && !Kernel::System::DB->can('PrepareOriginal') ) {
+        *Kernel::System::DB::PrepareOriginal = \&Kernel::System::DB::Prepare;
+        *Kernel::System::DB::Prepare = sub {
+            my ( $Self, %Param ) = @_;
+
+            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(%{$Self});
+            $Self->{SQLLogObject}->PreStatement(%Param);
+            my $Result = $Self->PrepareOriginal(%Param);
+            $Self->{SQLLogObject}->PostStatement(%Param);
+
+            return $Result;
+       };
+    }
+
+    # Override Kernel::System::DB::Do() method to intercept database calls
+    if ( Kernel::System::DB->can('Do') && !Kernel::System::DB->can('DoOriginal') ) {
+        *Kernel::System::DB::DoOriginal = \&Kernel::System::DB::Do;
+        *Kernel::System::DB::Do = sub {
+            my ( $Self, %Param ) = @_;
+
+            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(%{$Self});
+            $Self->{SQLLogObject}->PreStatement(%Param);
+            my $Result = $Self->DoOriginal(%Param);
+            $Self->{SQLLogObject}->PostStatement(%Param);
+
+            return $Result;
+       };
+    }
+
     # Override Kernel::Config::Get() method to intercept config strings
     if ( Kernel::Config::Defaults->can('Get') && !Kernel::Config::Defaults->can('GetOriginal') ) {
         *Kernel::Config::Defaults::GetOriginal = \&Kernel::Config::Defaults::Get;
@@ -101,6 +132,7 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             return $Self->GetOriginal($What);
        };
     }
+
 }
 
 1;
