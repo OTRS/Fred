@@ -248,6 +248,9 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
             $Container = $('<div></div>');
             $Container.append( $this.clone() );
 
+            // onload attribute is sometimes needed for iframes, so we just remove it for the check
+            $Container.find('iframe').removeAttr('onload');
+
             Code = $Container.html();
 
             // search for events in html element code
