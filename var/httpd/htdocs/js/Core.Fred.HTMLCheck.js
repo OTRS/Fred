@@ -240,7 +240,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // Don't output this error for fred itself.
             // We also currently need onclick events in the main menu.
-            if ( $this.closest('.DevelFredContainer, #Navigation').length ) {
+            if ( $this.closest('.DevelFredContainer, #NavigationContainer').length ) {
                 return;
             }
 
