@@ -23,7 +23,7 @@
     </script>
     <div class="DevelFredBoxContent" id="FredJSLintScripts">
         <div id="FredJSLintRunning">
-            <i class="icon-spinner icon-spin"></i> Checks are running...
+            <i class="icon-spinner icon-spin"></i>&nbsp; Checks are running...
         </div>
     </div>
 </div>

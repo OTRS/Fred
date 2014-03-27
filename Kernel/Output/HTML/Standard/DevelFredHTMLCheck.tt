@@ -22,6 +22,6 @@
         });
     </script>
     <div style="padding:5px;" id="FredHTMLCheckResults" class="DevelFredBoxContent">
-        <div id="FredHTMLCheckRunning">Checks are running...</div>
+        <div id="FredHTMLCheckRunning"><i class="icon-spinner icon-spin"></i>&nbsp; Checks are running...</div>
     </div>
 </div>
