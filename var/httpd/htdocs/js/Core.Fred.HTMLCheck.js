@@ -160,7 +160,8 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
      */
 
     function CheckBadPractice() {
-        var ObsoleteElement2Replacement;
+        var ObsoleteElement2Replacement,
+            UsedIDs = [];
 
         // check for inputs which should be buttons
         $('input:button, input:submit, input:reset').each(function(){
@@ -207,6 +208,25 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                     'Obsolete element <code>&lt;' + this.tagName + '&gt;</code> used',
                     'Please replace it with: ' + ObsoleteElement2Replacement[this.tagName.toLowerCase()] + '.'
             );
+        });
+
+        // check for multiple usage of one ID
+        $('div, span, ul, ol, li, a, h1, h2, h3, h4, h5, input, select').each(function() {
+            var $this = $(this),
+                ID = $this.attr('id') || '';
+
+            if (ID) {
+                if ($.inArray(ID, UsedIDs) > 0) {
+                    outputError(
+                            $this,
+                            'BadPracticeMultipleIDUsage',
+                            'ID used multiple times: ' + ID,
+                            'Please make sure to use an ID only once!'
+                    );
+                    return true;
+                }
+                UsedIDs.push($(this).attr('id'));
+            }
         });
 
         function obsoleteClassError(ClassName) {
