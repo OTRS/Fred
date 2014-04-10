@@ -11,8 +11,8 @@
     <h1>
         STDERRLog
         <span class="FredToolBar">
-            <i class="icon-minus FredMinimize" title="Minimize"></i>
-            <i class="icon-remove FredClose" title="Close"></i>
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
         </span>
     </h1>
     <div class="DevelFredBoxContent">

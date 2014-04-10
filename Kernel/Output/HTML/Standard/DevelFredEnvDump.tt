@@ -10,15 +10,15 @@
     <h1>
         Environment Variables
         <span class="FredToolBar">
-            <i class="icon-search FredSearch" title="Search"></i>
-            <i class="icon-minus FredMinimize" title="Minimize"></i>
-            <i class="icon-remove FredClose" title="Close"></i>
+            <i class="fa fa-search FredSearch" title="Search"></i>
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
         </span>
     </h1>
     <div class="DevelFredBoxContent">
         <div class="FredQuickSearch">
             <input type="text" placeholder="Search for..." />
-            <i class="icon-remove"></i>
+            <i class="fa fa-times"></i>
         </div>
         <table class="FredTableDefault">
             <thead>

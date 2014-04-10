@@ -21,10 +21,10 @@
         Fred
         <div class="FredToolBar">
 [% RenderBlockStart("Setting") %]
-            <i class="icon-gear FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
+            <i class="fa fa-cog FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
 [% RenderBlockEnd("Setting") %]
-            <i class="icon-minus FredMinimize" title="Minimize"></i>
-            <i class="icon-remove FredClose" title="Close"></i>
+            <i class="fa fa-minus FredMinimize" title="Minimize"></i>
+            <i class="fa fa-times FredClose" title="Close"></i>
         </div>
     </h1>
     <div class="DevelFredBoxContent FredElementList">

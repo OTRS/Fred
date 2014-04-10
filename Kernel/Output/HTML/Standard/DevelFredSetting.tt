@@ -23,7 +23,7 @@
                     </span>
                 </label>
 [% RenderBlockStart("Config") %]
-                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Settings" class="FredSettingsLink" target="_blank"><i class="icon-gear"></i></a>
+                <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.ModuleName %];SysConfigGroup=Fred" title="Settings" class="FredSettingsLink" target="_blank"><i class="fa fa-cog"></i></a>
 [% RenderBlockEnd("Config") %]
             </li>
 [% RenderBlockEnd("FredModule") %]
