@@ -13,6 +13,8 @@ package Kernel::System::Fred::STDERRLog;
 use strict;
 use warnings;
 
+use IO::Handle;
+
 =head1 NAME
 
 Kernel::System::Fred::STDERRLog
@@ -89,6 +91,9 @@ sub DataGet {
         }
     }
 
+    # Make sure that we get everything to disk before trying to read it (otherwise content could be lost).
+    STDERR->flush();
+
     # open the STDERR.log file to get the STDERR messages
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/STDERR.log';
     my $Filehandle;
@@ -101,21 +106,12 @@ sub DataGet {
         return;
     }
 
-    # get the whole information
+    # Read log until last "FRED" marker.
     my @LogMessages;
     LINE:
     for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ m{ \A \s* FRED \s* \z}xms;
-
-        # Attention: the last two strings are because of DProf. I have to force the process.
-        # So I get this warnings!
-        if (
-            $Line
-            !~ /(Subroutine .+? redefined at|has .+? unstacked calls|Faking .+? exit timestamp)/
-            )
-        {
-            push @LogMessages, $Line;
-        }
+        push @LogMessages, $Line;
     }
     close $Filehandle;
 
