@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<style type="text/css">
+<style type="text/css" scoped="">
 .DevelFredContainer {
     width: [% Config("Fred::ConsoleWidth") %];
     -moz-opacity: [% Config("Fred::ConsoleOpacity") %];
@@ -19,13 +19,13 @@
 <div class="DevelFredBox">
     <h1>
         Fred
-        <div class="FredToolBar">
+        <span class="FredToolBar">
 [% RenderBlockStart("Setting") %]
             <i class="fa fa-cog FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
 [% RenderBlockEnd("Setting") %]
             <i class="fa fa-minus FredMinimize" title="Minimize"></i>
             <i class="fa fa-times FredClose" title="Close"></i>
-        </div>
+        </span>
     </h1>
     <div class="DevelFredBoxContent FredElementList">
         <span>mod_perl [% Data.ModPerl | html %]</span>
