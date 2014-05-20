@@ -305,7 +305,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
         });
         $('#FredHTMLCheckRunning').remove();
         if (!ErrorsFound) {
-            $('#FredHTMLCheckResults').html('<p class="Confirmation">All checks ok.</p>');
+            $('#FredHTMLCheckResults').html('<p class="FredJSLintSuccessful">All checks ok.</p>');
         }
     };
 
