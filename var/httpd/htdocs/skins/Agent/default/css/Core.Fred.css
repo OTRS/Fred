@@ -101,7 +101,7 @@
     padding: 5px;
 }
 
-.FredJSLintSuccessfull {
+.FredJSLintSuccessful {
     color: green;
 }
 
@@ -110,6 +110,8 @@
     font-size: 11px;
 }
 
+body #FredHTMLCheckResults p ,
+body #FredHTMLCheckResults pre,
 body #FredJSLintScripts p ,
 body #FredJSLintScripts pre {
     margin: 0px;

@@ -72,12 +72,12 @@ Core.Fred.JSLint = (function (TargetNS) {
             // activate else branch to see positive check results per file for fred debugging
             //else {
             //    $('#FredJSLintRunning').remove();
-            //    $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">' + this.Src + ' ok</p>');
+            //    $('#FredJSLintScripts').append('<p class="FredJSLintSuccessful">' + this.Src + ' ok</p>');
             //}
         });
         if (!ErrorsFound) {
             $('#FredJSLintRunning').remove();
-            $('#FredJSLintScripts').append('<p class="FredJSLintSuccessfull">All checks ok.</p>');
+            $('#FredJSLintScripts').append('<p class="FredJSLintSuccessful">All checks ok.</p>');
         }
 
         if (TargetNS.AllScripts.length === 0) {
