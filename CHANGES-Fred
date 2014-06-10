@@ -6,6 +6,10 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+3.2.3 2014-??-??
+ - 2014-06-10 Improved HTML check to accept placeholder attributes.
+
 3.2.2 2014-03-04
  - 2014-03-04 Fixed a bug that caused a ring reference in ConfigLog.
 

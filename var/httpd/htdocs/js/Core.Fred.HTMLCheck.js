@@ -72,6 +72,11 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                 $Label = $([]),
                 Title;
 
+            // Ignore elements which have a placeholder text
+            if ($this.attr('placeholder') && $this.attr('placeholder').length) {
+                return;
+            }
+
             // first look for labels which refer to this element by id
             if ($this.attr('id') && $this.attr('id').length) {
                 $Label = $('label[for=' + escapeSelector($this.attr('id'))  + ']');
@@ -101,8 +106,8 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
                 outputError(
                     $this,
                     'AccessibilityMissingLabel',
-                    'Input element without a describing label or title attribute',
-                    'Please add a title attribute or a label element with a "speaking" description for this element.'
+                    'Input element without a describing label, placeholder or title attribute',
+                    'Please add a placeholder or title attribute or a label element with a "speaking" description for this element.'
                 );
             }
         });
