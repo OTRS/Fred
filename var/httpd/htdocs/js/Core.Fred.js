@@ -37,6 +37,9 @@ Core.Fred = (function (TargetNS) {
         $('.FredClose').bind('click', function() {
             $(this).closest('.DevelFredBox').remove();
         });
+        $('.FredCloseAll').bind('click', function() {
+            $('.DevelFredBox').remove();
+        });
 
         // empty the search field
         $('.FredQuickSearch i').bind('click', function() {

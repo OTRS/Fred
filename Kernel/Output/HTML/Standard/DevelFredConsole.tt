@@ -24,7 +24,7 @@
             <i class="fa fa-cog FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
 [% RenderBlockEnd("Setting") %]
             <i class="fa fa-minus FredMinimize" title="Minimize"></i>
-            <i class="fa fa-times FredClose" title="Close"></i>
+            <i class="fa fa-times FredCloseAll" title="Close all"></i>
         </span>
     </h1>
     <div class="DevelFredBoxContent FredElementList">
