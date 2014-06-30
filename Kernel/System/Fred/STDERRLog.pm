@@ -91,7 +91,7 @@ sub DataGet {
         }
     }
 
-    # Make sure that we get everything to disk before trying to read it (otherwise content could be lost).
+# Make sure that we get everything to disk before trying to read it (otherwise content could be lost).
     STDERR->flush();
 
     # open the STDERR.log file to get the STDERR messages
