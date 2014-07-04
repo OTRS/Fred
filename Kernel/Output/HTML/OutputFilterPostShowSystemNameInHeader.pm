@@ -69,7 +69,7 @@ sub Run {
     # inject system name right into the middle of the header to always have the attention
     my $Search  = '(<div \s* id="Logo"></div>)';
     my $Replace = <<"FILTERINPUT_HTML";
-<div style="font-size:18px; background-color: $BackgroundColor; padding: 10px 10px 15px 10px; width: 400px; text-align: center; position: absolute; left: 50%; margin-left: -110px; top: 0px; border-radius: 0px 0px 5px 5px;">$SystemName</div>
+<div style="font-size:13px; background-color: $BackgroundColor; padding: 6px 6px 12px 6px; text-shadow: 1px 1px 1px #333; width: 400px; text-align: center; position: absolute; left: 50%; margin-left: -206px; top: 0px;">$SystemName</div>
 FILTERINPUT_HTML
     ${ $Param{Data} } =~ s{$Search}{$Replace$1}xms;
 
