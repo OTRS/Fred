@@ -59,7 +59,10 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             }
 
             if (!$Self->{Translation}->{$What}) {
-                $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new( %{$Self} );
+                $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new(
+                    ConfigObject => $Kernel::OM->Get('Kernel::Config'),
+                    LogObject => $Kernel::OM->Get('Kernel::System::Log'),
+                );
                 $Self->{TranslationDebugObject}->InsertWord(What => $What);
             }
 
@@ -74,7 +77,10 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             my ( $Self, $Text, @Parameters ) = @_;
 
             if ($Text && !$Self->{Translation}->{$Text}) {
-                $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new(%{$Self});
+                $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new(
+                    ConfigObject => $Kernel::OM->Get('Kernel::Config'),
+                    LogObject => $Kernel::OM->Get('Kernel::System::Log'),
+                );
                 $Self->{TranslationDebugObject}->InsertWord(What => $Text);
             }
 
@@ -88,7 +94,10 @@ if ( $ENV{HTTP_USER_AGENT} ) {
         *Kernel::System::DB::Prepare = sub {
             my ( $Self, %Param ) = @_;
 
-            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(%{$Self});
+            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(
+                ConfigObject => $Kernel::OM->Get('Kernel::Config'),
+                LogObject => $Kernel::OM->Get('Kernel::System::Log'),
+            );
             $Self->{SQLLogObject}->PreStatement(%Param);
             my $Result = $Self->PrepareOriginal(%Param);
             $Self->{SQLLogObject}->PostStatement(%Param);
@@ -103,7 +112,10 @@ if ( $ENV{HTTP_USER_AGENT} ) {
         *Kernel::System::DB::Do = sub {
             my ( $Self, %Param ) = @_;
 
-            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(%{$Self});
+            $Self->{SQLLogObject} ||= Kernel::System::Fred::SQLLog->new(
+                ConfigObject => $Kernel::OM->Get('Kernel::Config'),
+                LogObject => $Kernel::OM->Get('Kernel::System::Log'),
+            );
             $Self->{SQLLogObject}->PreStatement(%Param);
             my $Result = $Self->DoOriginal(%Param);
             $Self->{SQLLogObject}->PostStatement(%Param);
