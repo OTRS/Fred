@@ -14,6 +14,11 @@
     -webkit-opacity: [% Config("Fred::ConsoleOpacity") %];
     opacity: [% Config("Fred::ConsoleOpacity") %];
 }
+[% IF Config("Fred::ConsoleHeight") %]
+.DevelFredBoxContent {
+    max-height: [% Config("Fred::ConsoleHeight") %];
+}
+[% END %]
 </style>
 
 <div class="DevelFredBox">

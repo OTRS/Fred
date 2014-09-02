@@ -70,6 +70,14 @@
             <String Regex="">50%</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Fred::ConsoleHeight" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width of the Fred console in percent.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">200px</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Fred::ConsoleOpacity" Required="0" Valid="1">
         <Description Translatable="1">Defines the opacity of the Fred console, e.g. 0.9 for 10% transparency.</Description>
         <Group>Fred</Group>
