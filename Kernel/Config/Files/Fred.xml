@@ -71,7 +71,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::ConsoleHeight" Required="0" Valid="1">
-        <Description Translatable="1">Defines the width of the Fred console in percent.</Description>
+        <Description Translatable="1">Defines the height of the Fred console in pixel.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
