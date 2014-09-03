@@ -34,7 +34,6 @@
 }
 
 .DevelFredBoxContent {
-    max-height: 150px;
     overflow-y: auto;
     border: 1px solid #999;
 }
