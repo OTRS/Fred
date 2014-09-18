@@ -7,7 +7,10 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-3.2.3 2014-??-??
+3.2.6 2014-??-??
+ - 2014-09-18 Removed duplicated entries from TranslationDebug, thanks to Thorsten Eckel!
+
+3.2.5 2014-09-16
  - 2014-06-10 Improved HTML check to accept placeholder attributes.
 
 3.2.2 2014-03-04
