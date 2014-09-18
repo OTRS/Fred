@@ -106,17 +106,17 @@ sub DataGet {
 
         chomp $Line;
         next LINE if $Line eq '';
-        
-        # skip duplicate entries
-        next LINE if $LogLines{ $Line };
 
-        $LogLines{ $Line } = 1;
+        # skip duplicate entries
+        next LINE if $LogLines{$Line};
+
+        $LogLines{$Line} = 1;
     }
     close $Filehandle;
 
     $Self->InsertWord( What => "FRED\n" );
 
-    my @LogLines              = keys %LogLines;
+    my @LogLines = keys %LogLines;
     $Param{ModuleRef}->{Data} = \@LogLines;
 
     return 1;
