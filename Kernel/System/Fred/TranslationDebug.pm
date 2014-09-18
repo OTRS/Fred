@@ -105,6 +105,9 @@ sub DataGet {
 
         chomp $Line;
         next LINE if $Line eq '';
+        
+        # skip duplicate entries
+        next LINE if scalar grep { $Line eq $_ } @LogMessages;
 
         push @LogMessages, $Line;
     }
