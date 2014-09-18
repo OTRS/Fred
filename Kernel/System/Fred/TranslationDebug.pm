@@ -96,9 +96,10 @@ sub DataGet {
         ];
         return;
     }
-    my @LogMessages;
 
-    # get the whole information
+    # get distinct entries from TranslationDebug.log
+    # till the last 'FRED' entry
+    my %LogLines;
     LINE:
     for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ /FRED/;
@@ -107,15 +108,16 @@ sub DataGet {
         next LINE if $Line eq '';
         
         # skip duplicate entries
-        next LINE if scalar grep { $Line eq $_ } @LogMessages;
+        next LINE if $LogLines{ $Line };
 
-        push @LogMessages, $Line;
+        $LogLines{ $Line } = 1;
     }
     close $Filehandle;
 
     $Self->InsertWord( What => "FRED\n" );
 
-    $Param{ModuleRef}->{Data} = \@LogMessages;
+    my @LogLines              = keys %LogLines;
+    $Param{ModuleRef}->{Data} = \@LogLines;
 
     return 1;
 }
