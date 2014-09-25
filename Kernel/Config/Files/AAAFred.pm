@@ -18,6 +18,8 @@ use Kernel::System::Fred::ConfigLog;
 use Kernel::System::Fred::SQLLog;
 use Kernel::System::Fred::TranslationDebug;
 
+our $ObjectManagerDisabled = 1;
+
 if ( $ENV{HTTP_USER_AGENT} ) {
 
     # check if the needed path is available
