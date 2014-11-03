@@ -133,7 +133,7 @@ sub CreateFredOutput {
 sub _ModPerl {
 
     # find out, if modperl is used
-    my $ModPerl = 'is not activated';
+    my $ModPerl = 'not active';
 
     ## no critic
     if ( exists $ENV{MOD_PERL} && defined $mod_perl::VERSION ) {

@@ -39,8 +39,8 @@
     </h1>
     <div class="DevelFredBoxContent FredElementList">
         <span>System <strong>[% Data.SystemName | html %]</strong></span>
-        <span class="[% Data.BranchClass | html %]">On branch <strong>[% Data.BranchName | html %]</strong></span>
+        <span class="[% Data.BranchClass | html %]">Branch <strong>[% Data.BranchName | html %]</strong></span>
         <span>mod_perl <strong>[% Data.ModPerl | html %]</strong></span>
-        <span>Perl version <strong>[% Data.Perl | html %]</strong></span>
+        <span>Perl <strong>[% Data.Perl | html %]</strong></span>
     </div>
 </div>
