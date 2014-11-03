@@ -14,6 +14,8 @@ use warnings;
 
 use vars qw(@ISA $VERSION);
 
+use Cwd;
+
 =head1 NAME
 
 Kernel::Output::HTML::FredConsole - layout backend module
@@ -87,12 +89,41 @@ sub CreateFredOutput {
         );
     }
 
+    # get config
+    my $SystemName = $Self->{ConfigObject}->Get('Fred::SystemName')
+        || $Self->{ConfigObject}->Get('Home');
+    my $BackgroundColor = $Self->{ConfigObject}->Get('Fred::BackgroundColor')
+        || 'red';
+    my $BranchName;
+
+    # Add current git branch to output
+    my $Home = $Self->{ConfigObject}->Get('Home');
+    if ( -d "$Home/.git" ) {
+        my $OldWorkingDir = getcwd();
+        chdir($Home);
+        my $GitResult = `git branch`;
+        chdir($OldWorkingDir);
+
+        if ($GitResult) {
+            ($BranchName) = $GitResult =~ m/^[*] \s+ (\S+)/xms;
+        }
+    }
+
+    my $BranchClass;
+    if ($BranchName eq 'master') {
+        $BranchClass = 'Warning';
+    }
+
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredConsole',
         Data         => {
             Text    => $Console,
             ModPerl => _ModPerl(),
             Perl    => sprintf( "%vd", $^V ),
+            SystemName => $SystemName,
+            BranchName => $BranchName,
+            BranchClass => $BranchClass,
+            BackgroundColor => $BackgroundColor,
         },
     );
 

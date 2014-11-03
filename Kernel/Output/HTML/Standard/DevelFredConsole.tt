@@ -14,6 +14,11 @@
     -webkit-opacity: [% Config("Fred::ConsoleOpacity") %];
     opacity: [% Config("Fred::ConsoleOpacity") %];
 }
+
+.DevelFredBox h1 {
+    background-color: [% Data.BackgroundColor | html %];
+}
+
 [% IF Config("Fred::ConsoleHeight") %]
 .DevelFredBoxContent {
     max-height: [% Config("Fred::ConsoleHeight") %];
@@ -23,7 +28,7 @@
 
 <div class="DevelFredBox">
     <h1>
-        Fred
+        Fred Console
         <span class="FredToolBar">
 [% RenderBlockStart("Setting") %]
             <i class="fa fa-cog FredSettings" data-url="[% Env("Baselink") %]Action=DevelFred;Subaction=Setting"></i>
@@ -33,7 +38,9 @@
         </span>
     </h1>
     <div class="DevelFredBoxContent FredElementList">
-        <span>mod_perl [% Data.ModPerl | html %]</span>
-        <span>Perl [% Data.Perl | html %]</span>
+        <span>System <strong>[% Data.SystemName | html %]</strong></span>
+        <span class="[% Data.BranchClass | html %]">On branch <strong>[% Data.BranchName | html %]</strong></span>
+        <span>mod_perl <strong>[% Data.ModPerl | html %]</strong></span>
+        <span>Perl version <strong>[% Data.Perl | html %]</strong></span>
     </div>
 </div>
