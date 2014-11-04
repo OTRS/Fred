@@ -94,7 +94,7 @@ sub CreateFredOutput {
         || $Self->{ConfigObject}->Get('Home');
     my $BackgroundColor = $Self->{ConfigObject}->Get('Fred::BackgroundColor')
         || 'red';
-    my $BranchName;
+    my $BranchName = 'could not be detected';
 
     # Add current git branch to output
     my $Home = $Self->{ConfigObject}->Get('Home');

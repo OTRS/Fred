@@ -151,6 +151,17 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Fred::Module###ConfigSwitch" Required="0" Valid="1">
+        <Description Translatable="1">Turn on if you want to use the config switch mechanism.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Active">0</Item>
+                <Item Key="Description">Switch on or off some often needed config items directly in Fred.</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Fred::Module###STDERRLog" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to see the STDERRLog.</Description>
         <Group>Fred</Group>
@@ -230,6 +241,32 @@
                 <Item Key="0">Config</Item>
                 <Item Key="2">Package</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::ConfigSwitch" Required="1" Valid="1">
+        <Description Translatable="1">List of config settings which should be available for quick switch. Please add only settings with possible values 0 or 1 (No/Yes).</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>Frontend::RichText</Item>
+                <Item>Frontend::DebugMode</Item>
+                <Item>Frontend::MenuDragDropEnabled</Item>
+                <Item>TicketACL::Debug::Enabled</Item>
+                <Item>Ticket::Frontend::NeedSpellCheck</Item>
+                <Item>Ticket::Frontend::AgentTicketBulk###RequiredLock</Item>
+                <Item>Ticket::Responsible</Item>
+                <Item>Ticket::Type</Item>
+                <Item>Ticket::Service</Item>
+                <Item>Ticket::Watcher</Item>
+                <Item>Ticket::UseArticleColors</Item>
+                <Item>CheckMXRecord</Item>
+                <Item>CheckEmailAddresses</Item>
+                <Item>SessionUseCookie</Item>
+                <Item>Loader::Enabled::CSS</Item>
+                <Item>Loader::Enabled::JS</Item>
+                <Item>OpenMainMenuOnHover</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::SystemName" Required="1" Valid="1">

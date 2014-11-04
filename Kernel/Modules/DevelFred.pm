@@ -147,6 +147,43 @@ sub Run {
         );
     }
 
+    # ---------------------------------------------------------- #
+    # handle for config switch
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'ConfigSwitchAJAX' ) {
+
+        my $ItemKey   = $Self->{ParamObject}->GetParam( Param => 'Key' );
+        my $ItemValue = $Self->{ParamObject}->GetParam( Param => 'Value' );
+
+        my $Success = 0;
+
+        if ($ItemKey) {
+
+            # the value which is passed is the current value, so we
+            # need to switch it.
+            if ( $ItemValue == 1 ) {
+                $ItemValue = 0;
+            }
+            else {
+                $ItemValue = 1;
+            }
+
+            $Self->{SysConfigObject}->ConfigItemUpdate(
+                Valid => 1,
+                Key   => $ItemKey,
+                Value => $ItemValue,
+            );
+            $Success = 1;
+        }
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $Success,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     return 1;
 }
 

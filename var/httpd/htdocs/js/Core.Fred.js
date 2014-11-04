@@ -46,10 +46,15 @@ Core.Fred = (function (TargetNS) {
             $(this).prev('input').val('').trigger('keydown');
         });
 
-        // register the table filter on the quicksearch fields
-        $('.FredQuickSearch input').each(function() {
-            Core.UI.Table.InitTableFilter($(this), $(this).closest('.DevelFredBox').find('.FredTableDefault'));
-        });
+        // register the table filter on the quicksearch fields (only if Core.UI.Table is available)
+        if (Core.Debug.CheckDependency('Fred', 'Core.UI.Table', 'Core.UI.Table', true)) {
+            $('.FredQuickSearch input').each(function() {
+                Core.UI.Table.InitTableFilter($(this), $(this).closest('.DevelFredBox').find('.FredTableDefault'));
+            });
+        }
+        else {
+            $('.FredQuickSearch, .FredSearch').remove();
+        }
 
         // register new popup profile as needed by fred
         Core.UI.Popup.ProfileAdd('FredSettings', {
@@ -57,7 +62,7 @@ Core.Fred = (function (TargetNS) {
             Left:            100,
             Top:             100,
             Width:           400,
-            Height:          470
+            Height:          500
         });
 
         // open the settings popup

@@ -232,3 +232,53 @@ table.FredTableDefault tr:last-child td {
     padding: 10px;
     white-space: pre-line;
 }
+
+table.FredSwitchTable td {
+    padding: 3px;
+    vertical-align: middle;
+}
+
+table.FredSwitchTable td:first-child {
+    width: 40px;
+}
+
+table.FredSwitchTable td:last-child {
+    padding-left: 10px;
+}
+
+.FredSwitch a {
+    display: block;
+    position: relative;
+    width: 30px;
+    border: 1px solid #888;
+    height: 16px;
+    border-radius: 10px;
+    margin: 0px auto;
+    background-color: #eee
+}
+
+.FredSwitch a span {
+    width: 15px;
+    height: 14px;
+    border-radius: 13px;
+    border: 1px solid #333;
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    background-color: #fff;
+    -webkit-transition: all 0.2s ease-in;
+     -moz-transition: all 0.2s ease-in;
+       -o-transition: all 0.2s ease-in;
+          transition: all 0.2s ease-in;
+}
+
+.FredSwitch.On a {
+    background-color: #777;
+    border-color: #333;
+}
+
+.FredSwitch.On span {
+    right: -1px;
+    left: auto;
+}
