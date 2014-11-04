@@ -86,7 +86,7 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    $Self->{ConfigsToSwitch} = $Self->{ConfigObject}->Get('Loader::ConfigSwitch');
+    $Self->{ConfigsToSwitch} = $Self->{ConfigObject}->Get('Fred::ConfigSwitch');
 
     return if !$Self->{ConfigsToSwitch};
 
