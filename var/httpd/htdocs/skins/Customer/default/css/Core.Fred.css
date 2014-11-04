@@ -18,9 +18,9 @@
 
 
 .DevelFredContainer:hover {
-    -webkit-opacity: 1.0;
-    -moz-opacity: 1.0;
-    opacity: 1.0;
+    -webkit-opacity: 1.0 !important;
+    -moz-opacity: 1.0 !important;
+    opacity: 1.0 !important;
 }
 
 .DevelFredBox {
@@ -201,7 +201,7 @@ table.FredTableDefault tr:last-child td {
 }
 
 .DevelFredBox .FredElementList {
-    padding: 5px 3px 3px 5px;
+    padding: 5px 3px 0px 5px;
 }
 
 .FredElementList span {
@@ -210,12 +210,19 @@ table.FredTableDefault tr:last-child td {
     padding: 3px 5px;
     background-color: #eee;
     border: 1px solid #ccc;
-    margin: 0px 3px 3px 0px;
+    margin: 0px 3px 5px 0px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
+    white-space: nowrap;
+}
+
+.FredElementList span.Warning {
+    background-color: red;
+    color: #fff;
+    border-color: #CE0000;
 }
 
 .FredMonoSpace {
