@@ -16,7 +16,6 @@
     z-index: 5000;
 }
 
-
 .DevelFredContainer:hover {
     -webkit-opacity: 1.0 !important;
     -moz-opacity: 1.0 !important;
@@ -36,7 +35,8 @@
 .DevelFredBoxContent {
     max-height: 150px;
     overflow-y: auto;
-    border: 1px solid #999;
+    border: 1px solid #aaa;
+    border-top: 0px;
 }
 
 .DevelFredBoxContent .FredQuickSearch {
@@ -217,6 +217,20 @@ table.FredTableDefault tr:last-child td {
     -o-border-radius: 3px;
     border-radius: 3px;
     white-space: nowrap;
+}
+
+.FredElementList span i {
+    position: relative;
+    top: 1px;
+}
+
+.FredElementList span a {
+    text-decoration: underline;
+    color: #000;
+}
+
+.FredElementList span a:hover {
+    text-decoration: none;
 }
 
 .FredElementList span.Warning {

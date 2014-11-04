@@ -110,8 +110,13 @@ sub CreateFredOutput {
     }
 
     my $BranchClass;
+    my $BugNumber;
+
     if ($BranchName eq 'master') {
         $BranchClass = 'Warning';
+    }
+    elsif ( $BranchName =~ m{bug-((\d){1,6}).*} ) {
+        $BugNumber = $1;
     }
 
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
@@ -124,6 +129,7 @@ sub CreateFredOutput {
             BranchName => $BranchName,
             BranchClass => $BranchClass,
             BackgroundColor => $BackgroundColor,
+            BugNumber => $BugNumber,
         },
     );
 

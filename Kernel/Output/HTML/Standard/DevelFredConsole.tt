@@ -42,5 +42,8 @@
         <span class="[% Data.BranchClass | html %]">Branch <strong>[% Data.BranchName | html %]</strong></span>
         <span>mod_perl <strong>[% Data.ModPerl | html %]</strong></span>
         <span>Perl <strong>[% Data.Perl | html %]</strong></span>
+    [% IF Data.BugNumber %]
+        <span><i class="fa fa-external-link"></i> Open <a href="http://bugs.otrs.org/show_bug.cgi?id=[% Data.BugNumber | uri %]" target="_blank">Bug#[% Data.BugNumber | html %]</a> in BugZilla</span>
+    [% END %]
     </div>
 </div>
