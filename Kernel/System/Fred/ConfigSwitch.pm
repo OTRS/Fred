@@ -86,12 +86,12 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    $Self->{ConfigsToSwitch} = $Self->{ConfigObject}->Get('Fred::ConfigSwitch');
+    my $Config = $Self->{ConfigObject}->Get('Fred::ConfigSwitch');
 
-    return if !$Self->{ConfigsToSwitch};
+    return if !$Config->{Settings};
 
     my @ConfigItems;
-    for my $Item ( sort @{ $Self->{ConfigsToSwitch} } ) {
+    for my $Item ( sort @{ $Config->{Settings} } ) {
         push @ConfigItems, {
             Key   => $Item,
             Value => $Self->{ConfigObject}->Get($Item),
