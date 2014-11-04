@@ -89,7 +89,7 @@ sub DataGet {
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
     my $Filehandle;
-    if ( !open $Filehandle, '<', $File ) {
+    if ( !open $Filehandle, '<:utf8', $File ) {
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/",
             "Can't read /var/fred/TranslationDebug.log"
@@ -116,7 +116,7 @@ sub DataGet {
 
     $Self->InsertWord( What => "FRED\n" );
 
-    my @LogLines = keys %LogLines;
+    my @LogLines = sort {$a cmp $b} keys %LogLines;
     $Param{ModuleRef}->{Data} = \@LogLines;
 
     return 1;
@@ -148,7 +148,7 @@ sub InsertWord {
 
     # save the word in log file
     my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
-    open my $Filehandle, '>>', $File || die "Can't write $File !\n";
+    open my $Filehandle, '>>:utf8', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What} . "\n";
     close $Filehandle;
 
