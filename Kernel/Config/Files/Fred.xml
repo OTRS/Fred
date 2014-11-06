@@ -251,6 +251,7 @@
             <Array>
                 <Item>Frontend::RichText</Item>
                 <Item>Frontend::DebugMode</Item>
+                <Item>Frontend::TemplateCache</Item>
                 <Item>Frontend::MenuDragDropEnabled</Item>
                 <Item>TicketACL::Debug::Enabled</Item>
                 <Item>Ticket::Frontend::NeedSpellCheck</Item>
@@ -265,6 +266,7 @@
                 <Item>Loader::Enabled::CSS</Item>
                 <Item>Loader::Enabled::JS</Item>
                 <Item>OpenMainMenuOnHover</Item>
+                <Item>SecureMode</Item>
             </Array>
         </Setting>
     </ConfigItem>
