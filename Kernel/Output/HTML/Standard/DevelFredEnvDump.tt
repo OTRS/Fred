@@ -15,7 +15,7 @@
             <i class="fa fa-times FredClose" title="Close"></i>
         </span>
     </h1>
-    <div class="DevelFredBoxContent">
+    <div class="DevelFredBoxContent" id="DevelFredEnvDump">
         <div class="FredQuickSearch">
             <input type="text" placeholder="Search for..." />
             <i class="fa fa-times"></i>

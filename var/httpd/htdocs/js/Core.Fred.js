@@ -27,12 +27,46 @@ Core.Fred = (function (TargetNS) {
      */
     TargetNS.Init = function () {
 
+        var WidgetStatus = {}, Key;
+
+        // get status of Fred widgets
+        if (window && window.localStorage) {
+            WidgetStatus = window.localStorage.getItem('FRED_widget_status');
+
+            try {
+                WidgetStatus = JSON.parse(WidgetStatus);
+            }
+            catch (Exception) {
+                WidgetStatus = {};
+            }
+
+            for (Key in WidgetStatus) {
+                $('.DevelFredBoxContent#' + Key).removeClass('Expanded Collapsed')
+                if (WidgetStatus[Key] === 'Collapsed' || WidgetStatus[Key] === 'Expanded') {
+                    $('#' + Key).addClass(WidgetStatus[Key]);
+                }
+            }
+        }
+
+        // all Fred widgets without a saved widget status are now expanded
+        $('.DevelFredBoxContent').filter(':not(.Collapsed, .Expanded)').addClass('Expanded');
+
         // Toolbar items
         $('.FredSearch').bind('click', function() {
             $(this).closest('.DevelFredBox').find('.FredQuickSearch').toggle();
         });
         $('.FredMinimize').bind('click', function() {
-            $(this).closest('.DevelFredBox').find('.DevelFredBoxContent').slideToggle('fast');
+            var $WidgetElement = $(this).closest('.DevelFredBox').find('.DevelFredBoxContent');
+
+            $WidgetElement
+                .slideToggle('fast')
+                .toggleClass('Collapsed')
+                .toggleClass('Expanded');
+
+            WidgetStatus[$WidgetElement.attr('id')] = $WidgetElement.hasClass('Collapsed') ? 'Collapsed' : 'Expanded';
+            if (window && window.localStorage) {
+                window.localStorage.setItem('FRED_widget_status', JSON.stringify(WidgetStatus));
+            }
         });
         $('.FredClose').bind('click', function() {
             $(this).closest('.DevelFredBox').remove();

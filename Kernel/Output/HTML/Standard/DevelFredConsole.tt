@@ -37,7 +37,7 @@
             <i class="fa fa-times FredCloseAll" title="Close all"></i>
         </span>
     </h1>
-    <div class="DevelFredBoxContent FredElementList">
+    <div class="DevelFredBoxContent FredElementList" id="DevelFredConsole">
         <span>System <strong>[% Data.SystemName | html %]</strong></span>
         <span class="[% Data.BranchClass | html %]">Branch <strong>[% Data.BranchName | html %]</strong></span>
         <span>mod_perl <strong>[% Data.ModPerl | html %]</strong></span>

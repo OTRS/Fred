@@ -16,7 +16,7 @@
             <i class="fa fa-times FredClose" title="Close"></i>
         </span>
     </h1>
-    <div class="DevelFredBoxContent">
+    <div class="DevelFredBoxContent" id="DevelFredSQLLog">
         <div class="FredElementList">
             <span>Executed <strong>[% Data.AllStatements %]</strong> Statements</span>
             <span><strong>[% Data.SelectStatements | html %]</strong> SELECTs + <strong>[% Data.DoStatements | html %]</strong> DOs</span>

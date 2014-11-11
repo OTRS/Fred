@@ -15,7 +15,7 @@
             <i class="fa fa-times FredClose" title="Close"></i>
         </span>
     </h1>
-    <div class="DevelFredBoxContent FredElementList">
+    <div class="DevelFredBoxContent FredElementList" id="DevelFredTranslationDebug">
 [% Data.HTMLLines %]
     </div>
 </div>

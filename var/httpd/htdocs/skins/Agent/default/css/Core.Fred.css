@@ -37,6 +37,11 @@
     overflow-y: auto;
     border: 1px solid #aaa;
     border-top: 0px;
+    display: none;
+}
+
+.DevelFredBoxContent.Expanded {
+    display: block;
 }
 
 .DevelFredBoxContent .FredQuickSearch {
