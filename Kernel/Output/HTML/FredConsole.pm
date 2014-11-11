@@ -76,8 +76,7 @@ sub CreateFredOutput {
     }
 
     # create the console table
-    my $Console
-        = 'Activated modules: <strong>'
+    my $Console = 'Activated modules: <strong>'
         . ( join ' - ', @{ $Param{ModuleRef}->{Data} } )
         . '</strong>';
 
@@ -112,7 +111,7 @@ sub CreateFredOutput {
     my $BranchClass;
     my $BugNumber;
 
-    if ($BranchName eq 'master') {
+    if ( $BranchName eq 'master' ) {
         $BranchClass = 'Warning';
     }
     elsif ( $BranchName =~ m{bug-((\d){1,6}).*} ) {
@@ -122,14 +121,14 @@ sub CreateFredOutput {
     $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
         TemplateFile => 'DevelFredConsole',
         Data         => {
-            Text    => $Console,
-            ModPerl => _ModPerl(),
-            Perl    => sprintf( "%vd", $^V ),
-            SystemName => $SystemName,
-            BranchName => $BranchName,
-            BranchClass => $BranchClass,
+            Text            => $Console,
+            ModPerl         => _ModPerl(),
+            Perl            => sprintf( "%vd", $^V ),
+            SystemName      => $SystemName,
+            BranchName      => $BranchName,
+            BranchClass     => $BranchClass,
             BackgroundColor => $BackgroundColor,
-            BugNumber => $BugNumber,
+            BugNumber       => $BugNumber,
         },
     );
 

@@ -78,8 +78,7 @@ sub CreateFredOutput {
     my $SessionID = $Self->{LayoutObject}->{EnvRef}->{SessionID};
     my %SessionData;
     if ($SessionID) {
-        %SessionData
-            = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+        %SessionData = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
     }
 
     for my $Key ( sort keys %SessionData ) {

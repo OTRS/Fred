@@ -14,6 +14,7 @@
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"/>
         <File Permission="644" Location="Kernel/Modules/DevelFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FredConfigSwitch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredEnvDump.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
@@ -25,6 +26,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigSwitch.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredContainer.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredEnvDump.tt"/>
@@ -37,6 +39,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.tt"/>
         <File Permission="644" Location="Kernel/System/Fred.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
+        <File Permission="644" Location="Kernel/System/Fred/ConfigSwitch.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/EnvDump.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/HTMLCheck.pm"/>
