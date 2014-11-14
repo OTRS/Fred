@@ -173,6 +173,14 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Fred::STDERRLogFilter" Required="0" Valid="0">
+        <Description Translatable="1">Turn on if you want to filter the output of the STDERRLog. You can add a regular expression to filter the output.</Description>
+        <Group>Fred</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">.* Subroutine .* redefined \s at .* line</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Fred::Module###SessionDump" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to see the data in the serverside session object.</Description>
         <Group>Fred</Group>

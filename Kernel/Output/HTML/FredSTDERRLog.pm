@@ -76,7 +76,16 @@ sub CreateFredOutput {
 
     # create html string
     my $HTMLLines;
+    my $HTMLLinesFilter = $Self->{ConfigObject}->Get('Fred::STDERRLogFilter');
+
+    LINE:
     for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
+
+        # filter content if needed
+        if ($HTMLLinesFilter) {
+            next LINE if $Line =~ /$HTMLLinesFilter/smx;
+        }
+
         $HTMLLines .= $Line;
     }
 
