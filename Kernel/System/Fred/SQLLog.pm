@@ -113,8 +113,8 @@ sub DataGet {
         # do not show the log from the previous request
         last LINE if $Line =~ /FRED/;
 
-     # a typical line from SQL.log looks like:
-     # SQL-SELECT##!##SELECT 1 + 1 FROM dual WHERE id = ? AND user_id = ?##!##1, 2##!##Kernel::System::User##!##0.004397
+# a typical line from SQL.log looks like:
+# SQL-SELECT##!##SELECT 1 + 1 FROM dual WHERE id = ? AND user_id = ?##!##1, 2##!##Kernel::System::User##!##0.004397
         my @SplitLogLine = split /##!##/, $Line;
         if ( $SplitLogLine[0] eq 'SQL-DO' && $SplitLogLine[1] =~ m{ \A SELECT }xms ) {
             $SplitLogLine[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
