@@ -15,7 +15,7 @@
     opacity: [% Config("Fred::ConsoleOpacity") %];
 }
 
-.DevelFredBox h1 {
+.DevelFredBox.Expanded h1 {
     background-color: [% Data.BackgroundColor | html %];
 }
 

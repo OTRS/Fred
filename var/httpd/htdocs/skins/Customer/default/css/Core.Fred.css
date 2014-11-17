@@ -83,12 +83,20 @@
 
 .DevelFredBox h1 {
     font-size: 12px;
-    background: #255565;
+    background-color: #888;
     color: #fff;
     margin: 0px;
     padding: 6px 7px;
     cursor: move;
     overflow: hidden;
+}
+
+.DevelFredBox.Expanded h1 {
+    background: #255565;
+}
+
+.DevelFredBox.Collapsed h1 {
+    background-color: #888;
 }
 
 .DevelFredBox h1 .FredToolBar {

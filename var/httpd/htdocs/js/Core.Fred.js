@@ -46,7 +46,10 @@ Core.Fred = (function (TargetNS) {
             for (Key in WidgetStatus) {
                 $('.DevelFredBoxContent#' + Key).removeClass('Expanded Collapsed')
                 if (WidgetStatus[Key] === 'Collapsed' || WidgetStatus[Key] === 'Expanded') {
-                    $('#' + Key).addClass(WidgetStatus[Key]);
+                    $('#' + Key)
+                        .addClass(WidgetStatus[Key])
+                        .closest('.DevelFredBox')
+                        .addClass(WidgetStatus[Key]);
                 }
             }
         }
@@ -65,6 +68,11 @@ Core.Fred = (function (TargetNS) {
                 .slideToggle('fast')
                 .toggleClass('Collapsed')
                 .toggleClass('Expanded');
+
+            $WidgetElement
+                .closest('.DevelFredBox')
+                .removeClass('Expanded Collapsed')
+                .addClass($WidgetElement.hasClass('Expanded') ? 'Expanded' : 'Collapsed');
 
             WidgetStatus[$WidgetElement.attr('id')] = $WidgetElement.hasClass('Collapsed') ? 'Collapsed' : 'Expanded';
             if (window && window.localStorage) {
