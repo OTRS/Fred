@@ -35,6 +35,9 @@ Core.Fred = (function (TargetNS) {
 
             try {
                 WidgetStatus = JSON.parse(WidgetStatus);
+                if (WidgetStatus === null) {
+                    WidgetStatus = {};
+                }
             }
             catch (Exception) {
                 WidgetStatus = {};
