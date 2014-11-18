@@ -178,7 +178,7 @@
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">: [ ] Subroutine [ ] [_a-zA-Z]+ [ ] redefined [ ] at [ ] .+ [ ] line [ ] \d+ \.</String>
+            <String Regex="">: [ ] Subroutine [ ] [_a-zA-Z0-9]+ [ ] redefined [ ] at [ ] .+ [ ] line [ ] \d+ \.</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Fred::Module###SessionDump" Required="0" Valid="1">
