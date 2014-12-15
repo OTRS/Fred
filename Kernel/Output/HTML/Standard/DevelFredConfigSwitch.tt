@@ -43,7 +43,8 @@
 $('.FredSwitch a').unbind('click').bind('click', function(Event) {
 
     var Key = $(this).data('key'),
-        Value = parseInt($(this).data('value'), 10);
+        Value = parseInt($(this).data('value'), 10),
+        Data = {};
 
     if (!Key) {
         return false;
@@ -58,7 +59,7 @@ $('.FredSwitch a').unbind('click').bind('click', function(Event) {
         .next('td')
         .prepend('<i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;');
 
-    var Data = {
+    Data = {
         Action: 'DevelFred',
         Subaction: 'ConfigSwitchAJAX',
         'Key': Key,
