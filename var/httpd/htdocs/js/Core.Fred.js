@@ -45,12 +45,14 @@ Core.Fred = (function (TargetNS) {
             }
 
             for (Key in WidgetStatus) {
-                $('.DevelFredBoxContent#' + Key).removeClass('Expanded Collapsed');
-                if (WidgetStatus[Key] === 'Collapsed' || WidgetStatus[Key] === 'Expanded') {
-                    $('#' + Key)
-                        .addClass(WidgetStatus[Key])
-                        .closest('.DevelFredBox')
-                        .addClass(WidgetStatus[Key]);
+                if (WidgetStatus.hasOwnProperty(Key)) {
+                    $('.DevelFredBoxContent#' + Key).removeClass('Expanded Collapsed');
+                    if (WidgetStatus[Key] === 'Collapsed' || WidgetStatus[Key] === 'Expanded') {
+                        $('#' + Key)
+                            .addClass(WidgetStatus[Key])
+                            .closest('.DevelFredBox')
+                            .addClass(WidgetStatus[Key]);
+                    }
                 }
             }
         }
