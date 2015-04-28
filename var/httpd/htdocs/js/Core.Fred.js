@@ -1,5 +1,4 @@
 // --
-// Core.Fred.js - Generic Fred functions
 // Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -21,7 +20,6 @@ Core.Fred = (function (TargetNS) {
 
     /**
      * @function
-     * @return nothing.
      * @description
      *      This function inits generic fred functions
      */

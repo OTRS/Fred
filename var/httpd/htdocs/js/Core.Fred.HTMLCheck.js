@@ -1,5 +1,4 @@
 // --
-// Core.Fred.HTMLCheck.js - various HTML checks
 // Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -59,8 +58,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
      * @description
      *      Performs various accessibility checks to see if the HTML code
      *      violates some of our guidelines.
-     * @return
-     *      nothing, but calls OutputError if an error was found
+     *      Returns nothing, but calls OutputError if an error was found.
      */
 
     function CheckAccessibility() {
@@ -159,9 +157,8 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
     /**
      * @function
      * @description
-     *      Performs various checks for bad HTML practice
-     * @return
-     *      nothing, but calls OutputError if an error was found
+     *      Performs various checks for bad HTML practice.
+     *      Returns nothing, but calls OutputError if an error was found.
      */
 
     function CheckBadPractice() {
@@ -305,7 +302,6 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
      * @function
      * @description
      *      This function checks if HTMLCheck can be started (jQuery is loaded).
-     * @return nothing.
      */
     TargetNS.CheckForStart = function () {
         if (jQuery) {
@@ -324,8 +320,6 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
      * @function
      * @description
      *      Runs all available check functions
-     * @return
-     *      nothing
      */
     TargetNS.Run = function(){
         $.each(CheckFunctions, function(){

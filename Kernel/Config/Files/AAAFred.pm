@@ -1,5 +1,4 @@
 # --
-# AAAFred.pm - the config to bind STDERR to an log file usable for fred
 # Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

@@ -1,5 +1,4 @@
 // --
-// Core.Fred.JSLint.js - JSLint interface
 // Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -32,7 +31,6 @@ Core.Fred.JSLint = (function (TargetNS) {
     /**
      * @function
      * @private
-     * @return nothing
      * @description Start JSLint check.
      */
     function startJSLint() {
@@ -116,7 +114,6 @@ Core.Fred.JSLint = (function (TargetNS) {
 
     /**
      * @function
-     * @return nothing.
      * @description
      *      This is the init function for JSLint.
      */
@@ -135,7 +132,6 @@ Core.Fred.JSLint = (function (TargetNS) {
 
     /**
      * @function
-     * @return nothing
      * @description Get all scripts to check.
      */
     TargetNS.GetScripts = function () {
@@ -179,7 +175,6 @@ Core.Fred.JSLint = (function (TargetNS) {
 
     /**
      * @function
-     * @return nothing.
      * @description
      *      This function checks, if JSLint can be started (all scripts are loaded).
      */
