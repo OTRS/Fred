@@ -11,6 +11,12 @@ package Kernel::Output::HTML::FredSTDERRLog;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::Output::HTML::FredSTDERRLog - layout backend module
@@ -40,11 +46,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -63,7 +64,7 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
@@ -75,7 +76,7 @@ sub CreateFredOutput {
 
     # create html string
     my $HTMLLines;
-    my $HTMLLinesFilter = $Self->{ConfigObject}->Get('Fred::STDERRLogFilter');
+    my $HTMLLinesFilter = $Kernel::OM->Get('Kernel::Config')->Get('Fred::STDERRLogFilter');
 
     LINE:
     for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
@@ -91,7 +92,7 @@ sub CreateFredOutput {
     return if !$HTMLLines;
 
     # output the html
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
         TemplateFile => 'DevelFredSTDERRLog',
         Data         => {
             HTMLLines => $HTMLLines,

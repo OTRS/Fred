@@ -14,6 +14,11 @@ use warnings;
 
 use Data::Dumper;
 
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $Env in dtl
@@ -43,11 +48,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -66,28 +66,30 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
         return;
     }
 
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # Kernel::System::Fred::EnvDump::DataGet() is not used,
     # as the data of interest is not easily available there.
-    for my $Key ( sort keys %{ $Self->{LayoutObject}->{EnvRef} } ) {
+    for my $Key ( sort keys %{ $LayoutObject->{EnvRef} } ) {
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'EnvDataRow',
             Data => {
                 Key   => $Key,
-                Value => $Self->{LayoutObject}->{EnvRef}->{$Key},
+                Value => $LayoutObject->{EnvRef}->{$Key},
             },
         );
     }
 
     # output the html
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
         TemplateFile => 'DevelFredEnvDump',
     );
 

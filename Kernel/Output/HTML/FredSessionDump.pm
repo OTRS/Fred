@@ -12,6 +12,11 @@ package Kernel::Output::HTML::FredSessionDump;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
+
 use Data::Dumper;
 
 =head1 NAME
@@ -43,11 +48,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -66,23 +66,25 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
         return;
     }
 
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
-    my $SessionID = $Self->{LayoutObject}->{EnvRef}->{SessionID};
+    my $SessionID = $LayoutObject->{EnvRef}->{SessionID};
     my %SessionData;
     if ($SessionID) {
-        %SessionData = $Self->{LayoutObject}->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+        %SessionData = $LayoutObject->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
     }
 
     for my $Key ( sort keys %SessionData ) {
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'SessionDataRow',
             Data => {
                 Key   => $Key,
@@ -92,7 +94,7 @@ sub CreateFredOutput {
     }
 
     # output the html
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
         TemplateFile => 'DevelFredSessionDump',
     );
 

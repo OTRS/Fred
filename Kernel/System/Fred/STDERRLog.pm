@@ -35,24 +35,6 @@ handle the STDERR log data
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Fred::STDERRLog;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $FredObject = Kernel::System::Fred::STDERRLog->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-
 =cut
 
 sub new {

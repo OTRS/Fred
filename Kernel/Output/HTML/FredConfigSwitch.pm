@@ -11,7 +11,10 @@ package Kernel::Output::HTML::FredConfigSwitch;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -42,11 +45,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -65,7 +63,7 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
@@ -74,7 +72,7 @@ sub CreateFredOutput {
 
     return if !$Param{ModuleRef}->{Data};
 
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
         TemplateFile => 'DevelFredConfigSwitch',
         Data         => {
             ConfigItems => $Param{ModuleRef}->{Data},

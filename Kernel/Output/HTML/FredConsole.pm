@@ -11,7 +11,11 @@ package Kernel::Output::HTML::FredConsole;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
 
 use Cwd;
 
@@ -44,11 +48,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -67,7 +66,7 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
@@ -82,20 +81,21 @@ sub CreateFredOutput {
     return 1 if !$Param{ModuleRef}->{Status};
 
     if ( $Param{ModuleRef}->{Setting} ) {
-        $Self->{LayoutObject}->Block(
+        $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
             Name => 'Setting',
         );
     }
 
-    # get config
-    my $SystemName = $Self->{ConfigObject}->Get('Fred::SystemName')
-        || $Self->{ConfigObject}->Get('Home');
-    my $BackgroundColor = $Self->{ConfigObject}->Get('Fred::BackgroundColor')
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $SystemName = $ConfigObject->Get('Fred::SystemName')
+        || $ConfigObject->Get('Home');
+    my $BackgroundColor = $ConfigObject->Get('Fred::BackgroundColor')
         || 'red';
     my $BranchName = 'could not be detected';
 
     # Add current git branch to output
-    my $Home = $Self->{ConfigObject}->Get('Home');
+    my $Home = $ConfigObject->Get('Home');
     if ( -d "$Home/.git" ) {
         my $OldWorkingDir = getcwd();
         chdir($Home);
@@ -117,7 +117,7 @@ sub CreateFredOutput {
         $BugNumber = $1;
     }
 
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
         TemplateFile => 'DevelFredConsole',
         Data         => {
             Text            => $Console,

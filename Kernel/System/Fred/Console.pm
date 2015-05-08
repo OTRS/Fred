@@ -31,24 +31,6 @@ gives you all functions which are needed for the FRED-console
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Fred::Console;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $FredObject = Kernel::System::Fred::Console->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-
 =cut
 
 sub new {

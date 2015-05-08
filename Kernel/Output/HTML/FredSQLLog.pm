@@ -11,7 +11,10 @@ package Kernel::Output::HTML::FredSQLLog;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -42,11 +45,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -65,16 +63,18 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
         return;
     }
 
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Row',
             Data => {
                 Time            => $Line->[4] * 1000,
@@ -85,7 +85,7 @@ sub CreateFredOutput {
         );
 
         for my $Line ( split( /;/, $Line->[3] ) ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StackTrace',
                 Data => {
                     StackTrace => $Line,
@@ -94,7 +94,7 @@ sub CreateFredOutput {
         }
 
         if ( $Line->[2] ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'RowBindParameters',
                 Data => {
                     BindParameters => $Line->[2],
@@ -104,7 +104,7 @@ sub CreateFredOutput {
         }
     }
 
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
         TemplateFile => 'DevelFredSQLLog',
         Data         => {
             AllStatements    => $Param{ModuleRef}->{AllStatements},

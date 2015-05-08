@@ -11,7 +11,10 @@ package Kernel::Output::HTML::FredConfigLog;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -42,11 +45,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -65,18 +63,20 @@ sub CreateFredOutput {
 
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ModuleRef!',
         );
         return;
     }
 
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my $HTMLLines = '';
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
 
         for my $TD ( @{$Line} ) {
-            $TD = $Self->{LayoutObject}->Ascii2Html( Text => $TD );
+            $TD = $LayoutObject->Ascii2Html( Text => $TD );
         }
 
         if ( $Line->[1] eq 'True' ) {
@@ -97,7 +97,7 @@ sub CreateFredOutput {
 
     return if !$HTMLLines;
 
-    $Param{ModuleRef}->{Output} = $Self->{LayoutObject}->Output(
+    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
         TemplateFile => 'DevelFredConfigLog',
         Data         => {
             HTMLLines => $HTMLLines,

@@ -24,7 +24,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredSQLLog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FredTranslationDebug.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LayoutFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigSwitch.tt"/>
@@ -38,7 +37,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSQLLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredSTDERRLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredTranslationDebug.tt"/>
-        <File Permission="644" Location="Kernel/System/Fred.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigLog.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/ConfigSwitch.pm"/>
         <File Permission="644" Location="Kernel/System/Fred/Console.pm"/>

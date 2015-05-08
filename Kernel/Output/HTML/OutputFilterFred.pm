@@ -12,7 +12,11 @@ use strict;
 use warnings;
 use URI::Escape;
 
-use Kernel::System::Fred;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Fred',
+);
 
 =head1 NAME
 
@@ -35,12 +39,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(MainObject ConfigObject LogObject )) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    $Self->{LayoutObject} = $Param{LayoutObject};
     return $Self;
 }
 
@@ -50,8 +48,10 @@ sub Run {
     # perhaps no output is generated
     die 'Fred: At the moment, your code generates no output!' if !$Param{Data};
 
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # do not show the debug bar in Fred's setting window
-    if ( $Self->{LayoutObject}->{Action} && $Self->{LayoutObject}->{Action} eq 'DevelFred' ) {
+    if ( $LayoutObject->{Action} && $LayoutObject->{Action} eq 'DevelFred' ) {
         return 1;
     }
 
@@ -88,7 +88,7 @@ sub Run {
     }
 
     # get data of the activated modules
-    my $ModuleForRef   = $Self->{ConfigObject}->Get('Fred::Module');
+    my $ModuleForRef   = $Kernel::OM->Get('Kernel::Config')->Get('Fred::Module');
     my $ModulesDataRef = {};
     for my $Module ( sort keys %{$ModuleForRef} ) {
         if ( $ModuleForRef->{$Module}->{Active} ) {
@@ -96,16 +96,18 @@ sub Run {
         }
     }
 
-    my $FredObject = Kernel::System::Fred->new( %{$Self} );
+    for my $ModuleName ( sort keys %{$ModulesDataRef} ) {
 
-    # load the activated modules
-    $FredObject->DataGet(
-        FredModulesRef => $ModulesDataRef,
-        HTMLDataRef    => $Param{Data},
-    );
+        $Kernel::OM->Get( 'Kernel::System::Fred::' . $ModuleName )->DataGet(
+            ModuleRef      => $ModulesDataRef->{$ModuleName},
+            HTMLDataRef    => $Param{Data},
+            FredModulesRef => $ModulesDataRef,
+        );
 
-    # create freds output
-    $Self->{LayoutObject}->CreateFredOutput( FredModulesRef => $ModulesDataRef );
+        $Kernel::OM->Get( 'Kernel::Output::HTML::Fred' . $ModuleName )->CreateFredOutput(
+            ModuleRef => $ModulesDataRef->{$ModuleName},
+        );
+    }
 
     # build the content string
     my $Output = '';
@@ -124,7 +126,7 @@ sub Run {
     }smxeg;
 
     # Put output in the Fred Container
-    $Output = $Self->{LayoutObject}->Output(
+    $Output = $LayoutObject->Output(
         TemplateFile => 'DevelFredContainer',
         Data         => {
             Data => $Output
