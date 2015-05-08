@@ -14,6 +14,11 @@ use warnings;
 
 use IO::Handle;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::Fred::STDERRLog
@@ -57,11 +62,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -82,7 +82,7 @@ sub DataGet {
     # check needed stuff
     for my $Needed (qw(ModuleRef)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -94,7 +94,7 @@ sub DataGet {
     STDERR->flush();
 
     # open the STDERR.log file to get the STDERR messages
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/STDERR.log';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/STDERR.log';
     my $Filehandle;
 
     if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {

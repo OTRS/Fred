@@ -12,7 +12,9 @@ package Kernel::System::Fred::ConfigLog;
 use strict;
 use warnings;
 
-use Scalar::Util();
+our @ObjectDependencies = (
+    'Kernel::Config',
+);
 
 =head1 NAME
 
@@ -57,17 +59,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # ConfigObject holds a reference to us, so don't reference it to avoid
-    #   a ring reference.
-    Scalar::Util::weaken( $Self->{ConfigObject} );
-
-    # Don't call ConfigObject->Get() here, this could cause deep recursions.
-
     return $Self;
 }
 
@@ -87,8 +78,10 @@ sub DataGet {
 
     my @LogMessages;
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # open the TranslationDebug.log file to get the untranslated words
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/Config.log';
+    my $File = $ConfigObject->Get('Home') . '/var/fred/Config.log';
     my $Filehandle;
     if ( !open $Filehandle, '<', $File ) {
         print STDERR "Perhaps you don't have permission at /var/fred/\n" .
@@ -122,7 +115,7 @@ sub DataGet {
     }
 
     # sort the data
-    my $Config = $Self->{ConfigObject}->Get('Fred::ConfigLog');
+    my $Config = $ConfigObject->Get('Fred::ConfigLog');
     my $OrderBy = defined( $Config->{OrderBy} ) ? $Config->{OrderBy} : 3;
     if ( $OrderBy == 3 ) {
         @LogMessages = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
@@ -148,14 +141,16 @@ Save a word in the translation debug log
 sub InsertWord {
     my ( $Self, %Param ) = @_;
 
-    my $FredSettings = $Self->{ConfigObject}->GetOriginal('Fred::Module');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $FredSettings = $ConfigObject->GetOriginal('Fred::Module');
 
     if ( !$FredSettings || !$FredSettings->{ConfigLog} || !$FredSettings->{ConfigLog}->{Active} ) {
         return;
     }
 
     if ( !$Param{Home} ) {
-        $Param{Home} = $Self->{ConfigObject}->GetOriginal('Home');
+        $Param{Home} = $ConfigObject->GetOriginal('Home');
     }
 
     # save the word in log file

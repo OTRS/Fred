@@ -14,6 +14,11 @@ use warnings;
 
 use Time::HiRes qw(gettimeofday tv_interval);
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::Fred::SQLLog
@@ -59,17 +64,14 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     if (
-        ref $Self->{ConfigObject}->Get('Fred::Module')
-        && $Self->{ConfigObject}->Get('Fred::Module')->{SQLLog}
+        ref $ConfigObject->Get('Fred::Module')
+        && $ConfigObject->Get('Fred::Module')->{SQLLog}
         )
     {
-        $Self->{Active} = $Self->{ConfigObject}->Get('Fred::Module')->{SQLLog}->{Active};
+        $Self->{Active} = $ConfigObject->Get('Fred::Module')->{SQLLog}->{Active};
     }
 
     return $Self;
@@ -90,7 +92,7 @@ sub DataGet {
     my ( $Self, %Param ) = @_;
 
     # open the file SQL.log
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/SQL.log';
 
     my $Filehandle;
     if ( !open $Filehandle, '<', $File ) {
@@ -168,7 +170,7 @@ sub InsertWord {
 
     # check needed stuff
     if ( !$Param{What} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need What!',
         );
@@ -186,7 +188,7 @@ sub InsertWord {
     }
 
     # apppend the line to log file
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/SQL.log';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/SQL.log';
     open my $Filehandle, '>>', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What}, "\n";
     close $Filehandle;

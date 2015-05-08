@@ -11,8 +11,7 @@ package Kernel::Modules::DevelFred;
 use strict;
 use warnings;
 
-use Kernel::System::Fred;
-use Kernel::System::SysConfig;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,26 +20,7 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed Objects
-    OBJECT:
-    for my $Object (
-        qw(
-        ParamObject DBObject     LogObject ConfigObject
-        MainObject  LayoutObject TimeObject EncodeObject
-        )
-        )
-    {
-        if ( $Param{$Object} ) {
-            $Self->{$Object} = $Param{$Object};
-            next OBJECT;
-        }
-        $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-    }
-
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
-
-    $Self->{FredObject} = Kernel::System::Fred->new( %{$Self} );
-    $Self->{Subaction} = $Self->{ParamObject}->GetParam( Param => 'Subaction' );
+    $Self->{Subaction} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'Subaction' );
 
     return $Self;
 }
@@ -48,14 +28,18 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # ---------------------------------------------------------- #
     # show the overview
     # ---------------------------------------------------------- #
 
     if ( !$Self->{Subaction} ) {
-        my $Version = $Self->{ConfigObject}->Get('Version');
+        my $Version = $ConfigObject->Get('Version');
 
-        $Self->{LayoutObject}->FatalError(
+        $LayoutObject->FatalError(
             Message => 'Sorry, this page is currently under development!',
         );
     }
@@ -66,7 +50,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Setting' ) {
 
         # get hashref with all Fred-plugins
-        my $ModuleForRef = $Self->{ConfigObject}->Get('Fred::Module');
+        my $ModuleForRef = $ConfigObject->Get('Fred::Module');
 
         # The Console can't be deactivated
         delete $ModuleForRef->{Console};
@@ -74,7 +58,7 @@ sub Run {
         # loop over Modules which can be activated and deactivated
         for my $Module ( sort keys %{$ModuleForRef} ) {
             my $Checked = $ModuleForRef->{$Module}->{Active} ? 'checked="checked"' : '';
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'FredModule',
                 Data => {
                     FredModule  => $Module,
@@ -84,8 +68,8 @@ sub Run {
             );
 
             # Provide a link to the SysConfig only for plugins that have config options
-            if ( $Self->{ConfigObject}->Get("Fred::$Module") ) {
-                $Self->{LayoutObject}->Block(
+            if ( $ConfigObject->Get("Fred::$Module") ) {
+                $LayoutObject->Block(
                     Name => 'Config',
                     Data => {
                         ModuleName => $Module,
@@ -95,15 +79,15 @@ sub Run {
         }
 
         # build output
-        my $Output = $Self->{LayoutObject}->Header(
+        my $Output = $LayoutObject->Header(
             Title => 'Fred-Setting',
             Type  => 'Small',
         );
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             Data         => {%Param},
             TemplateFile => 'DevelFredSetting',
         );
-        $Output .= $Self->{LayoutObject}->Footer(
+        $Output .= $LayoutObject->Footer(
             Type => 'Small',
         );
 
@@ -114,8 +98,8 @@ sub Run {
     # fast handle for fred settings
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'SettingAction' ) {
-        my $ModuleForRef        = $Self->{ConfigObject}->Get('Fred::Module');
-        my @SelectedFredModules = $Self->{ParamObject}->GetArray( Param => 'FredModule' );
+        my $ModuleForRef        = $ConfigObject->Get('Fred::Module');
+        my @SelectedFredModules = $ParamObject->GetArray( Param => 'FredModule' );
         my %SelectedModules     = map { $_ => 1; } @SelectedFredModules;
         my $UpdateFlag;
         delete $ModuleForRef->{Console};
@@ -132,7 +116,7 @@ sub Run {
                 # update certain values
                 $ModuleForRef->{$Module}->{Active} = $SelectedModules{$Module} || 0;
 
-                $Self->{SysConfigObject}->ConfigItemUpdate(
+                $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
                     Valid => 1,
                     Key   => "Fred::Module###$Module",
                     Value => $ModuleForRef->{$Module},
@@ -141,7 +125,7 @@ sub Run {
             }
         }
 
-        return $Self->{LayoutObject}->PopupClose(
+        return $LayoutObject->PopupClose(
             Reload => 1,
         );
     }
@@ -151,8 +135,8 @@ sub Run {
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'ConfigSwitchAJAX' ) {
 
-        my $ItemKey   = $Self->{ParamObject}->GetParam( Param => 'Key' );
-        my $ItemValue = $Self->{ParamObject}->GetParam( Param => 'Value' );
+        my $ItemKey   = $ParamObject->GetParam( Param => 'Key' );
+        my $ItemValue = $ParamObject->GetParam( Param => 'Value' );
 
         my $Success = 0;
 
@@ -167,7 +151,7 @@ sub Run {
                 $ItemValue = 1;
             }
 
-            $Self->{SysConfigObject}->ConfigItemUpdate(
+            $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
                 Valid => 1,
                 Key   => $ItemKey,
                 Value => $ItemValue,
@@ -175,8 +159,8 @@ sub Run {
             $Success = 1;
         }
 
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
             Content     => $Success,
             Type        => 'inline',
             NoCache     => 1,

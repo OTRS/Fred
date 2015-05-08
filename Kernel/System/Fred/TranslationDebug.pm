@@ -12,6 +12,11 @@ package Kernel::System::Fred::TranslationDebug;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::Fred::TranslationDebug
@@ -55,17 +60,14 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     if (
-        ref $Self->{ConfigObject}->Get('Fred::Module')
-        && $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug}
+        ref $ConfigObject->Get('Fred::Module')
+        && $ConfigObject->Get('Fred::Module')->{TranslationDebug}
         )
     {
-        $Self->{Active} = $Self->{ConfigObject}->Get('Fred::Module')->{TranslationDebug}->{Active};
+        $Self->{Active} = $ConfigObject->Get('Fred::Module')->{TranslationDebug}->{Active};
     }
 
     return $Self;
@@ -86,7 +88,7 @@ sub DataGet {
     my ( $Self, %Param ) = @_;
 
     # open the TranslationDebug.log file to get the untranslated words
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/TranslationDebug.log';
     my $Filehandle;
     if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {
         $Param{ModuleRef}->{Data} = [
@@ -138,7 +140,7 @@ sub InsertWord {
 
     # check needed stuff
     if ( !defined( $Param{What} ) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need What!',
         );
@@ -146,7 +148,7 @@ sub InsertWord {
     }
 
     # save the word in log file
-    my $File = $Self->{ConfigObject}->Get('Home') . '/var/fred/TranslationDebug.log';
+    my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/TranslationDebug.log';
     open my $Filehandle, '>>:encoding(UTF-8)', $File || die "Can't write $File !\n";
     print $Filehandle $Param{What} . "\n";
     close $Filehandle;

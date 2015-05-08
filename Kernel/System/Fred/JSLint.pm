@@ -11,7 +11,7 @@ package Kernel::System::Fred::JSLint;
 use strict;
 use warnings;
 
-use File::Temp;
+our @ObjectDependencies = ();
 
 =head1 NAME
 
@@ -61,10 +61,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
     return $Self;
 }
 

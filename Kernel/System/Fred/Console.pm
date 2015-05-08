@@ -11,6 +11,10 @@ package Kernel::System::Fred::Console;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::Fred::Console
@@ -54,11 +58,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     return $Self;
 }
 
@@ -79,7 +78,7 @@ sub DataGet {
     # check needed stuff
     for my $Ref (qw(ModuleRef HTMLDataRef FredModulesRef)) {
         if ( !$Param{$Ref} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Ref!",
             );

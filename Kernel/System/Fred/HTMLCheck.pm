@@ -11,6 +11,9 @@ package Kernel::System::Fred::HTMLCheck;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+);
+
 =head1 NAME
 
 Kernel::System::Fred::HTMLCheck
@@ -61,10 +64,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
     return $Self;
 }
 

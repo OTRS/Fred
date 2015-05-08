@@ -12,7 +12,9 @@ package Kernel::System::Fred::ConfigSwitch;
 use strict;
 use warnings;
 
-use Scalar::Util();
+our @ObjectDependencies = (
+    'Kernel::Config',
+);
 
 =head1 NAME
 
@@ -57,17 +59,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (qw(ConfigObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # ConfigObject holds a reference to us, so don't reference it to avoid
-    #   a ring reference.
-    Scalar::Util::weaken( $Self->{ConfigObject} );
-
-    # Don't call ConfigObject->Get() here, this could cause deep recursions.
-
     return $Self;
 }
 
@@ -85,7 +76,9 @@ And add the data to the module ref.
 sub DataGet {
     my ( $Self, %Param ) = @_;
 
-    my $Config = $Self->{ConfigObject}->Get('Fred::ConfigSwitch');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $Config = $ConfigObject->Get('Fred::ConfigSwitch');
 
     return if !$Config->{Settings};
 
@@ -93,7 +86,7 @@ sub DataGet {
     for my $Item ( sort @{ $Config->{Settings} } ) {
         push @ConfigItems, {
             Key   => $Item,
-            Value => $Self->{ConfigObject}->Get($Item),
+            Value => $ConfigObject->Get($Item),
         };
     }
 
