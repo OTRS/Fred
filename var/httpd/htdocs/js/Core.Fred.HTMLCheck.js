@@ -7,7 +7,7 @@
 // --
 
 "use strict";
-/*global JSLINT: false, $: false, jQuery: false */
+/*global $: false, jQuery: false */
 
 var Core = Core || {};
 Core.Fred = Core.Fred || {};
