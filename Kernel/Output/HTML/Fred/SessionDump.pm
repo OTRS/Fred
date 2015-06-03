@@ -6,7 +6,8 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredJSLint;
+package Kernel::Output::HTML::Fred::SessionDump;
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 
 use strict;
 use warnings;
@@ -16,13 +17,15 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
 );
 
+use Data::Dumper;
+
 =head1 NAME
 
-Kernel::Output::HTML::FredJSLint - Fred module for JSLint checks
+Kernel::Output::HTML::FredSessionDump - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of JSLint object
+All layout functions of the session dump object
 
 =over 4
 
@@ -32,7 +35,7 @@ All layout functions of JSLint object
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredJSLint->new(
+    $BackendObject = Kernel::Output::HTML::FredSessionDump->new(
         %Param,
     );
 
@@ -50,7 +53,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the JSLint module
+Get the session data and create the output of the session dump
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -70,9 +73,29 @@ sub CreateFredOutput {
         return;
     }
 
-    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
-        TemplateFile => 'DevelFredJSLint',
-        Data         => {},
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
+    my $SessionID = $LayoutObject->{EnvRef}->{SessionID};
+    my %SessionData;
+    if ($SessionID) {
+        %SessionData = $LayoutObject->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+    }
+
+    for my $Key ( sort keys %SessionData ) {
+
+        $LayoutObject->Block(
+            Name => 'SessionDataRow',
+            Data => {
+                Key   => $Key,
+                Value => $SessionData{$Key},
+            },
+        );
+    }
+
+    # output the html
+    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
+        TemplateFile => 'DevelFredSessionDump',
     );
 
     return 1;

@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredConsole;
+package Kernel::Output::HTML::Fred::Console;
 
 use strict;
 use warnings;

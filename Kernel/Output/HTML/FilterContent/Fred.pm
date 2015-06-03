@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilterFred;
+package Kernel::Output::HTML::FilterContent::Fred;
 
 use strict;
 use warnings;
@@ -104,7 +104,7 @@ sub Run {
             FredModulesRef => $ModulesDataRef,
         );
 
-        $Kernel::OM->Get( 'Kernel::Output::HTML::Fred' . $ModuleName )->CreateFredOutput(
+        $Kernel::OM->Get( 'Kernel::Output::HTML::Fred::' . $ModuleName )->CreateFredOutput(
             ModuleRef => $ModulesDataRef->{$ModuleName},
         );
     }

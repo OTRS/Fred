@@ -6,7 +6,7 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::OutputFilterFred</Item>
+                <Item Key="Module">Kernel::Output::HTML::FilterContent::Fred</Item>
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>

@@ -6,13 +6,10 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredEnvDump;
-## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
+package Kernel::Output::HTML::Fred::TranslationDebug;
 
 use strict;
 use warnings;
-
-use Data::Dumper;
 
 our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
@@ -21,11 +18,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $Env in dtl
+Kernel::Output::HTML::FredTranslationDebug - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of the layout env dump object
+All layout functions of translation debug module
 
 =over 4
 
@@ -35,7 +32,7 @@ All layout functions of the layout env dump object
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredEnvDump->new(
+    $BackendObject = Kernel::Output::HTML::FredTranslationDebug->new(
         %Param,
     );
 
@@ -53,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-Get the session data and create the output of the session dump
+create the output of the translationdebugging log
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -73,24 +70,18 @@ sub CreateFredOutput {
         return;
     }
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    # Kernel::System::Fred::EnvDump::DataGet() is not used,
-    # as the data of interest is not easily available there.
-    for my $Key ( sort keys %{ $LayoutObject->{EnvRef} } ) {
-
-        $LayoutObject->Block(
-            Name => 'EnvDataRow',
-            Data => {
-                Key   => $Key,
-                Value => $LayoutObject->{EnvRef}->{$Key},
-            },
-        );
+    my $HTMLLines = '';
+    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+        $HTMLLines .= "<span>$Line</span>";
     }
 
-    # output the html
-    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
-        TemplateFile => 'DevelFredEnvDump',
+    return 1 if !$HTMLLines;
+
+    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
+        TemplateFile => 'DevelFredTranslationDebug',
+        Data         => {
+            HTMLLines => $HTMLLines,
+        },
     );
 
     return 1;

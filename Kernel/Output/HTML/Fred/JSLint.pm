@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredConfigSwitch;
+package Kernel::Output::HTML::Fred::JSLint;
 
 use strict;
 use warnings;
@@ -18,11 +18,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::FredConfigSwitch - layout backend module
+Kernel::Output::HTML::FredJSLint - Fred module for JSLint checks
 
 =head1 SYNOPSIS
 
-All layout functions of the config switch module
+All layout functions of JSLint object
 
 =over 4
 
@@ -32,7 +32,7 @@ All layout functions of the config switch module
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredConfigSwitch->new(
+    $BackendObject = Kernel::Output::HTML::FredJSLint->new(
         %Param,
     );
 
@@ -50,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the config switch module
+create the output of the JSLint module
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -70,13 +70,9 @@ sub CreateFredOutput {
         return;
     }
 
-    return if !$Param{ModuleRef}->{Data};
-
     $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
-        TemplateFile => 'DevelFredConfigSwitch',
-        Data         => {
-            ConfigItems => $Param{ModuleRef}->{Data},
-        },
+        TemplateFile => 'DevelFredJSLint',
+        Data         => {},
     );
 
     return 1;

@@ -6,23 +6,24 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredConfigLog;
+package Kernel::Output::HTML::Fred::STDERRLog;
 
 use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::Log',
 );
 
 =head1 NAME
 
-Kernel::Output::HTML::FredConfigLog - layout backend module
+Kernel::Output::HTML::FredSTDERRLog - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of the config log module
+All layout functions of STDERR log objects
 
 =over 4
 
@@ -32,7 +33,7 @@ All layout functions of the config log module
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredConfigLog->new(
+    $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
         %Param,
     );
 
@@ -50,7 +51,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the translationdebugging log
+create the output of the STDERR log
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -70,35 +71,29 @@ sub CreateFredOutput {
         return;
     }
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    return if !$Param{ModuleRef}->{Data};
+    return if ref $Param{ModuleRef}->{Data} ne 'ARRAY';
 
-    my $HTMLLines = '';
-    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+    # create html string
+    my $HTMLLines;
+    my $HTMLLinesFilter = $Kernel::OM->Get('Kernel::Config')->Get('Fred::STDERRLogFilter');
 
-        for my $TD ( @{$Line} ) {
-            $TD = $LayoutObject->Ascii2Html( Text => $TD );
+    LINE:
+    for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
+
+        # filter content if needed
+        if ($HTMLLinesFilter) {
+            next LINE if $Line =~ /$HTMLLinesFilter/smx;
         }
 
-        if ( $Line->[1] eq 'True' ) {
-            $Line->[1] = '';
-        }
-
-        for my $Count ( 0 .. 3 ) {
-            $Line->[$Count] ||= '';
-        }
-
-        $HTMLLines .= "        <tr>\n"
-            . "          <td align=\"right\">$Line->[3]</td>\n"
-            . "          <td>$Line->[0]</td>\n"
-            . "          <td>$Line->[1]</td>\n"
-            . "          <td>$Line->[2]</td>\n"
-            . "        </tr>";
+        $HTMLLines .= $Line;
     }
 
     return if !$HTMLLines;
 
-    $Param{ModuleRef}->{Output} = $LayoutObject->Output(
-        TemplateFile => 'DevelFredConfigLog',
+    # output the html
+    $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
+        TemplateFile => 'DevelFredSTDERRLog',
         Data         => {
             HTMLLines => $HTMLLines,
         },

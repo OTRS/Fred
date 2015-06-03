@@ -6,10 +6,13 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredSQLLog;
+package Kernel::Output::HTML::Fred::EnvDump;
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 
 use strict;
 use warnings;
+
+use Data::Dumper;
 
 our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
@@ -18,11 +21,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::FredSQLLog - layout backend module
+Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $Env in dtl
 
 =head1 SYNOPSIS
 
-All layout functions of SQL log module
+All layout functions of the layout env dump object
 
 =over 4
 
@@ -32,7 +35,7 @@ All layout functions of SQL log module
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredSQLLog->new(
+    $BackendObject = Kernel::Output::HTML::FredEnvDump->new(
         %Param,
     );
 
@@ -50,7 +53,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the translationdebugging log
+Get the session data and create the output of the session dump
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -72,46 +75,22 @@ sub CreateFredOutput {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
+    # Kernel::System::Fred::EnvDump::DataGet() is not used,
+    # as the data of interest is not easily available there.
+    for my $Key ( sort keys %{ $LayoutObject->{EnvRef} } ) {
 
         $LayoutObject->Block(
-            Name => 'Row',
+            Name => 'EnvDataRow',
             Data => {
-                Time            => $Line->[4] * 1000,
-                EqualStatements => $Line->[5] || '',
-                Statement       => $Line->[1],
-                Package         => $Line->[3],
+                Key   => $Key,
+                Value => $LayoutObject->{EnvRef}->{$Key},
             },
         );
-
-        for my $Line ( split( /;/, $Line->[3] ) ) {
-            $LayoutObject->Block(
-                Name => 'StackTrace',
-                Data => {
-                    StackTrace => $Line,
-                },
-            );
-        }
-
-        if ( $Line->[2] ) {
-            $LayoutObject->Block(
-                Name => 'RowBindParameters',
-                Data => {
-                    BindParameters => $Line->[2],
-                },
-            );
-
-        }
     }
 
+    # output the html
     $Param{ModuleRef}->{Output} = $LayoutObject->Output(
-        TemplateFile => 'DevelFredSQLLog',
-        Data         => {
-            AllStatements    => $Param{ModuleRef}->{AllStatements},
-            DoStatements     => $Param{ModuleRef}->{DoStatements},
-            SelectStatements => $Param{ModuleRef}->{SelectStatements},
-            Time             => $Param{ModuleRef}->{Time},
-        },
+        TemplateFile => 'DevelFredEnvDump',
     );
 
     return 1;

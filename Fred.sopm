@@ -14,17 +14,17 @@
         <File Permission="644" Location="Kernel/Config/Files/AAAFred.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/Fred.xml"/>
         <File Permission="644" Location="Kernel/Modules/DevelFred.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredConfigLog.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredConfigSwitch.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredConsole.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredEnvDump.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredHTMLCheck.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredJSLint.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredSessionDump.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredSTDERRLog.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredSQLLog.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FredTranslationDebug.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFred.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FilterContent/Fred.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/ConfigLog.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/ConfigSwitch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/Console.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/EnvDump.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/HTMLCheck.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/JSLint.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/SessionDump.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/STDERRLog.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/SQLLog.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Fred/TranslationDebug.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigLog.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConfigSwitch.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DevelFredConsole.tt"/>

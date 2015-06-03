@@ -6,24 +6,23 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredSTDERRLog;
+package Kernel::Output::HTML::Fred::ConfigSwitch;
 
 use strict;
 use warnings;
 
 our @ObjectDependencies = (
-    'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::Log',
 );
 
 =head1 NAME
 
-Kernel::Output::HTML::FredSTDERRLog - layout backend module
+Kernel::Output::HTML::FredConfigSwitch - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of STDERR log objects
+All layout functions of the config switch module
 
 =over 4
 
@@ -33,7 +32,7 @@ All layout functions of STDERR log objects
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
+    $BackendObject = Kernel::Output::HTML::FredConfigSwitch->new(
         %Param,
     );
 
@@ -51,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the STDERR log
+create the output of the config switch module
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -72,30 +71,11 @@ sub CreateFredOutput {
     }
 
     return if !$Param{ModuleRef}->{Data};
-    return if ref $Param{ModuleRef}->{Data} ne 'ARRAY';
 
-    # create html string
-    my $HTMLLines;
-    my $HTMLLinesFilter = $Kernel::OM->Get('Kernel::Config')->Get('Fred::STDERRLogFilter');
-
-    LINE:
-    for my $Line ( reverse @{ $Param{ModuleRef}->{Data} } ) {
-
-        # filter content if needed
-        if ($HTMLLinesFilter) {
-            next LINE if $Line =~ /$HTMLLinesFilter/smx;
-        }
-
-        $HTMLLines .= $Line;
-    }
-
-    return if !$HTMLLines;
-
-    # output the html
     $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
-        TemplateFile => 'DevelFredSTDERRLog',
+        TemplateFile => 'DevelFredConfigSwitch',
         Data         => {
-            HTMLLines => $HTMLLines,
+            ConfigItems => $Param{ModuleRef}->{Data},
         },
     );
 

@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredTranslationDebug;
+package Kernel::Output::HTML::Fred::HTMLCheck;
 
 use strict;
 use warnings;
@@ -18,11 +18,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::FredTranslationDebug - layout backend module
+Kernel::Output::HTML::FredHTMLCheck - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of translation debug module
+All layout functions of HTML check object
 
 =over 4
 
@@ -32,7 +32,7 @@ All layout functions of translation debug module
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredTranslationDebug->new(
+    $BackendObject = Kernel::Output::HTML::FredSTDERRLog->new(
         %Param,
     );
 
@@ -50,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the translationdebugging log
+create the output of the STDERR log
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -61,6 +61,8 @@ create the output of the translationdebugging log
 sub CreateFredOutput {
     my ( $Self, %Param ) = @_;
 
+    my $HTMLLines = '';
+
     # check needed stuff
     if ( !$Param{ModuleRef} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -70,15 +72,8 @@ sub CreateFredOutput {
         return;
     }
 
-    my $HTMLLines = '';
-    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
-        $HTMLLines .= "<span>$Line</span>";
-    }
-
-    return 1 if !$HTMLLines;
-
     $Param{ModuleRef}->{Output} = $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Output(
-        TemplateFile => 'DevelFredTranslationDebug',
+        TemplateFile => 'DevelFredHTMLCheck',
         Data         => {
             HTMLLines => $HTMLLines,
         },

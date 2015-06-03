@@ -6,8 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FredSessionDump;
-## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
+package Kernel::Output::HTML::Fred::SQLLog;
 
 use strict;
 use warnings;
@@ -17,15 +16,13 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
 );
 
-use Data::Dumper;
-
 =head1 NAME
 
-Kernel::Output::HTML::FredSessionDump - layout backend module
+Kernel::Output::HTML::FredSQLLog - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of the session dump object
+All layout functions of SQL log module
 
 =over 4
 
@@ -35,7 +32,7 @@ All layout functions of the session dump object
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::FredSessionDump->new(
+    $BackendObject = Kernel::Output::HTML::FredSQLLog->new(
         %Param,
     );
 
@@ -53,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-Get the session data and create the output of the session dump
+create the output of the translationdebugging log
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,
@@ -75,27 +72,46 @@ sub CreateFredOutput {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
-    my $SessionID = $LayoutObject->{EnvRef}->{SessionID};
-    my %SessionData;
-    if ($SessionID) {
-        %SessionData = $LayoutObject->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
-    }
-
-    for my $Key ( sort keys %SessionData ) {
+    for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
 
         $LayoutObject->Block(
-            Name => 'SessionDataRow',
+            Name => 'Row',
             Data => {
-                Key   => $Key,
-                Value => $SessionData{$Key},
+                Time            => $Line->[4] * 1000,
+                EqualStatements => $Line->[5] || '',
+                Statement       => $Line->[1],
+                Package         => $Line->[3],
             },
         );
+
+        for my $Line ( split( /;/, $Line->[3] ) ) {
+            $LayoutObject->Block(
+                Name => 'StackTrace',
+                Data => {
+                    StackTrace => $Line,
+                },
+            );
+        }
+
+        if ( $Line->[2] ) {
+            $LayoutObject->Block(
+                Name => 'RowBindParameters',
+                Data => {
+                    BindParameters => $Line->[2],
+                },
+            );
+
+        }
     }
 
-    # output the html
     $Param{ModuleRef}->{Output} = $LayoutObject->Output(
-        TemplateFile => 'DevelFredSessionDump',
+        TemplateFile => 'DevelFredSQLLog',
+        Data         => {
+            AllStatements    => $Param{ModuleRef}->{AllStatements},
+            DoStatements     => $Param{ModuleRef}->{DoStatements},
+            SelectStatements => $Param{ModuleRef}->{SelectStatements},
+            Time             => $Param{ModuleRef}->{Time},
+        },
     );
 
     return 1;
