@@ -173,7 +173,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Fred::STDERRLogFilter" Required="0" Valid="0">
+    <ConfigItem Name="Fred::STDERRLogFilter" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to filter the output of the STDERRLog. You can add a regular expression to filter the output.</Description>
         <Group>Fred</Group>
         <SubGroup>Core</SubGroup>
