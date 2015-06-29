@@ -28,7 +28,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
     }
 
     function escapeSelector (Selector) {
-        return Selector.replace(/(#|:|\.|\[|\])/g,'\\$1');
+        return Selector.replace(/(#|:|\.|\[|\])/g, '\\$1');
     }
 
     function outputError($Element, ErrorType, ErrorDescription, Hint){
@@ -77,7 +77,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // first look for labels which refer to this element by id
             if ($this.attr('id') && $this.attr('id').length) {
-                $Label = $('label[for=' + escapeSelector($this.attr('id'))  + ']');
+                $Label = $('label[for=' + escapeSelector($this.attr('id')) + ']');
             }
             // then look for labels which surround the current element
             if (!$Label.length) {

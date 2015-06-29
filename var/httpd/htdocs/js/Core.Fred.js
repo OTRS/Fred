@@ -105,10 +105,10 @@ Core.Fred = (function (TargetNS) {
         // register new popup profile as needed by fred
         Core.UI.Popup.ProfileAdd('FredSettings', {
             WindowURLParams: "dependent=yes,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no",
-            Left:            100,
-            Top:             100,
-            Width:           400,
-            Height:          500
+            Left: 100,
+            Top: 100,
+            Width: 400,
+            Height: 500
         });
 
         // open the settings popup
@@ -135,7 +135,7 @@ Core.Fred = (function (TargetNS) {
 
                 if (window && window.localStorage !== undefined) {
                     window.localStorage.FRED_console_left = Left;
-                    window.localStorage.FRED_console_top  = Top;
+                    window.localStorage.FRED_console_top = Top;
                 }
             }
         });
@@ -144,9 +144,9 @@ Core.Fred = (function (TargetNS) {
         (function(){
             if (window && window.localStorage !== undefined && window.localStorage.FRED_console_left && window.localStorage.FRED_console_top) {
 
-                var SavedLeft  = window.localStorage.FRED_console_left,
-                    SavedTop   = window.localStorage.FRED_console_top,
-                    FredWidth  = $('#DevelFredContainer').width(),
+                var SavedLeft = window.localStorage.FRED_console_left,
+                    SavedTop = window.localStorage.FRED_console_top,
+                    FredWidth = $('#DevelFredContainer').width(),
                     FredHeight = $('#DevelFredContainer').height();
 
                 if (SavedLeft > $('body').width()) {
