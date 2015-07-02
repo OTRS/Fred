@@ -257,7 +257,7 @@ table.FredTableDefault tr:last-child td {
     font-size: 11px;
     line-height: 130%;
     padding: 10px;
-    white-space: pre-line;
+    white-space: pre;
 }
 
 table.FredSwitchTable td {
