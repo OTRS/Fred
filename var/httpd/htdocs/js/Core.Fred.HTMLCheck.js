@@ -41,7 +41,7 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
         // Get element HTML by wrapping it in a div and calling .html() on that
         $Container = $('<div></div>');
-        $Container.append( $Element.clone() );
+        $Container.append($Element.clone());
 
         Code = $Container.html();
         if (Code.length > 160) {
@@ -262,13 +262,13 @@ Core.Fred.HTMLCheck = (function (TargetNS) {
 
             // Don't output this error for fred itself.
             // We also currently need onclick events in the main menu.
-            if ( $this.closest('.DevelFredContainer, #NavigationContainer').length ) {
+            if ($this.closest('.DevelFredContainer, #NavigationContainer').length) {
                 return;
             }
 
             // Get element HTML by wrapping it in a div and calling .html() on that
             $Container = $('<div></div>');
-            $Container.append( $this.clone() );
+            $Container.append($this.clone());
 
             // onload attribute is sometimes needed for iframes, so we just remove it for the check
             $Container.find('iframe').removeAttr('onload');

@@ -48,7 +48,7 @@ Core.Fred.JSLint = (function (TargetNS) {
             var ErrorObject, Output, i;
 
             // Ignore invalid code that is injected by the google analytics opt-out plugin for browsers.
-            if ( this.Src === 'inline' && this.Script.match(/_gaUserPrefs/) ) {
+            if (this.Src === 'inline' && this.Script.match(/_gaUserPrefs/)) {
                 return;
             }
 

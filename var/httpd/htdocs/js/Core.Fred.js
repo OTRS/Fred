@@ -134,20 +134,24 @@ Core.Fred = (function (TargetNS) {
                     Left = ui.offset.left;
 
                 if (window && window.localStorage !== undefined) {
+                    /*eslint-disable camelcase*/
                     window.localStorage.FRED_console_left = Left;
                     window.localStorage.FRED_console_top = Top;
+                    /*eslint-enable camelcase*/
                 }
             }
         });
 
         // save fred's window position
         (function(){
+            var SavedLeft, SavedTop, FredWidth, FredHeight;
+
             if (window && window.localStorage !== undefined && window.localStorage.FRED_console_left && window.localStorage.FRED_console_top) {
 
-                var SavedLeft = window.localStorage.FRED_console_left,
-                    SavedTop = window.localStorage.FRED_console_top,
-                    FredWidth = $('#DevelFredContainer').width(),
-                    FredHeight = $('#DevelFredContainer').height();
+                SavedLeft = window.localStorage.FRED_console_left;
+                SavedTop = window.localStorage.FRED_console_top;
+                FredWidth = $('#DevelFredContainer').width();
+                FredHeight = $('#DevelFredContainer').height();
 
                 if (SavedLeft > $('body').width()) {
                     SavedLeft = $('body').width() - FredWidth;
