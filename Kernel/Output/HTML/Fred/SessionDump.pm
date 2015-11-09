@@ -14,6 +14,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::AuthSession',
     'Kernel::System::Log',
 );
 
@@ -73,7 +74,7 @@ sub CreateFredOutput {
         return;
     }
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
     # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
