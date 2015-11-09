@@ -74,12 +74,13 @@ sub CreateFredOutput {
     }
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
     # Data is generated here, as it is not available in Kernel::System::Fred::SessionDump
     my $SessionID = $LayoutObject->{EnvRef}->{SessionID};
     my %SessionData;
     if ($SessionID) {
-        %SessionData = $LayoutObject->{SessionObject}->GetSessionIDData( SessionID => $SessionID );
+        %SessionData = $SessionObject->GetSessionIDData( SessionID => $SessionID );
     }
 
     for my $Key ( sort keys %SessionData ) {
