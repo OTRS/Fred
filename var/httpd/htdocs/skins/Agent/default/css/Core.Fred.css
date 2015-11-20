@@ -309,3 +309,20 @@ table.FredSwitchTable td:last-child {
     right: -1px;
     left: auto;
 }
+
+.DevelFredToggleContainer {
+    position: absolute;
+    right: 5px;
+}
+
+a#DevelFredToggleContainerLink {
+    font-size: 35px;
+    font-weight:bold;
+    color: #808080;
+}
+
+a#DevelFredToggleContainerLink.FredActive {
+    font-size: 35px;
+    font-weight:bold;
+    color: #006ea5;
+}

@@ -48,6 +48,7 @@ sub Run {
     # perhaps no output is generated
     die 'Fred: At the moment, your code generates no output!' if !$Param{Data};
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # do not show the debug bar in Fred's setting window
@@ -88,7 +89,7 @@ sub Run {
     }
 
     # get data of the activated modules
-    my $ModuleForRef   = $Kernel::OM->Get('Kernel::Config')->Get('Fred::Module');
+    my $ModuleForRef   = $ConfigObject->Get('Fred::Module');
     my $ModulesDataRef = {};
     for my $Module ( sort keys %{$ModuleForRef} ) {
         if ( $ModuleForRef->{$Module}->{Active} ) {
@@ -137,6 +138,20 @@ sub Run {
     if ( ${ $Param{Data} } !~ s/(\<body(|.+?)\>)/$1\n$Output\n\n\n\n/mx ) {
         ${ $Param{Data} } =~ s/^(.)/\n$Output\n\n\n\n$1/mx;
     }
+
+    return if !$LayoutObject->{UserID};
+
+    # add fred icon to header
+    my $Active = $ConfigObject->Get('Fred::Active') || 0;
+    my $Class = $Active ? 'FredActive' : '';
+    ${ $Param{Data} } =~ s{ <div [^>]* id="header" [^>]*> }{
+        $&
+
+        <div class="DevelFredToggleContainer">
+            <a id="DevelFredToggleContainerLink" class="$Class" href="#">F</a>
+        </div>
+    }xmsig;
+    ${ $Param{Data} } =~ s{ (<body [^>]* class=" [^"]*) ( " [^>]*> ) }{ $1 $Class $2 }xmsig;
 
     # Inject JS at the end of the body
     ${ $Param{Data} } =~ s{</body>}{$JSOutput\n\t</body>}smx;

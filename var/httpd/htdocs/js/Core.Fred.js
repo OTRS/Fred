@@ -6,6 +6,8 @@
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
+/* eslint no-window:0 */
+
 "use strict";
 
 var Core = Core || {};
@@ -17,6 +19,8 @@ Core.Fred = Core.Fred || {};
  *      This namespace contains all logic for Fred
  */
 Core.Fred = (function (TargetNS) {
+
+    var DevelFredToggleContainerLinkProccess = 0;
 
     /**
      * @function
@@ -81,10 +85,10 @@ Core.Fred = (function (TargetNS) {
             }
         });
         $('.FredClose').bind('click', function() {
-            $(this).closest('.DevelFredBox').remove();
+            $(this).closest('.DevelFredBox').hide();
         });
         $('.FredCloseAll').bind('click', function() {
-            $('.DevelFredBox').remove();
+            $('.DevelFredBox').hide();
         });
 
         // empty the search field
@@ -99,7 +103,7 @@ Core.Fred = (function (TargetNS) {
             });
         }
         else {
-            $('.FredQuickSearch, .FredSearch').remove();
+            $('.FredQuickSearch, .FredSearch').hide();
         }
 
         // register new popup profile as needed by fred
@@ -166,6 +170,37 @@ Core.Fred = (function (TargetNS) {
                 }
             }
         }());
+
+        if (!$('body').hasClass('FredActive')) {
+            $('.DevelFredBox').hide();
+        }
+
+        $('#DevelFredToggleContainerLink').on('click', function() {
+            var Data = {
+                Action: 'DevelFred',
+                Subaction: 'ConfigSwitchAJAX',
+                Key: 'Fred::Active',
+                Value: $('body').hasClass('FredActive') ? 1 : 0
+            };
+
+            if (DevelFredToggleContainerLinkProccess) return;
+
+            DevelFredToggleContainerLinkProccess = 1;
+
+            $('body').toggleClass('FredActive');
+            $('#DevelFredToggleContainerLink').toggleClass('FredActive');
+
+            if (!$('.DevelFredBox').is(":visible") && $('body').hasClass('FredActive')) {
+                $('.DevelFredBox').show();
+            }
+            else {
+                $('.DevelFredBox').hide();
+            }
+
+            Core.AJAX.FunctionCall(Core.Config.Get('CGIHandle'), Data, function () {
+                DevelFredToggleContainerLinkProccess = 0;
+            }, 'json');
+        });
     };
 
     TargetNS.Init();
