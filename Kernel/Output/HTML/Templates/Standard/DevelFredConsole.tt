@@ -39,6 +39,7 @@
     <div class="DevelFredBoxContent FredElementList" id="DevelFredConsole">
         <span>System <strong>[% Data.SystemName | html %]</strong></span>
         <span class="[% Data.BranchClass | html %]">Branch <strong>[% Data.BranchName | html %]</strong></span>
+        <span>OTRS <strong>[% Data.OTRSVersion | html %]</strong></span>
         <span>mod_perl <strong>[% Data.ModPerl | html %]</strong></span>
         <span>Perl <strong>[% Data.Perl | html %]</strong></span>
     [% IF Data.BugNumber %]
