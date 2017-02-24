@@ -45,7 +45,7 @@ sub new {
 
 =item DataGet()
 
-This method is just for compatbility. No data is set here,
+This method is just for compatibility. No data is set here,
 as the needed session object is not easily available here.
 
     my $DataGetOk = $BackendObject->DataGet(

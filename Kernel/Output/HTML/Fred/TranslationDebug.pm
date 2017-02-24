@@ -50,7 +50,7 @@ sub new {
 
 =item CreateFredOutput()
 
-create the output of the translationdebugging log
+create the output of the translation debugging log
 
     $LayoutObject->CreateFredOutput(
         ModulesRef => $ModulesRef,

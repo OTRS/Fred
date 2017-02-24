@@ -61,7 +61,7 @@ sub new {
 
 =item DataGet()
 
-Get the data for this fred module. Returns true or false.
+Get the data for this Fred module. Returns true or false.
 And add the data to the module ref.
 
     $BackendObject->DataGet(
@@ -139,7 +139,7 @@ sub DataGet {
 
 =item InsertWord()
 
-Append a semicolon seperated record line to the the SQL log.
+Append a semicolon separated record line to the the SQL log.
 
     $BackendObject->InsertWord(
         What => 'SQL-SELECT;SELECT 1 + 1 FROM dual;Kernel::System::User;0.004397',

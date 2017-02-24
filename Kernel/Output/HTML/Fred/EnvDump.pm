@@ -25,7 +25,7 @@ Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $
 
 =head1 SYNOPSIS
 
-All layout functions of the layout env dump object
+All layout functions of the layout environment dump object
 
 =over 4
 

@@ -57,7 +57,7 @@ sub new {
 
 =item DataGet()
 
-Get the data for this fred module. Returns true or false.
+Get the data for this Fred module. Returns true or false.
 And add the data to the module ref.
 
     $BackendObject->DataGet(
