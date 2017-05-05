@@ -13,6 +13,7 @@
         <File Permission="660" Location="doc/en/Fred.xml" />
         <File Permission="660" Location="Kernel/Config/Files/AAAFred.pm" />
         <File Permission="660" Location="Kernel/Config/Files/Fred.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/Fred.xml" />
         <File Permission="660" Location="Kernel/Modules/DevelFred.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FilterContent/Fred.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/Fred/ConfigLog.pm" />
