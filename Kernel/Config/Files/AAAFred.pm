@@ -6,6 +6,11 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+# OTRS config file (automatically generated)
+# VERSION:1.1
+
+package Kernel::Config::Files::AAAFred;
+
 use strict;
 use warnings;
 
@@ -18,6 +23,8 @@ use Kernel::System::Fred::SQLLog;
 use Kernel::System::Fred::TranslationDebug;
 
 our $ObjectManagerDisabled = 1;
+
+sub Load {}
 
 if ( $ENV{HTTP_USER_AGENT} ) {
 
@@ -137,7 +144,6 @@ if ( $ENV{HTTP_USER_AGENT} ) {
             return $Self->GetOriginal($What);
         };
     }
-
 }
 
 1;
