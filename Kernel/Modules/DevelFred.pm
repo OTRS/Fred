@@ -13,6 +13,8 @@ use warnings;
 
 our $ObjectManagerDisabled = 1;
 
+use Kernel::Language qw(Translatable);
+
 sub new {
     my ( $Type, %Param ) = @_;
 
@@ -116,7 +118,7 @@ sub Run {
                 # update certain values
                 $ModuleForRef->{$Module}->{Active} = $SelectedModules{$Module} || 0;
 
-                $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+                $Self->_SettingUpdate(
                     Valid => 1,
                     Key   => "Fred::Module###$Module",
                     Value => $ModuleForRef->{$Module},
@@ -151,7 +153,7 @@ sub Run {
                 $ItemValue = 1;
             }
 
-            $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+            $Self->_SettingUpdate(
                 Valid => 1,
                 Key   => $ItemKey,
                 Value => $ItemValue,
@@ -164,6 +166,55 @@ sub Run {
             Content     => $Success,
             Type        => 'inline',
             NoCache     => 1,
+        );
+    }
+
+    return 1;
+}
+
+sub _SettingUpdate {
+    my ( $Self, %Param ) = @_;
+
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    # OTRS 5 SysConfig API
+    if ( $SysConfigObject->can('ConfigItemUpdate') ) {
+        $SysConfigObject->ConfigItemUpdate(%Param);
+    }
+
+    # OTRS 6+ SysConfig API
+    else {
+        my $SettingName = 'SecureMode';
+
+        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+            Name   => $Param{Key},
+            Force  => 1,
+            UserID => 1,
+        );
+
+        # Update config item via SysConfig object.
+        my $Result = $SysConfigObject->SettingUpdate(
+            Name              => $Param{Key},
+            IsValid           => $Param{Valid},
+            EffectiveValue    => $Param{Value},
+            ExclusiveLockGUID => $ExclusiveLockGUID,
+            UserID            => 1,
+        );
+
+        if ( !$Result ) {
+            $Kernel::OM->Get('Kernel::Output::HTML::Layout')->FatalError(
+                Message => Translatable('Can\'t write Config file!'),
+            );
+        }
+
+        # There is no need to unlock the setting as it was already unlocked in the update.
+
+        # 'Rebuild' the configuration.
+        my $Success = $SysConfigObject->ConfigurationDeploy(
+            Comments    => "Installer deployment",
+            AllSettings => 1,
+            Force       => 1,
+            UserID      => 1,
         );
     }
 
