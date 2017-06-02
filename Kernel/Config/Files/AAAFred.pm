@@ -24,7 +24,7 @@ use Kernel::System::Fred::TranslationDebug;
 
 our $ObjectManagerDisabled = 1;
 
-sub Load {}
+sub Load { }
 
 if ( $ENV{HTTP_USER_AGENT} ) {
 
