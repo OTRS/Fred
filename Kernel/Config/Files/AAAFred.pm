@@ -13,6 +13,7 @@ package Kernel::Config::Files::AAAFred;
 
 use strict;
 use warnings;
+no warnings 'redefine';
 
 use vars qw($Self);
 
