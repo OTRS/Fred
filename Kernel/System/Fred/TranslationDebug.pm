@@ -72,11 +72,8 @@ sub DataGet {
     # open the TranslationDebug.log file to get the untranslated words
     my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/TranslationDebug.log';
     my $Filehandle;
-    if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {
-        $Param{ModuleRef}->{Data} = [
-            "Perhaps you don't have permission at /var/fred/",
-            "Can't read /var/fred/TranslationDebug.log"
-        ];
+    if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {    ## no critic
+        $Param{ModuleRef}->{Data} = ["Can't read /var/fred/TranslationDebug.log"];
         return;
     }
 

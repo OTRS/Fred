@@ -2,7 +2,7 @@
 <otrs_config version="2.0" init="Application">
     <Setting Name="Frontend::Output::FilterContent###Fred" Required="0" Valid="1">
         <Description Translatable="1">Subscribe the output filter at the system.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FilterContent::Fred</Item>
@@ -17,7 +17,7 @@
     </Setting>
     <Setting Name="Loader::Agent::CommonJS###000-Fred" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
-        <Navigation>Core::Web</Navigation>
+        <Navigation>Frontend::Base::Loader</Navigation>
         <Value>
             <Array>
                 <Item>thirdparty/jslint/jslint.js</Item>
@@ -29,7 +29,7 @@
     </Setting>
     <Setting Name="Loader::Customer::CommonJS###000-Fred" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the customer interface.</Description>
-        <Navigation>Core::Web</Navigation>
+        <Navigation>Frontend::Base::Loader</Navigation>
         <Value>
             <Array>
                 <Item>thirdparty/jslint/jslint.js</Item>
@@ -41,7 +41,7 @@
     </Setting>
     <Setting Name="Loader::Agent::CommonCSS###000-Fred" Required="1" Valid="1">
         <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
-        <Navigation>Core::Web</Navigation>
+        <Navigation>Frontend::Base::Loader</Navigation>
         <Value>
             <Array>
                 <Item>Core.Fred.css</Item>
@@ -50,7 +50,7 @@
     </Setting>
     <Setting Name="Loader::Customer::CommonCSS###000-Fred" Required="1" Valid="1">
         <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
-        <Navigation>Core::Web</Navigation>
+        <Navigation>Frontend::Base::Loader</Navigation>
         <Value>
             <Array>
                 <Item>Core.Fred.css</Item>
@@ -66,21 +66,21 @@
     </Setting>
     <Setting Name="Fred::ConsoleHeight" Required="0" Valid="1">
         <Description Translatable="1">Defines the height of the Fred console in pixel.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">200px</Item>
         </Value>
     </Setting>
     <Setting Name="Fred::ConsoleOpacity" Required="0" Valid="1">
         <Description Translatable="1">Defines the opacity of the Fred console, e.g. 0.9 for 10% transparency.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">0.9</Item>
         </Value>
     </Setting>
     <Setting Name="Fred::Active" Required="0" Valid="1">
         <Description Translatable="1">Defines if fred is visible or hidden.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="1">
                 <Item ValueType="Option" Value="1" Translatable="1">Show</Item>
@@ -90,7 +90,7 @@
     </Setting>
     <Setting Name="Fred::Module###Console" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to use the fred console.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">1</Item>
@@ -99,7 +99,7 @@
     </Setting>
     <Setting Name="Fred::Module###SQLLog" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want an realtime SQL statement log function.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -109,7 +109,7 @@
     </Setting>
     <Setting Name="Fred::Module###HTMLCheck" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want an realtime HTML-checker.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -119,7 +119,7 @@
     </Setting>
     <Setting Name="Fred::Module###JSLint" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want a JavaScript code quality checker. Only works in CVS Head / OTRS 3 with jQuery.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -129,7 +129,7 @@
     </Setting>
     <Setting Name="Fred::Module###TranslationDebug" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want the translation debugger.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -139,7 +139,7 @@
     </Setting>
     <Setting Name="Fred::Module###ConfigLog" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to use the config log mechanism.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -149,7 +149,7 @@
     </Setting>
     <Setting Name="Fred::Module###ConfigSwitch" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to use the config switch mechanism.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -159,7 +159,7 @@
     </Setting>
     <Setting Name="Fred::Module###STDERRLog" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to see the STDERRLog.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">1</Item>
@@ -169,14 +169,14 @@
     </Setting>
     <Setting Name="Fred::STDERRLogFilter" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to filter the output of the STDERRLog. You can add a regular expression to filter the output.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">: [ ] Subroutine [ ] [_a-zA-Z0-9]+ [ ] redefined [ ] at [ ] .+ [ ] line [ ] \d+ \.</Item>
         </Value>
     </Setting>
     <Setting Name="Fred::Module###SessionDump" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to see the data in the serverside session object.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -186,7 +186,7 @@
     </Setting>
     <Setting Name="Fred::Module###EnvDump" Required="0" Valid="1">
         <Description Translatable="1">Turn on if you want to see the data in the environment of the layout object.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Hash>
                 <Item Key="Active">0</Item>
@@ -259,7 +259,7 @@
     </Setting>
     <Setting Name="Fred::ConfigLog###OrderBy" Required="0" Valid="1">
         <Description Translatable="1">Which order should the config log data have?</Description>
-        <Navigation>ConfigLog</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="3">
                 <Item ValueType="Option" Value="3">Calls</Item>
@@ -270,7 +270,7 @@
     </Setting>
     <Setting Name="Fred::ConfigSwitch###Settings" Required="1" Valid="1">
         <Description Translatable="1">List of config settings which should be available for quick switch. Please add only settings with possible values 0 or 1 (No/Yes).</Description>
-        <Navigation>ConfigSwitch</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Array>
                 <Item>Frontend::RichText</Item>
@@ -296,14 +296,14 @@
     </Setting>
     <Setting Name="Fred::SystemName" Required="1" Valid="1">
         <Description Translatable="1">Customizable system name. If empty, config item 'Home' is being used for display.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
     <Setting Name="Fred::BackgroundColor" Required="1" Valid="1">
         <Description Translatable="1">This option defines the background color for the sytem name box.</Description>
-        <Navigation>Core</Navigation>
+        <Navigation>Core::Fred</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">#D63535</Item>
         </Value>

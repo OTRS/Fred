@@ -66,18 +66,14 @@ sub DataGet {
     my $File = $ConfigObject->Get('Home') . '/var/fred/Config.log';
     my $Filehandle;
     if ( !open $Filehandle, '<', $File ) {
-        print STDERR "Perhaps you don't have permission at /var/fred/\n" .
-            "Can't read /var/fred/Config.log";
+        print STDERR "Can't read /var/fred/Config.log\n";
         return;
     }
-
-    # get the whole information
     LINE:
     for my $Line ( reverse <$Filehandle> ) {
         last LINE if $Line =~ /FRED/;
         push @LogMessages, $Line;
     }
-
     close $Filehandle;
     pop @LogMessages;
     $Self->InsertWord( What => "FRED\n" );

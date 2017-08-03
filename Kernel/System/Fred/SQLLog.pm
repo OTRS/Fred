@@ -77,11 +77,8 @@ sub DataGet {
     my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/SQL.log';
 
     my $Filehandle;
-    if ( !open $Filehandle, '<', $File ) {
-        $Param{ModuleRef}->{Data} = [
-            "Perhaps you don't have permission at /var/fred/",
-            "Can't read /var/fred/SQL.log",
-        ];
+    if ( !open $Filehandle, '<', $File ) {    ## no critic
+        $Param{ModuleRef}->{Data} = ["Can't read /var/fred/SQL.log"];
         return;
     }
 
@@ -184,6 +181,8 @@ sub PreStatement {
     return if ( !$Self->{Active} );
 
     $Self->{PrepareStart} = [gettimeofday];
+
+    return;
 }
 
 sub PostStatement {
@@ -223,6 +222,8 @@ sub PostStatement {
             . join( ';', @StackTrace )
             . "##!##$DiffTime",
     );
+
+    return;
 }
 
 1;

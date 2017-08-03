@@ -13,7 +13,7 @@ package Kernel::Config::Files::AAAFred;
 
 use strict;
 use warnings;
-no warnings 'redefine';
+no warnings 'redefine';    ## no critic
 
 use vars qw($Self);
 
@@ -50,7 +50,7 @@ if ( $ENV{HTTP_USER_AGENT} ) {
 
 # disable redefine warnings in this scope
 {
-    no warnings 'redefine';
+    no warnings 'redefine';               ## no critic
 
     # Override Kernel::Language::Get() method to intercept missing translations
     if ( Kernel::Language->can('Get') && !Kernel::Language->can('GetOriginal') ) {

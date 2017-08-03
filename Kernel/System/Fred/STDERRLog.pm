@@ -79,7 +79,7 @@ sub DataGet {
     my $File = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/var/fred/STDERR.log';
     my $Filehandle;
 
-    if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {
+    if ( !open $Filehandle, '<:encoding(UTF-8)', $File ) {    ## no critic
         $Param{ModuleRef}->{Data} = [
             "Perhaps you don't have permission at /var/fred/ or /Kernel/Config/Files/AAAFred.pm.",
             "Can't read /var/fred/STDERR.log",
