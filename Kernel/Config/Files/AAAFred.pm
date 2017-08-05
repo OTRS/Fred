@@ -26,7 +26,7 @@ use Kernel::System::Fred::TranslationDebug;
 our $ObjectManagerDisabled = 1;
 
 sub Load {
-    my ($File, $Self) = @_;
+    my ( $File, $Self ) = @_;
 
     if ( $ENV{HTTP_USER_AGENT} ) {
 
@@ -149,8 +149,5 @@ sub Load {
     }
     return;
 }
-
-
-
 
 1;
