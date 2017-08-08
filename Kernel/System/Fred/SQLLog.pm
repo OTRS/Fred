@@ -206,7 +206,7 @@ sub PostStatement {
         push @StackTrace, "$Subroutine2:$Line1";
     }
 
-    my @Array = map { defined $_ ? ${$_} : 'undef' } @{ $Param{Bind} || [] };
+    my @Array = map { defined $_ && defined ${$_} ? ${$_} : 'undef' } @{ $Param{Bind} || [] };
 
     # Replace newlines
     @Array = map { $_ =~ s{\r?\n}{[\\n]}smxg; $_; } @Array;    ## no critic

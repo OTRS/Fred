@@ -72,36 +72,24 @@ sub CreateFredOutput {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
+    my @SQLLog;
+
     for my $Line ( @{ $Param{ModuleRef}->{Data} } ) {
 
-        $LayoutObject->Block(
-            Name => 'Row',
-            Data => {
-                Time            => $Line->[4] * 1000,
-                EqualStatements => $Line->[5] || '',
-                Statement       => $Line->[1],
-                Package         => $Line->[3],
-            },
+        my %SQLLogEntry = (
+            Time            => $Line->[4] * 1000,
+            EqualStatements => $Line->[5] || '',
+            Statement       => $Line->[1],
+            Package         => $Line->[3],
+            BindParameters  => $Line->[2],
         );
 
         for my $Line ( split( /;/, $Line->[3] ) ) {
-            $LayoutObject->Block(
-                Name => 'StackTrace',
-                Data => {
-                    StackTrace => $Line,
-                },
-            );
+            $SQLLogEntry{StackTrace} //= [];
+            push @{ $SQLLogEntry{StackTrace} }, $Line;
         }
 
-        if ( $Line->[2] ) {
-            $LayoutObject->Block(
-                Name => 'RowBindParameters',
-                Data => {
-                    BindParameters => $Line->[2],
-                },
-            );
-
-        }
+        push @SQLLog, \%SQLLogEntry;
     }
 
     $Param{ModuleRef}->{Output} = $LayoutObject->Output(
@@ -111,6 +99,7 @@ sub CreateFredOutput {
             DoStatements     => $Param{ModuleRef}->{DoStatements},
             SelectStatements => $Param{ModuleRef}->{SelectStatements},
             Time             => $Param{ModuleRef}->{Time},
+            SQLLog           => \@SQLLog,
         },
     );
 
