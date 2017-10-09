@@ -1,6 +1,5 @@
 # --
-# Kernel/System/Fred/SQLLog.pm
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -103,8 +102,8 @@ sub DataGet {
         # do not show the log from the previous request
         last LINE if $Line =~ /FRED/;
 
-# a typical line from SQL.log looks like:
-# SQL-SELECT##!##SELECT 1 + 1 FROM dual WHERE id = ? AND user_id = ?##!##1, 2##!##Kernel::System::User##!##0.004397
+     # a typical line from SQL.log looks like:
+     # SQL-SELECT##!##SELECT 1 + 1 FROM dual WHERE id = ? AND user_id = ?##!##1, 2##!##Kernel::System::User##!##0.004397
         my @SplitLogLine = split /##!##/, $Line;
         if ( $SplitLogLine[0] eq 'SQL-DO' && $SplitLogLine[1] =~ m{ \A SELECT }xms ) {
             $SplitLogLine[0] .= ' - Perhaps you have an error you use DO for a SELECT-Statement:';
@@ -191,7 +190,7 @@ sub InsertWord {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you

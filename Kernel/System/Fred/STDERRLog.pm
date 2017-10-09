@@ -1,6 +1,5 @@
 # --
-# Kernel/System/Fred/STDERRLog.pm
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,7 +90,7 @@ sub DataGet {
         }
     }
 
-# Make sure that we get everything to disk before trying to read it (otherwise content could be lost).
+    # Make sure that we get everything to disk before trying to read it (otherwise content could be lost).
     STDERR->flush();
 
     # open the STDERR.log file to get the STDERR messages
@@ -142,7 +141,7 @@ sub DataGet {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you

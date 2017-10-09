@@ -1,6 +1,5 @@
 # --
-# AAAFred.pm - the config to bind STDERR to an log file usable for fred
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +32,7 @@ if ( $ENV{HTTP_USER_AGENT} ) {
     }
 
     # move STDOUT to tmp file
-    if ( !open STDERR, '>>', $File ) { ## no critic
+    if ( !open STDERR, '>>', $File ) {    ## no critic
         print STDERR "ERROR: Can't write $File!";
     }
 }
@@ -45,8 +44,8 @@ if ( $ENV{HTTP_USER_AGENT} ) {
     # Override Kernel::Language::Get() method to intercept missing translations
     if ( Kernel::Language->can('Get') && !Kernel::Language->can('GetOriginal') ) {
         *Kernel::Language::GetOriginal = \&Kernel::Language::Get;
-        *Kernel::Language::Get = sub {
-            my ($Self, $What) = @_;
+        *Kernel::Language::Get         = sub {
+            my ( $Self, $What ) = @_;
 
             return if !defined $What;
             return '' if $What eq '';
@@ -57,9 +56,9 @@ if ( $ENV{HTTP_USER_AGENT} ) {
                 $What = $1;
             }
 
-            if (!$Self->{Translation}->{$What}) {
+            if ( !$Self->{Translation}->{$What} ) {
                 $Self->{TranslationDebugObject} ||= Kernel::System::Fred::TranslationDebug->new( %{$Self} );
-                $Self->{TranslationDebugObject}->InsertWord(What => $What);
+                $Self->{TranslationDebugObject}->InsertWord( What => $What );
             }
 
             return $Result;
@@ -69,22 +68,28 @@ if ( $ENV{HTTP_USER_AGENT} ) {
     # Override Kernel::Config::Get() method to intercept config strings
     if ( Kernel::Config::Defaults->can('Get') && !Kernel::Config::Defaults->can('GetOriginal') ) {
         *Kernel::Config::Defaults::GetOriginal = \&Kernel::Config::Defaults::Get;
-        *Kernel::Config::Defaults::Get = sub {
+        *Kernel::Config::Defaults::Get         = sub {
             my ( $Self, $What ) = @_;
 
             $Self->{ConfigLogObject} ||= Kernel::System::Fred::ConfigLog->new(
                 ConfigObject => $Self,
             );
             my $Caller = caller();
-            if ($Self->{$What}) {
-                $Self->{ConfigLogObject}->InsertWord(What => "$What;True;$Caller;", Home => $Self->{Home});
+            if ( $Self->{$What} ) {
+                $Self->{ConfigLogObject}->InsertWord(
+                    What => "$What;True;$Caller;",
+                    Home => $Self->{Home}
+                );
             }
             else {
-                $Self->{ConfigLogObject}->InsertWord(What => "$What;False;$Caller;", Home => $Self->{Home});
+                $Self->{ConfigLogObject}->InsertWord(
+                    What => "$What;False;$Caller;",
+                    Home => $Self->{Home}
+                );
             }
 
             return $Self->GetOriginal($What);
-       };
+        };
     }
 }
 
