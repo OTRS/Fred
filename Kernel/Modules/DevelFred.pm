@@ -179,6 +179,7 @@ sub _SettingUpdate {
 
     # OTRS 5 SysConfig API
     if ( $SysConfigObject->can('ConfigItemUpdate') ) {
+        ##nofilter(TidyAll::Plugin::OTRS::Migrations::OTRS6::SysConfig)
         $SysConfigObject->ConfigItemUpdate(%Param);
     }
 
