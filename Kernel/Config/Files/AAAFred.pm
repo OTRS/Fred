@@ -1,3 +1,6 @@
+# OTRS config file (automatically generated)
+# VERSION:1.1
+
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
@@ -5,9 +8,6 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
-# OTRS config file (automatically generated)
-# VERSION:1.1
 
 package Kernel::Config::Files::AAAFred;
 
