@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::FredEnvDump - show dump of the environment ref, data for $Env in dtl
+Kernel::Output::HTML::Fred::EnvDump - show dump of the environment ref, data for $Env in dtl
 
 =head1 SYNOPSIS
 
@@ -99,13 +99,3 @@ sub CreateFredOutput {
 1;
 
 =back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
