@@ -8,8 +8,9 @@
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">A tool to  support the developer by his development.</Description>
+    <Description Lang="en">A tool to support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
+    <Description Lang="hu">Egy eszköz a fejlesztők munkájának támogatásához.</Description>
     <Filelist>
         <File Permission="660" Location="doc/en/Fred.xml" />
         <File Permission="660" Location="Kernel/Config/Files/AAAFred.pm" />
@@ -55,7 +56,7 @@
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Fred.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/Core.Fred.css" />
     </Filelist>
-    <IntroInstall Type="pre" Title="" Lang="en"><![CDATA[
+    <IntroInstall Type="pre" Title="Fred Features" Lang="en"><![CDATA[
         <br/>
         Welcome! <br/>
         <br/>
@@ -64,24 +65,24 @@
         To date, Fred has the following features: <br/>
         <ul>
         <li> HTMLCheck: <br/>
-                    performs different HTML quality checks in JavaScript </li>
+                    perform different HTML quality checks in JavaScript </li>
         <li> JSLint: <br/>
-                    performs different JavaScript quality checks in JavaScript </li>
+                    perform different JavaScript quality checks in JavaScript </li>
         <li> STDERRLog: <br/>
                     every entry contained in STDERR is displayed </li>
         <li> TranslationDebug: <br/>
-                    displays all translation attempts of the current request which failed. </li>
+                    display all translation attempts of the current request which failed </li>
         <li> SQLLog: <br/>
-                    lists all SQL statements of the current request </li>
+                    list all SQL statements of the current request </li>
         <li> ConfigLog: <br/>
-                    lists all ConfigGet requests, indicating their frequency </li>
+                    list all ConfigGet requests, indicating their frequency </li>
         <li> SessionDump: <br/>
                     show the current content of the serverside session </li>
         <li> EnvDump: <br/>
                     show info about the environment of the layout object </li>
         </ul>
         <br/>
-        *Caution* : Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>
+        <strong>Caution</strong>: Please have a look at the possible config settings, which are easily accessible by clicking on "setting". <br/>
         <br/>
         <br/>
         What is Fred's current status?<br/>
@@ -93,6 +94,47 @@
                     ideas for improving the output or sensible configurations will be very welcome </li>
         <li> please extend Fred, if you have good ideas <br/>
         <li> if you have no time to implement your ideas yourselves, please enter them in dev mailinglist </li>
+        </ul>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="A Fred funkciói" Lang="hu"><![CDATA[
+        <br/>
+        Üdvözöljük! <br/>
+        <br/>
+        Mire képes a Fred?<br/>
+        <br/>
+        A Fred jelenleg a következő funkciókkal rendelkezik: <br/>
+        <ul>
+        <li> HTMLCheck: <br/>
+                    különböző HTML minőség-ellenőrzések végrehajtása a JavaScript kódban </li>
+        <li> JSLint: <br/>
+                    különböző JavaScript minőség-ellenőrzések végrehajtása a JavaScript kódban </li>
+        <li> STDERRLog: <br/>
+                    a szabványos hibakimeneten megjelenő összes bejegyzés megjelenítése </li>
+        <li> TranslationDebug: <br/>
+                    az aktuális kérés összes olyan fordítási kísérletének megjelenítése, amely sikertelen </li>
+        <li> SQLLog: <br/>
+                    az aktuális kérés összes SQL-lekérdezésének felsorolása </li>
+        <li> ConfigLog: <br/>
+                    az összes ConfigGet kérés felsorolása, jelezve azok gyakoriságát </li>
+        <li> SessionDump: <br/>
+                    a kiszolgáló oldali munkamenet aktuális tartalmának megjelenítése </li>
+        <li> EnvDump: <br/>
+                    információk megjelenítése a megjelenítő objektum környezetéről </li>
+        </ul>
+        <br/>
+        <strong>Vigyázat</strong>: nézze meg a lehetséges konfigurációs beállításokat, amelyek egyszerűen elérhetők a „beállításra” kattintva. <br/>
+        <br/>
+        <br/>
+        Mi a Fred jelenlegi állapota?<br/>
+        <br/>
+        <ul>
+        <li> moduláris felépítés: <br/>
+                    bárki bármikor hozzáadhat egy új modult </li>
+        <li> a modulok kimenete még nem kifinomult <br/>
+                    szívesen fogadjuk a kimenet javításával vagy az érzékeny beállításokkal kapcsolatos ötleteket </li>
+        <li> bővítse a Fred programot, ha vannak jó ötletei <br/>
+        <li> ha nincs ideje az ötletei megvalósításához, akkor írja le a fejlesztői levelezőlistán </li>
         </ul>
         <br/>
     ]]></IntroInstall>
