@@ -4,8 +4,8 @@
     <Version>0.0.0</Version>
     <Framework>5.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
-    <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">A tool to  support the developer by his development.</Description>
     <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
     <Filelist>
