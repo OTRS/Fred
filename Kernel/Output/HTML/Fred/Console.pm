@@ -90,7 +90,7 @@ sub CreateFredOutput {
 
     my $SystemName = $ConfigObject->Get('Fred::SystemName')
         || $ConfigObject->Get('Home');
-    my $OTRSVersion = $ConfigObject->Get('Version') || 'Version unknown';
+    my $OTRSVersion     = $ConfigObject->Get('Version') || 'Version unknown';
     my $BackgroundColor = $ConfigObject->Get('Fred::BackgroundColor')
         || 'red';
     my $BranchName = 'could not be detected';

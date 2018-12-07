@@ -75,7 +75,7 @@ sub Run {
                     Name => 'Config',
                     Data => {
                         ModuleName => $Module,
-                        }
+                    }
                 );
             }
         }
