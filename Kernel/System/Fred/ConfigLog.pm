@@ -97,7 +97,7 @@ sub DataGet {
     }
 
     # sort the data
-    my $Config = $ConfigObject->Get('Fred::ConfigLog');
+    my $Config  = $ConfigObject->Get('Fred::ConfigLog');
     my $OrderBy = defined( $Config->{OrderBy} ) ? $Config->{OrderBy} : 3;
     if ( $OrderBy == 3 ) {
         @LogMessages = sort { $b->[$OrderBy] <=> $a->[$OrderBy] } @LogMessages;
