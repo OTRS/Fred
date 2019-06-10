@@ -143,7 +143,7 @@ sub Run {
 
     # add fred icon to header
     my $Active = $ConfigObject->Get('Fred::Active') || 0;
-    my $Class = $Active ? 'FredActive' : '';
+    my $Class  = $Active ? 'FredActive' : '';
     ${ $Param{Data} } =~ s{ <div [^>]* id="header" [^>]*> }{
         $&
 
