@@ -7,8 +7,8 @@
     <Vendor>OTRS AG</Vendor>
     <URL>https://otrs.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
-    <Description Lang="en">A tool to support the developer by his development.</Description>
-    <Description Lang="de">Ein Entwicklertool welches dem Entwickler zur Laufzeit bei der Entwicklung unterstützen soll.</Description>
+    <Description Lang="en">A tool to help the developer during development.</Description>
+    <Description Lang="de">Ein Werkzeug welches den Entwickler bei der Entwicklung unterstützen soll.</Description>
     <Description Lang="hu">Egy eszköz a fejlesztők munkájának támogatásához.</Description>
     <Filelist>
         <File Permission="660" Location="doc/en/Fred.xml" />
