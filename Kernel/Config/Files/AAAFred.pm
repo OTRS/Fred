@@ -59,7 +59,7 @@ sub Load {
             *Kernel::Language::Get         = sub {
                 my ( $Self, $What ) = @_;
 
-                return if !defined $What;
+                return    if !defined $What;
                 return '' if $What eq '';
 
                 my $Result = $Self->GetOriginal($What);
